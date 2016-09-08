@@ -17,8 +17,6 @@ public class S3ConfigurationSource implements PolledConfigurationSource {
     private String bucket;
     private String key;
 
-    private Map<String, Object> cachedConfiguration = new HashMap<>();
-
     public S3ConfigurationSource(String bucket, String key) {
         this.bucket = bucket;
         this.key = key;
@@ -45,11 +43,6 @@ public class S3ConfigurationSource implements PolledConfigurationSource {
             return configs;
         } catch(Exception e){
             LOG.error("s3.config.properties.get.failed");
-        }
-
-        //If new poll is empty, but there's data in the cache, then return the cache.
-        if (configs.isEmpty() && !cachedConfiguration.isEmpty()) {
-            return cachedConfiguration;
         }
 
         return configs;

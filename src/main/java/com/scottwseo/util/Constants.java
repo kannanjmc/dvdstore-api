@@ -12,4 +12,8 @@ public class Constants {
 
     public static final String S3_KEY = "com.scottwseo.api.S3_KEY";
 
+    public static final String ACCESS_KEY_ID = "com.scottseo.api.ACCESS_KEY_ID";
+
+    public static final String SECRET_KEY = "com.scottseo.api.SECRET_KEY";
+
 }

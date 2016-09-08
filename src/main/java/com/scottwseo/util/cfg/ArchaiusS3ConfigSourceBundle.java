@@ -20,7 +20,7 @@ public class ArchaiusS3ConfigSourceBundle <T extends Configuration>  implements 
 
         PolledConfigurationSource s3ConfigurationSource = new S3ConfigurationSource(bucket, key);
 
-        AbstractPollingScheduler scheduler = new FixedDelayPollingScheduler(0, 60 * 1000, false);
+        AbstractPollingScheduler scheduler = new FixedDelayPollingScheduler(0, 60 * 1000, true);
 
         DynamicConfiguration dynamicConfiguration = new DynamicConfiguration(s3ConfigurationSource, scheduler);
 

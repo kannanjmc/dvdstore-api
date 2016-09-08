@@ -3,6 +3,7 @@ package com.scottwseo;
 import com.scottwseo.health.ConfigHealthCheck;
 import com.scottwseo.resources.ConfigurationResource;
 import com.scottwseo.util.Config;
+import com.scottwseo.util.Constants;
 import com.scottwseo.util.PostgreSQLDatabase;
 import com.scottwseo.util.cfg.ArchaiusS3ConfigSourceBundle;
 import io.dropwizard.Application;
@@ -48,6 +49,9 @@ public class APIApplication extends Application<APIConfiguration> {
     @Override
     public void run(final APIConfiguration configuration,
                     final Environment environment) {
+
+        System.setProperty("aws.accessKeyId", System.getenv(Constants.ACCESS_KEY_ID));
+        System.setProperty("aws.secretKey", System.getenv(Constants.SECRET_KEY));
 
         boolean ok = Config.check() && PostgreSQLDatabase.check();
 
