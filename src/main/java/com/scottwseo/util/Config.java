@@ -1,5 +1,6 @@
 package com.scottwseo.util;
 
+import com.netflix.config.ConfigurationManager;
 import com.scottwseo.util.cfg.ConfigType;
 import com.scottwseo.util.cfg.Configuration;
 
@@ -9,7 +10,7 @@ import com.scottwseo.util.cfg.Configuration;
 public enum Config {
 
     @Configuration(type= ConfigType.TEXT)
-    DB_HOST("db.host"),
+    DB_URL("db.url"),
 
     @Configuration(type=ConfigType.TEXT)
     DB_USER("db.user"),
@@ -24,10 +25,16 @@ public enum Config {
     }
 
     public boolean isProvided() {
-        if ("db.pwd".equals(key)) {
+        String value = ConfigurationManager.getConfigInstance().getString(key);
+
+        if (value == null || "".equals(value)) {
             return false;
         }
         return true;
+    }
+
+    public String getString() {
+        return ConfigurationManager.getConfigInstance().getString(key);
     }
 
     public String key() {

@@ -3,14 +3,14 @@ package com.scottwseo;
 import com.scottwseo.health.ConfigHealthCheck;
 import com.scottwseo.resources.ConfigurationResource;
 import com.scottwseo.util.Config;
+import com.scottwseo.util.PostgreSQLDatabase;
+import com.scottwseo.util.cfg.ArchaiusS3ConfigSourceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
-
-import java.util.Map;
 
 public class APIApplication extends Application<APIConfiguration> {
 
@@ -32,8 +32,6 @@ public class APIApplication extends Application<APIConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<APIConfiguration> bootstrap) {
-        bootstrap.addBundle(new ViewBundle<APIConfiguration>());
-
         // Enable variable substitution with environment variables
         bootstrap.setConfigurationSourceProvider(
                 new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
@@ -41,18 +39,22 @@ public class APIApplication extends Application<APIConfiguration> {
                 )
         );
 
+        // Initialize config
+        bootstrap.addBundle(new ArchaiusS3ConfigSourceBundle<APIConfiguration>());
 
+        bootstrap.addBundle(new ViewBundle<APIConfiguration>());
     }
 
     @Override
     public void run(final APIConfiguration configuration,
                     final Environment environment) {
 
-        environment.healthChecks().register("config.check", new ConfigHealthCheck());
+        boolean ok = Config.check() && PostgreSQLDatabase.check();
 
-        boolean configChecked = Config.check();
-
-        if (!configChecked) {
+        if (ok) {
+            environment.healthChecks().register("config.check", new ConfigHealthCheck());
+        }
+        else {
             environment.jersey().register(new ConfigurationResource());
         }
 

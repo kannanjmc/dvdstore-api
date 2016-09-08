@@ -1,21 +1,17 @@
 package com.scottwseo;
 
 import io.dropwizard.Configuration;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.db.DataSourceFactory;
-import org.hibernate.validator.constraints.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 public class APIConfiguration extends Configuration {
 
-    @Valid
-    @NotNull
-    @JsonProperty
     private DataSourceFactory database = new DataSourceFactory();
 
     public DataSourceFactory getDataSourceFactory() {
+
+        database.setDriverClass("org.postgresql.Driver");
+        database.setUser("");
+
         return database;
     }
 
