@@ -10,7 +10,7 @@
     </prerequisites>
 
     <groupId>com.scottwseo</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>commons</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
