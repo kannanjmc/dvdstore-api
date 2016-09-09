@@ -21,6 +21,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>1.0.0</dropwizard.version>
         <mainClass>com.scottwseo.APIApplication</mainClass>
+        <guice.version>4.1.0</guice.version>
+        <postgresql.version>9.4-1201-jdbc41</postgresql.version>
     </properties>
 
     <dependencyManagement>
@@ -36,6 +38,13 @@
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-bom</artifactId>
                 <version>1.11.22</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice-bom</artifactId>
+                <version>4.1.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -60,6 +69,14 @@
             <artifactId>dropwizard-jdbi</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-auth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-assets</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.netflix.archaius</groupId>
             <artifactId>archaius-core</artifactId>
             <version>0.6.0</version>
@@ -76,7 +93,11 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc41</version>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
         </dependency>
     </dependencies>
 
