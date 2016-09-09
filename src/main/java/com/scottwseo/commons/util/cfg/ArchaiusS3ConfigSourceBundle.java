@@ -1,7 +1,7 @@
-package com.scottwseo.util.cfg;
+package com.scottwseo.commons.util.cfg;
 
 import com.netflix.config.*;
-import com.scottwseo.util.Constants;
+import com.scottwseo.commons.util.Constants;
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;

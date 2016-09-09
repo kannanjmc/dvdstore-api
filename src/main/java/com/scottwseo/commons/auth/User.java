@@ -1,4 +1,4 @@
-package com.scottwseo.auth;
+package com.scottwseo.commons.auth;
 
 import javax.security.auth.Subject;
 import java.security.Principal;

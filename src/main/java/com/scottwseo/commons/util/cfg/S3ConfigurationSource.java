@@ -1,8 +1,8 @@
-package com.scottwseo.util.cfg;
+package com.scottwseo.commons.util.cfg;
 
 import com.netflix.config.PollResult;
 import com.netflix.config.PolledConfigurationSource;
-import com.scottwseo.util.S3Util;
+import com.scottwseo.commons.util.S3Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

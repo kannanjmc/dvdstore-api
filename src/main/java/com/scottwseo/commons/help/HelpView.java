@@ -1,4 +1,4 @@
-package com.scottwseo.help;
+package com.scottwseo.commons.help;
 
 import io.dropwizard.views.View;
 
@@ -9,6 +9,10 @@ public class HelpView extends View {
 
     public HelpView() {
         super("help.ftl");
+    }
+
+    public String getBase() {
+        return "/api/v1/commons";
     }
 
 }

@@ -1,4 +1,4 @@
-package com.scottwseo.auth;
+package com.scottwseo.commons.auth;
 
 import io.dropwizard.auth.Authorizer;
 

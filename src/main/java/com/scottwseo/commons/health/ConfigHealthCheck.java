@@ -1,7 +1,7 @@
-package com.scottwseo.health;
+package com.scottwseo.commons.health;
 
 import com.codahale.metrics.health.HealthCheck;
-import com.scottwseo.util.Config;
+import com.scottwseo.commons.util.Config;
 
 public class ConfigHealthCheck extends HealthCheck {
 

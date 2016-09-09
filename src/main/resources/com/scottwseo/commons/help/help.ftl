@@ -8,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <base href="/api/v1/com/scottwseo/help/" target="_blank">
+    <base href="${base}/com/scottwseo/commons/help/" target="_blank">
     <link rel="icon" href="favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
@@ -34,18 +34,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="#"><span id="appname"></span>&nbsp;<span id="tag"></span></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Help</a></li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
         </div>
     </div>
 </nav>
@@ -54,8 +48,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li id="overview" class="active"><a href="/api/v1/com/scottwseo/help/overview.html">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="/api/v1/com/scottwseo/swagger/index.html">Swagger</a></li>
+                <li id="overview" class="active"><a href="overview.html">Overview <span class="sr-only">(current)</span></a></li>
+                <li><a href="../swagger/index.html">Swagger</a></li>
                 <li><a href="#">Analytics</a></li>
                 <li><a href="#">Export</a></li>
             </ul>
@@ -114,8 +108,14 @@
         })
 
         // load the initial page
-        $('iframe').attr('src', '/api/v1/com/scottwseo/help/overview.html');
+        $('iframe').attr('src', 'overview.html');
+
+        $.ajax({url: '${base}/meta', success: function(json){
+            $("#tag").html(json.tag);
+            $("#appname").html(json.appname);
+        }});
     });
+
 </script>
 
 </body>

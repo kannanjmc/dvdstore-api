@@ -1,16 +1,16 @@
-package com.scottwseo;
+package com.scottwseo.commons.app;
 
-import com.scottwseo.auth.SimpleAuthenticator;
-import com.scottwseo.auth.SimpleAuthorizer;
-import com.scottwseo.auth.User;
-import com.scottwseo.health.ConfigHealthCheck;
-import com.scottwseo.help.HelpResource;
-import com.scottwseo.help.HelpView;
-import com.scottwseo.resources.ConfigurationResource;
-import com.scottwseo.util.Config;
-import com.scottwseo.util.Constants;
-import com.scottwseo.util.PostgreSQLDatabase;
-import com.scottwseo.util.cfg.ArchaiusS3ConfigSourceBundle;
+import com.scottwseo.commons.auth.SimpleAuthenticator;
+import com.scottwseo.commons.auth.SimpleAuthorizer;
+import com.scottwseo.commons.auth.User;
+import com.scottwseo.commons.health.ConfigHealthCheck;
+import com.scottwseo.commons.help.HelpResource;
+import com.scottwseo.commons.help.HelpView;
+import com.scottwseo.commons.resources.ConfigurationResource;
+import com.scottwseo.commons.util.Config;
+import com.scottwseo.commons.util.Constants;
+import com.scottwseo.commons.util.PostgreSQLDatabase;
+import com.scottwseo.commons.util.cfg.ArchaiusS3ConfigSourceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -55,9 +55,9 @@ public class APIApplication extends Application<APIConfiguration> {
 
         bootstrap.addBundle(new ViewBundle<APIConfiguration>());
 
-        bootstrap.addBundle(new AssetsBundle("/com/scottwseo/help", "/com/scottwseo/help", "index.html", "help"));
+        bootstrap.addBundle(new AssetsBundle("/com/scottwseo/commons/help", "/com/scottwseo/commons/help", "index.html", "help"));
 
-        bootstrap.addBundle(new AssetsBundle("/com/scottwseo/swagger", "/com/scottwseo/swagger", "index.html", "swagger"));
+        bootstrap.addBundle(new AssetsBundle("/com/scottwseo/commons/swagger", "/com/scottwseo/commons/swagger", "index.html", "swagger"));
 
     }
 

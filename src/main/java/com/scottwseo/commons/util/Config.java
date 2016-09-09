@@ -1,8 +1,8 @@
-package com.scottwseo.util;
+package com.scottwseo.commons.util;
 
 import com.netflix.config.ConfigurationManager;
-import com.scottwseo.util.cfg.ConfigType;
-import com.scottwseo.util.cfg.Configuration;
+import com.scottwseo.commons.util.cfg.ConfigType;
+import com.scottwseo.commons.util.cfg.Configuration;
 
 /**
  * Created by sseo on 9/6/16.

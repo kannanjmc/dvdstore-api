@@ -1,4 +1,4 @@
-package com.scottwseo.util.cfg;
+package com.scottwseo.commons.util.cfg;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

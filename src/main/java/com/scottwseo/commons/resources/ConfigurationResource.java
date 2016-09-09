@@ -1,6 +1,6 @@
-package com.scottwseo.resources;
+package com.scottwseo.commons.resources;
 
-import com.scottwseo.util.Config;
+import com.scottwseo.commons.util.Config;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

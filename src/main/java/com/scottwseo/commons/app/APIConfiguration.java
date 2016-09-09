@@ -1,4 +1,4 @@
-package com.scottwseo;
+package com.scottwseo.commons.app;
 
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
