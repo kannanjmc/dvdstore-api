@@ -1,8 +1,11 @@
 package com.scottwseo.commons.app;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.scottwseo.commons.auth.SimpleAuthenticator;
 import com.scottwseo.commons.auth.SimpleAuthorizer;
 import com.scottwseo.commons.auth.User;
+import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.commons.health.ConfigHealthCheck;
 import com.scottwseo.commons.help.HelpResource;
 import com.scottwseo.commons.help.HelpView;
@@ -22,10 +25,16 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+import org.togglz.console.TogglzConsoleServlet;
+import org.togglz.servlet.TogglzFilter;
+
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
 
 public class APIApplication extends Application<APIConfiguration> {
 
     public static void main(final String[] args) throws Exception {
+        java.security.Security.setProperty("networkaddress.cache.ttl", "60");
         launch(args);
     }
 
@@ -83,6 +92,15 @@ public class APIApplication extends Application<APIConfiguration> {
             environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
             environment.jersey().register(new HelpResource(new HelpView()));
+
+            Injector injector = Guice.createInjector(new ServiceModule(configuration, environment));
+
+            TogglzFilter togglzFilter = injector.getInstance(TogglzFilter.class);
+            environment.servlets().addFilter("TogglzFilter", togglzFilter)
+                    .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+            environment.servlets().addServlet("TogglzConsoleServlet", TogglzConsoleServlet.class)
+                    .addMapping("/togglz/*");
+
         }
         else {
             environment.jersey().register(new ConfigurationResource());

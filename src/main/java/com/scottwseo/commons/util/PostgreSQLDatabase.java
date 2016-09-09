@@ -1,8 +1,13 @@
 package com.scottwseo.commons.util;
 
+import com.scottwseo.commons.app.APIConfiguration;
+import io.dropwizard.db.ManagedDataSource;
+import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.exceptions.UnableToObtainConnectionException;
+
+import javax.sql.DataSource;
 
 /**
  * Created by sseo on 9/7/16.
@@ -27,6 +32,12 @@ public class PostgreSQLDatabase {
             return false;
         }
 
+    }
+
+    public DataSource getDataSource(APIConfiguration configuration, Environment environment) {
+        ManagedDataSource dataSource = configuration.getDataSourceFactory().build(environment.metrics(), "ds-" + System.currentTimeMillis());
+        environment.lifecycle().manage(dataSource);
+        return dataSource;
     }
 
 }
