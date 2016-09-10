@@ -1,7 +1,7 @@
 package com.scottwseo.commons.util.cfg;
 
 import com.netflix.config.*;
-import com.scottwseo.commons.util.Constants;
+import com.scottwseo.commons.util.EnvVariables;
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -14,9 +14,9 @@ public class ArchaiusS3ConfigSourceBundle <T extends Configuration>  implements 
 
     @Override
     public void run(T configuration, Environment environment) throws Exception {
-        String bucket = System.getenv(Constants.S3_BUCKET);
+        String bucket = System.getenv(EnvVariables.S3_BUCKET);
 
-        String key = System.getenv(Constants.S3_KEY);
+        String key = System.getenv(EnvVariables.S3_KEY);
 
         PolledConfigurationSource s3ConfigurationSource = new S3ConfigurationSource(bucket, key);
 

@@ -4,6 +4,8 @@ import com.netflix.config.ConfigurationManager;
 import com.scottwseo.commons.util.cfg.ConfigType;
 import com.scottwseo.commons.util.cfg.Configuration;
 
+import static com.scottwseo.commons.util.StringUtils.isEmpty;
+
 /**
  * Created by sseo on 9/6/16.
  */
@@ -27,7 +29,7 @@ public enum Config {
     public boolean isProvided() {
         String value = ConfigurationManager.getConfigInstance().getString(key);
 
-        if (value == null || "".equals(value)) {
+        if (isEmpty(value)) {
             return false;
         }
         return true;

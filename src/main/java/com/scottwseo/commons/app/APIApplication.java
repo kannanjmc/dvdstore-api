@@ -5,12 +5,13 @@ import com.google.inject.Injector;
 import com.scottwseo.commons.auth.AuthenticationBundle;
 import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.commons.health.ConfigHealthCheck;
+import com.scottwseo.commons.health.DummyHealthCheck;
 import com.scottwseo.commons.help.HelpResource;
 import com.scottwseo.commons.help.HelpView;
 import com.scottwseo.commons.resources.ConfigurationResource;
 import com.scottwseo.commons.togglz.TogglzBundle;
 import com.scottwseo.commons.util.Config;
-import com.scottwseo.commons.util.Constants;
+import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
 import com.scottwseo.commons.util.cfg.ArchaiusS3ConfigSourceBundle;
 import io.dropwizard.Application;
@@ -49,8 +50,11 @@ public class APIApplication extends Application<APIConfiguration> {
                 )
         );
 
-        // Initialize config
-        bootstrap.addBundle(new ArchaiusS3ConfigSourceBundle<APIConfiguration>());
+        if (EnvVariables.check()) {
+            bootstrap.addBundle(new ArchaiusS3ConfigSourceBundle<APIConfiguration>());
+        }
+
+        bootstrap.addBundle(new TogglzBundle<APIConfiguration>());
 
         bootstrap.addBundle(new AuthenticationBundle<APIConfiguration>("Commons"));
 
@@ -60,20 +64,18 @@ public class APIApplication extends Application<APIConfiguration> {
 
         bootstrap.addBundle(new AssetsBundle("/com/scottwseo/commons/swagger", "/com/scottwseo/commons/swagger", "index.html", "swagger"));
 
-        bootstrap.addBundle(new TogglzBundle<APIConfiguration>());
     }
 
     @Override
     public void run(final APIConfiguration configuration,
                     final Environment environment) {
 
-        System.setProperty("aws.accessKeyId", System.getenv(Constants.ACCESS_KEY_ID));
-        System.setProperty("aws.secretKey", System.getenv(Constants.SECRET_KEY));
+        if (EnvVariables.check() && Config.check() && PostgreSQLDatabase.check()) {
 
-        boolean ok = Config.check() && PostgreSQLDatabase.check();
+            System.setProperty("aws.accessKeyId", System.getenv(EnvVariables.ACCESS_KEY_ID));
+            System.setProperty("aws.secretKey", System.getenv(EnvVariables.SECRET_KEY));
 
-        if (ok) {
-            environment.healthChecks().register("config.check", new ConfigHealthCheck());
+            environment.healthChecks().register("config", new ConfigHealthCheck());
 
             environment.jersey().register(new HelpResource(new HelpView()));
 
@@ -82,6 +84,7 @@ public class APIApplication extends Application<APIConfiguration> {
         }
         else {
             environment.jersey().register(new ConfigurationResource());
+            environment.healthChecks().register("dummy", new DummyHealthCheck());
         }
 
     }
