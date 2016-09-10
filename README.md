@@ -7,5 +7,4 @@
 # Todo
 - Buy SSL cert
 - Complete swagger once data dump is ready
-
-
+- MetricsReporterFactory
