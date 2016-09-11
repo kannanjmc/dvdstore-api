@@ -18,7 +18,10 @@ public enum Config {
     DB_USER("db.user"),
 
     @Configuration(type=ConfigType.TEXT)
-    DB_PWD("db.pwd");
+    DB_PWD("db.pwd"),
+
+    @Configuration(type=ConfigType.TEXT)
+    GRAPHITE_HOST("graphite.host");
 
     private String key;
 
