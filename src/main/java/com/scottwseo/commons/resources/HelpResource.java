@@ -1,7 +1,8 @@
-package com.scottwseo.commons.help;
+package com.scottwseo.commons.resources;
 
 import com.google.inject.Inject;
 import com.scottwseo.commons.auth.User;
+import com.scottwseo.commons.help.HelpView;
 import io.dropwizard.auth.Auth;
 
 import javax.ws.rs.Consumes;

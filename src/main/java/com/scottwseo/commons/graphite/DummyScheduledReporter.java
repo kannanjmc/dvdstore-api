@@ -1,4 +1,4 @@
-package com.scottwseo.commons.util;
+package com.scottwseo.commons.graphite;
 
 import com.codahale.metrics.*;
 

@@ -6,10 +6,11 @@ import com.scottwseo.commons.auth.AuthenticationBundle;
 import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.commons.health.ConfigHealthCheck;
 import com.scottwseo.commons.health.DummyHealthCheck;
-import com.scottwseo.commons.help.HelpResource;
 import com.scottwseo.commons.help.HelpView;
-import com.scottwseo.commons.resources.ConfigurationResource;
+import com.scottwseo.commons.resources.HelpResource;
+import com.scottwseo.commons.resources.StartupCheckListResource;
 import com.scottwseo.commons.togglz.TogglzBundle;
+import com.scottwseo.commons.util.AWSCredentialsInitializerBundle;
 import com.scottwseo.commons.util.Config;
 import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
@@ -51,6 +52,9 @@ public class APIApplication extends Application<APIConfiguration> {
         );
 
         if (EnvVariables.check()) {
+            // AWSCredentialInitializerBundle is for allowing developers to manually specify the aws
+            // credentials using environment variables
+            bootstrap.addBundle(new AWSCredentialsInitializerBundle<APIConfiguration>());
             bootstrap.addBundle(new ArchaiusS3ConfigSourceBundle<APIConfiguration>());
         }
 
@@ -72,9 +76,6 @@ public class APIApplication extends Application<APIConfiguration> {
 
         if (EnvVariables.check() && Config.check() && PostgreSQLDatabase.check()) {
 
-            System.setProperty("aws.accessKeyId", System.getenv(EnvVariables.ACCESS_KEY_ID));
-            System.setProperty("aws.secretKey", System.getenv(EnvVariables.SECRET_KEY));
-
             environment.healthChecks().register("config", new ConfigHealthCheck());
 
             environment.jersey().register(new HelpResource(new HelpView()));
@@ -83,7 +84,7 @@ public class APIApplication extends Application<APIConfiguration> {
 
         }
         else {
-            environment.jersey().register(new ConfigurationResource());
+            environment.jersey().register(new StartupCheckListResource());
             environment.healthChecks().register("dummy", new DummyHealthCheck());
         }
 

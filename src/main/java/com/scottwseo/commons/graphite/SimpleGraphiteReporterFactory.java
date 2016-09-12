@@ -1,4 +1,4 @@
-package com.scottwseo.commons.util;
+package com.scottwseo.commons.graphite;
 
 import com.amazonaws.util.EC2MetadataUtils;
 import com.codahale.metrics.MetricRegistry;
@@ -6,6 +6,8 @@ import com.codahale.metrics.ScheduledReporter;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.scottwseo.commons.util.Config;
+import com.scottwseo.commons.util.StringUtils;
 import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

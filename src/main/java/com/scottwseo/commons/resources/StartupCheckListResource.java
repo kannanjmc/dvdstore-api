@@ -18,7 +18,7 @@ import java.util.Map;
 @Path("/{default: .*}")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ConfigurationResource {
+public class StartupCheckListResource {
 
     @GET
     public Map<String, Object> index() {
