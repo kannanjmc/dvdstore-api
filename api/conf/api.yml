@@ -5,7 +5,7 @@ logging:
 
   appenders:
     # Log warnings and errors to stderr
-    - type: console
+    - type: websocket
       threshold: INFO
       target: stdout
 

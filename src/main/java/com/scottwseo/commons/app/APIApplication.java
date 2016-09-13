@@ -1,5 +1,6 @@
 package com.scottwseo.commons.app;
 
+import be.tomcools.dropwizard.websocket.WebsocketBundle;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.scottwseo.commons.auth.AuthenticationBundle;
@@ -7,6 +8,7 @@ import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.commons.health.ConfigHealthCheck;
 import com.scottwseo.commons.health.DummyHealthCheck;
 import com.scottwseo.commons.help.HelpView;
+import com.scottwseo.commons.logging.LogEndPoint;
 import com.scottwseo.commons.resources.HelpResource;
 import com.scottwseo.commons.resources.StartupCheckListResource;
 import com.scottwseo.commons.togglz.TogglzBundle;
@@ -42,6 +44,8 @@ public class APIApplication extends Application<APIConfiguration> {
         return "API";
     }
 
+    private WebsocketBundle websocket = new WebsocketBundle();
+
     @Override
     public void initialize(final Bootstrap<APIConfiguration> bootstrap) {
         // Enable variable substitution with environment variables
@@ -64,9 +68,16 @@ public class APIApplication extends Application<APIConfiguration> {
 
         bootstrap.addBundle(new ViewBundle<APIConfiguration>());
 
+        // for assets folder
+        bootstrap.addBundle(new AssetsBundle());
+
         bootstrap.addBundle(new AssetsBundle("/com/scottwseo/commons/help", "/com/scottwseo/commons/help", "index.html", "help"));
 
         bootstrap.addBundle(new AssetsBundle("/com/scottwseo/commons/swagger", "/com/scottwseo/commons/swagger", "index.html", "swagger"));
+
+        bootstrap.addBundle(new AssetsBundle("/log", "/log", "tail.html", "log"));
+
+        bootstrap.addBundle(websocket);
 
     }
 
@@ -87,6 +98,8 @@ public class APIApplication extends Application<APIConfiguration> {
             environment.jersey().register(new StartupCheckListResource());
             environment.healthChecks().register("dummy", new DummyHealthCheck());
         }
+
+        websocket.addEndpoint(LogEndPoint.class);
 
     }
 
