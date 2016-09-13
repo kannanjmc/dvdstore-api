@@ -24,6 +24,7 @@
         <guice.version>4.1.0</guice.version>
         <postgresql.version>9.4-1201-jdbc41</postgresql.version>
         <togglz.version>2.3.0.Final</togglz.version>
+        <logback.contrib.version>0.1.5</logback.contrib.version>
     </properties>
 
     <dependencyManagement>
@@ -124,6 +125,17 @@
             <artifactId>togglz-console</artifactId>
             <version>${togglz.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback.contrib</groupId>
+            <artifactId>logback-json-classic</artifactId>
+            <version>${logback.contrib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback.contrib</groupId>
+            <artifactId>logback-jackson</artifactId>
+            <version>${logback.contrib.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,0 +1,3 @@
+com.scottwseo.commons.logging.JsonConsoleAppenderFactory
+io.dropwizard.logging.FileAppenderFactory
+io.dropwizard.logging.SyslogAppenderFactory
