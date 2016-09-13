@@ -21,11 +21,12 @@ public abstract class FeatureManagerProviderBase implements FeatureManagerProvid
     private StateRepository stateRepository;
 
     public FeatureManagerProviderBase() {
-        if (!Configs.DB_URL.isProvided()) {
-            this.stateRepository = new InMemoryStateRepository();
-        } else {
-            DataSource dataSource = getDataSource();
+        DataSource dataSource = getDataSource();
+
+        if (dataSource != null && Configs.DB_URL.isProvided()) {
             this.stateRepository = new JDBCStateRepository(dataSource);
+        } else {
+            this.stateRepository = new InMemoryStateRepository();
         }
     }
 

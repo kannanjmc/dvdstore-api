@@ -11,16 +11,11 @@ public class PostgreSQLDatabase {
 
     public static boolean check() {
 
-        String url = Configs.DB_URL.getString();
-        String user = Configs.DB_USER.getString();
-        String password = Configs.DB_PWD.getString();
-        String validationQuery = "/* API Health Check */ SELECT 1";
-
         // url e.g. "jdbc:postgresql://host:port/database"
-        final DBI dbi = new DBI(url + "?user=" + user + "&password=" + password);
+        final DBI dbi = new DBI(url());
 
         try (Handle handle = dbi.open()) {
-            handle.execute(validationQuery);
+            handle.execute("/* API Health Check */ SELECT 1");
             return true;
         }
         catch (UnableToObtainConnectionException e) {

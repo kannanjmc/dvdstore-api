@@ -16,15 +16,22 @@ public class CommonsFeatureManagerProvider extends FeatureManagerProviderBase {
     }
 
     public synchronized DataSource getDataSource() {
-        String url = Configs.DB_URL.getString();
-        String user = Configs.DB_USER.getString();
-        String password = Configs.DB_PWD.getString();
 
-        PGPoolingDataSource source = new PGPoolingDataSource();
-        source.setUrl(url);
-        source.setUser(user);
-        source.setPassword(password);
-        return source;
+        if (PostgreSQLDatabase.check()) {
+            String url = Configs.DB_URL.getString();
+            String user = Configs.DB_USER.getString();
+            String password = Configs.DB_PWD.getString();
+
+            PGPoolingDataSource source = new PGPoolingDataSource();
+            source.setUrl(url);
+            source.setUser(user);
+            source.setPassword(password);
+            return source;
+        }
+        else {
+            return null;
+        }
+
     }
 
 }
