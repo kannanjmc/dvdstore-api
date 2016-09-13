@@ -12,6 +12,7 @@ import com.scottwseo.commons.health.ConfigHealthCheck;
 import com.scottwseo.commons.health.DummyHealthCheck;
 import com.scottwseo.commons.help.HelpView;
 import com.scottwseo.commons.logging.LogEndPoint;
+import com.scottwseo.commons.resources.CategoryResource;
 import com.scottwseo.commons.resources.HelpResource;
 import com.scottwseo.commons.resources.StartupCheckListResource;
 import com.scottwseo.commons.togglz.TogglzBundle;
@@ -95,6 +96,10 @@ public class APIApplication extends Application<APIConfiguration> {
             environment.jersey().register(new HelpResource(new HelpView(), getName(), getAppVersion()));
 
             Injector injector = Guice.createInjector(new ServiceModule(configuration, environment));
+
+            CategoryResource categoryResource = injector.getInstance(CategoryResource.class);
+
+            environment.jersey().register(categoryResource);
 
         }
         else {
