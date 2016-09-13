@@ -1,6 +1,6 @@
 package com.scottwseo.commons.togglz;
 
-import com.scottwseo.commons.util.Config;
+import com.scottwseo.commons.util.Configs;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.manager.FeatureManagerBuilder;
 import org.togglz.core.repository.StateRepository;
@@ -21,7 +21,7 @@ public abstract class FeatureManagerProviderBase implements FeatureManagerProvid
     private StateRepository stateRepository;
 
     public FeatureManagerProviderBase() {
-        if (!Config.DB_URL.isProvided()) {
+        if (!Configs.DB_URL.isProvided()) {
             this.stateRepository = new InMemoryStateRepository();
         } else {
             DataSource dataSource = getDataSource();

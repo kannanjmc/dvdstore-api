@@ -16,9 +16,9 @@ public class CommonsFeatureManagerProvider extends FeatureManagerProviderBase {
     }
 
     public synchronized DataSource getDataSource() {
-        String url = Config.DB_URL.getString();
-        String user = Config.DB_USER.getString();
-        String password = Config.DB_PWD.getString();
+        String url = Configs.DB_URL.getString();
+        String user = Configs.DB_USER.getString();
+        String password = Configs.DB_PWD.getString();
 
         PGPoolingDataSource source = new PGPoolingDataSource();
         source.setUrl(url);

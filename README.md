@@ -4,9 +4,9 @@
 - Feature flags
 - Swagger UI
 - MetricsReporterFactory
+- Json log formatting
+- Websocket logging
 
 # Todo
 - Buy SSL cert
 - Complete swagger once data dump is ready
-- Json log formatting
-- Websocket logging

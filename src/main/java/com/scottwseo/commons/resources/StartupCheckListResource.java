@@ -1,6 +1,8 @@
 package com.scottwseo.commons.resources;
 
-import com.scottwseo.commons.util.Config;
+import com.scottwseo.commons.util.Configs;
+import com.scottwseo.commons.util.EnvVariables;
+import com.scottwseo.commons.util.PostgreSQLDatabase;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -25,19 +27,26 @@ public class StartupCheckListResource {
         Map<String, Object> message = new HashMap<>();
 
         message.put("code", "500");
-        message.put("message", "missing configuration");
+        message.put("message", "check failures");
 
-        List configs = new ArrayList();
+        List<String> s = new ArrayList<>();
 
-        if (!Config.check()) {
-            for (Config config : Config.values()) {
-                if (!config.isProvided()) {
-                    configs.add(config.key());
+        if (!EnvVariables.check()) {
+            s.addAll(EnvVariables.missing());
+        }
+
+        if (!Configs.check()) {
+            for (Configs config : Configs.values()) {
+                if (Configs.isRequired(config) && !config.isProvided()) {
+                    s.add("config [" + config.key() + "] missing");
                 }
             }
         }
+        else if (!PostgreSQLDatabase.check()) {
+            s.add("PostgreSQL connection failure. URL: " + PostgreSQLDatabase.url());
+        }
 
-        message.put("configs", configs);
+        message.put("failures", s);
 
         return message;
 

@@ -11,9 +11,9 @@ public class PostgreSQLDatabase {
 
     public static boolean check() {
 
-        String url = Config.DB_URL.getString();
-        String user = Config.DB_USER.getString();
-        String password = Config.DB_PWD.getString();
+        String url = Configs.DB_URL.getString();
+        String user = Configs.DB_USER.getString();
+        String password = Configs.DB_PWD.getString();
         String validationQuery = "/* API Health Check */ SELECT 1";
 
         // url e.g. "jdbc:postgresql://host:port/database"
@@ -27,6 +27,14 @@ public class PostgreSQLDatabase {
             return false;
         }
 
+    }
+
+    public static String url() {
+        String url = Configs.DB_URL.getString();
+        String user = Configs.DB_USER.getString();
+        String password = Configs.DB_PWD.getString();
+
+        return url + "?user=" + user + "&password=" + password;
     }
 
 }

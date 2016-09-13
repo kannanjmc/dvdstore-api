@@ -13,10 +13,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.TYPE})
 public @interface Configuration {
 
-    ConfigType type();
+    ConfigDataType type();
 
     String defaultValue() default "";
 
     String example() default "";
+
+    boolean required() default true;
 
 }

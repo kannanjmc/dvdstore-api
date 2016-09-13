@@ -1,7 +1,7 @@
 package com.scottwseo.commons.app;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.scottwseo.commons.util.Config;
+import com.scottwseo.commons.util.Configs;
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 
@@ -17,13 +17,13 @@ public class APIConfiguration extends Configuration {
 
     public DataSourceFactory getDataSourceFactory() {
 
-        if (!Config.check()) {
+        if (!Configs.check()) {
             throw new RuntimeException("Configuration is not initialized");
         }
 
-        database.setUrl(Config.DB_URL.getString());
-        database.setUser(Config.DB_USER.getString());
-        database.setPassword(Config.DB_PWD.getString());
+        database.setUrl(Configs.DB_URL.getString());
+        database.setUser(Configs.DB_USER.getString());
+        database.setPassword(Configs.DB_PWD.getString());
 
         return database;
     }

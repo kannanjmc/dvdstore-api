@@ -13,7 +13,7 @@ import com.scottwseo.commons.resources.HelpResource;
 import com.scottwseo.commons.resources.StartupCheckListResource;
 import com.scottwseo.commons.togglz.TogglzBundle;
 import com.scottwseo.commons.util.AWSCredentialsInitializerBundle;
-import com.scottwseo.commons.util.Config;
+import com.scottwseo.commons.util.Configs;
 import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
 import com.scottwseo.commons.util.cfg.ArchaiusS3ConfigSourceBundle;
@@ -85,7 +85,7 @@ public class APIApplication extends Application<APIConfiguration> {
     public void run(final APIConfiguration configuration,
                     final Environment environment) {
 
-        if (EnvVariables.check() && Config.check() && PostgreSQLDatabase.check()) {
+        if (EnvVariables.check() && Configs.check() && PostgreSQLDatabase.check()) {
 
             environment.healthChecks().register("config", new ConfigHealthCheck());
 

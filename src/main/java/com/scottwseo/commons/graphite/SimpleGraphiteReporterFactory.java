@@ -6,7 +6,7 @@ import com.codahale.metrics.ScheduledReporter;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.scottwseo.commons.util.Config;
+import com.scottwseo.commons.util.Configs;
 import com.scottwseo.commons.util.StringUtils;
 import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class SimpleGraphiteReporterFactory extends GraphiteReporterFactory {
 
     @Override
     public ScheduledReporter build(MetricRegistry registry) {
-        String host = Config.GRAPHITE_HOST.getString();
+        String host = Configs.GRAPHITE_HOST.getString();
 
         if (host == null) {
             LOG.info("graphite host name missing");
