@@ -1,9 +1,12 @@
 package com.scottwseo.commons.app;
 
 import be.tomcools.dropwizard.websocket.WebsocketBundle;
+import com.google.common.base.MoreObjects;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.netflix.config.ConfigurationManager;
 import com.scottwseo.commons.auth.AuthenticationBundle;
+import com.scottwseo.commons.cfg.ArchaiusS3ConfigSourceBundle;
 import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.commons.health.ConfigHealthCheck;
 import com.scottwseo.commons.health.DummyHealthCheck;
@@ -16,7 +19,6 @@ import com.scottwseo.commons.util.AWSCredentialsInitializerBundle;
 import com.scottwseo.commons.util.Configs;
 import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
-import com.scottwseo.commons.util.cfg.ArchaiusS3ConfigSourceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -24,6 +26,7 @@ import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import org.apache.commons.io.IOUtils;
 
 public class APIApplication extends Application<APIConfiguration> {
 
@@ -41,7 +44,7 @@ public class APIApplication extends Application<APIConfiguration> {
 
     @Override
     public String getName() {
-        return "API";
+        return ConfigurationManager.getConfigInstance().getString(Configs.APP_NAME.key(), "API");
     }
 
     private WebsocketBundle websocket = new WebsocketBundle();
@@ -89,7 +92,7 @@ public class APIApplication extends Application<APIConfiguration> {
 
             environment.healthChecks().register("config", new ConfigHealthCheck());
 
-            environment.jersey().register(new HelpResource(new HelpView()));
+            environment.jersey().register(new HelpResource(new HelpView(), getName(), getAppVersion()));
 
             Injector injector = Guice.createInjector(new ServiceModule(configuration, environment));
 
@@ -100,6 +103,31 @@ public class APIApplication extends Application<APIConfiguration> {
         }
 
         websocket.addEndpoint(LogEndPoint.class);
+
+    }
+
+    /**
+     * Override this method and call getAppVersion(appVersionFileInClassPath, defaultValue) in the overriding
+     * method for convenience
+     *
+     * @return String app version
+     */
+    protected String getAppVersion() {
+        return getAppVersion("app.version", "v1.0.0");
+    }
+
+    protected String getAppVersion(String appVersionFileInClassPath, String defaultValue) {
+
+        try {
+            ClassLoader classLoader =
+                    MoreObjects.firstNonNull(Thread.currentThread().getContextClassLoader(),
+                            HelpResource.class.getClassLoader());
+
+            return IOUtils.toString(classLoader.getResourceAsStream(appVersionFileInClassPath));
+        }
+        catch(Exception ioe) {
+            return defaultValue;
+        }
 
     }
 

@@ -1,4 +1,4 @@
-package com.scottwseo.commons.util.cfg;
+package com.scottwseo.commons.cfg;
 
 import com.netflix.config.*;
 import com.scottwseo.commons.util.EnvVariables;

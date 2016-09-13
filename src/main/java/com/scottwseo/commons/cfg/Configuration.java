@@ -1,4 +1,4 @@
-package com.scottwseo.commons.util.cfg;
+package com.scottwseo.commons.cfg;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -20,5 +20,7 @@ public @interface Configuration {
     String example() default "";
 
     boolean required() default true;
+
+    boolean masked() default false;
 
 }

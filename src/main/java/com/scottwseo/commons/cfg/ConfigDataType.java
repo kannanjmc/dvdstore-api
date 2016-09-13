@@ -1,4 +1,4 @@
-package com.scottwseo.commons.util.cfg;
+package com.scottwseo.commons.cfg;
 
 /**
  * Created by sseo on 9/6/16.

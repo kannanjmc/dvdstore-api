@@ -1,9 +1,9 @@
 package com.scottwseo.commons.util;
 
 import com.netflix.config.ConfigurationManager;
-import com.scottwseo.commons.util.cfg.Config;
-import com.scottwseo.commons.util.cfg.ConfigDataType;
-import com.scottwseo.commons.util.cfg.Configuration;
+import com.scottwseo.commons.cfg.Config;
+import com.scottwseo.commons.cfg.ConfigDataType;
+import com.scottwseo.commons.cfg.Configuration;
 
 import java.lang.annotation.Annotation;
 
@@ -20,11 +20,14 @@ public enum Configs implements Config {
     @Configuration(type= ConfigDataType.TEXT)
     DB_USER("db.user"),
 
-    @Configuration(type= ConfigDataType.TEXT)
+    @Configuration(type= ConfigDataType.TEXT, masked = true)
     DB_PWD("db.pwd"),
 
     @Configuration(type= ConfigDataType.TEXT, required = false)
-    GRAPHITE_HOST("graphite.host");
+    GRAPHITE_HOST("graphite.host"),
+
+    @Configuration(type= ConfigDataType.TEXT, required = false)
+    APP_NAME("appname");
 
     private String key;
 
@@ -85,5 +88,12 @@ public enum Configs implements Config {
         return true;
     }
 
+    public static boolean isMasked(Config config) {
+        Configuration configuration = getAnnotation(config, Configuration.class);
+        if (configuration != null) {
+            return configuration.masked();
+        }
+        return true;
+    }
 
 }
