@@ -25,11 +25,18 @@ public class PostgreSQLDatabase {
     }
 
     public static String url() {
-        String url = Configs.DB_URL.getString();
+        StringBuilder url = new StringBuilder();
         String user = Configs.DB_USER.getString();
         String password = Configs.DB_PWD.getString();
 
-        return url + "?user=" + user + "&password=" + password;
+        url.append(Configs.DB_URL.getString());
+        if (url.toString().contains("?")) {
+            url.append("&user=").append(user).append("&password=").append(password);
+        }
+        else {
+            url.append("?user=").append(user).append("&password=").append(password);
+        }
+        return url.toString();
     }
 
 }

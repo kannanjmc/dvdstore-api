@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<String> getCategories() {
 
         try (Handle h = dbi.open()) {
-            String sql = "select * from public.categories";
+            String sql = "select * from categories";
             Query query = h.createQuery(sql.toString());
 
             return query.map(StringColumnMapper.INSTANCE).list();
