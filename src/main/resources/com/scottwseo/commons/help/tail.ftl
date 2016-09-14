@@ -26,7 +26,7 @@
 <script>
     var hostname = window.location.hostname;
     var port = window.location.port;
-    var url = 'ws://' + hostname + ':' + port + '/api/v1/commons/logevent';
+    var url = 'ws://' + hostname + ':' + port + '${base}/logevent';
 
     var socket = new SimpleWebSocket(url);
     socket.connect();

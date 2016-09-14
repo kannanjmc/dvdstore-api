@@ -2,6 +2,7 @@ package com.scottwseo.dvdstore.resources;
 
 import com.google.inject.Inject;
 import com.scottwseo.dvdstore.service.CategoryService;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -30,6 +31,8 @@ public class CategoryResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public List<String> categories() {
+        LoggerFactory.getLogger(CategoryService.class).warn("testing websocket");
+
         return categoryService.getCategories();
     }
 

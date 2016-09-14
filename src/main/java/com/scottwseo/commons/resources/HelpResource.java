@@ -2,6 +2,7 @@ package com.scottwseo.commons.resources;
 
 import com.scottwseo.commons.auth.User;
 import com.scottwseo.commons.help.HelpView;
+import com.scottwseo.commons.help.TailView;
 import com.scottwseo.commons.util.Configs;
 import io.dropwizard.auth.Auth;
 
@@ -20,14 +21,17 @@ public class HelpResource {
 
     private HelpView helpView;
 
+    private TailView tailView;
+
     private String appName;
 
     private String appVersion;
 
-    public HelpResource(HelpView helpView, String appName, String appVersion) {
+    public HelpResource(HelpView helpView, TailView tailView, String appName, String appVersion) {
         this.helpView = helpView;
         this.appName = appName;
         this.appVersion =  appVersion;
+        this.tailView = tailView;
     }
 
     @GET
@@ -58,6 +62,13 @@ public class HelpResource {
 
         return meta;
 
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/log")
+    public TailView log(@Auth User user) {
+        return tailView;
     }
 
 }

@@ -9,6 +9,7 @@ import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.commons.health.ConfigHealthCheck;
 import com.scottwseo.commons.health.DummyHealthCheck;
 import com.scottwseo.commons.help.HelpView;
+import com.scottwseo.commons.help.TailView;
 import com.scottwseo.commons.logging.LogEndPoint;
 import com.scottwseo.commons.resources.HelpResource;
 import com.scottwseo.commons.resources.StartupCheckListResource;
@@ -36,11 +37,13 @@ public class CommonsApplication extends APIApplication {
     @Override
     public void run(final APIConfiguration configuration,
                     final Environment environment) {
+        String applicationContextPath = applicationContextPath(configuration);
+
         if (EnvVariables.check() && Configs.check() && PostgreSQLDatabase.check()) {
 
             environment.healthChecks().register("config", new ConfigHealthCheck());
 
-            environment.jersey().register(new HelpResource(new HelpView(applicationContextPath(configuration)), getName(), getAppVersion()));
+            environment.jersey().register(new HelpResource(new HelpView(applicationContextPath), new TailView(applicationContextPath), getName(), getAppVersion()));
 
             Injector injector = Guice.createInjector(new ServiceModule(configuration, environment));
         }

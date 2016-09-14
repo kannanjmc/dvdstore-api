@@ -5,7 +5,10 @@ logging:
 
   appenders:
     # Log warnings and errors to stderr
-    - type: ${APPENDER_TYPE:-console}
+    - type: console
+      threshold: INFO
+      target: stdout
+    - type: ${APPENDER_TYPE:-websocket}
       threshold: INFO
       target: stdout
 
