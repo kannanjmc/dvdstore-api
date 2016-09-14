@@ -31,12 +31,12 @@ public class HelpResource {
 
     private String appVersion;
 
-    public HelpResource(String applicationContextPath, String appName, String appVersion) {
+    public HelpResource(String applicationContextPath, String swaggerloc, String appName, String appVersion) {
         this.appName = appName;
         this.appVersion =  appVersion;
         this.helpView = new HelpView(applicationContextPath);
         this.tailView = new TailView(applicationContextPath);
-        this.swaggerView = new SwaggerView(applicationContextPath);
+        this.swaggerView = new SwaggerView(applicationContextPath, swaggerloc);
     }
 
     @GET

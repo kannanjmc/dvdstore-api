@@ -39,7 +39,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "${base}/dvdswagger/swagger.json";
+        url = "${base}/${swaggerloc}/swagger.json";
       }
 
       hljs.configure({

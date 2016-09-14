@@ -52,6 +52,8 @@ public abstract class APIApplication extends Application<APIConfiguration> {
 
         bootstrap.addBundle(new AssetsBundle("/com/scottwseo/commons/swagger", "/com/scottwseo/commons/swagger", "index.html", "swagger"));
 
+        bootstrap.addBundle(new AssetsBundle("/" + getSwaggerloc(),"/" + getSwaggerloc(), "swagger.json", "swagger"));
+
         bootstrap.addBundle(websocket);
 
     }
@@ -92,5 +94,7 @@ public abstract class APIApplication extends Application<APIConfiguration> {
         }
         return null;
     }
+
+    protected abstract String getSwaggerloc();
 
 }

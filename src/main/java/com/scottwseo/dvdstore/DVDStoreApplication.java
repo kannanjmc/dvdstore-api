@@ -14,7 +14,6 @@ import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
 import com.scottwseo.dvdstore.guice.DVDStoreServiceModule;
 import com.scottwseo.dvdstore.resources.CategoryResource;
-import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -31,7 +30,6 @@ public class DVDStoreApplication extends APIApplication {
     @Override
     public void initialize(final Bootstrap<APIConfiguration> bootstrap) {
         super.initialize(bootstrap);
-        bootstrap.addBundle(new AssetsBundle("/dvdswagger", "/dvdswagger", "swagger.json", "dvdswagger"));
     }
 
     @Override
@@ -44,7 +42,7 @@ public class DVDStoreApplication extends APIApplication {
 
             Injector injector = Guice.createInjector(new DVDStoreServiceModule(configuration, environment));
 
-            environment.jersey().register(new HelpResource(applicationContextPath, getName(), getAppVersion()));
+            environment.jersey().register(new HelpResource(applicationContextPath, getSwaggerloc(), getName(), getAppVersion()));
 
             CategoryResource categoryResource = injector.getInstance(CategoryResource.class);
 
@@ -66,6 +64,11 @@ public class DVDStoreApplication extends APIApplication {
     @Override
     protected String getAppVersion() {
         return getAppVersion("app.version", "v1.0.0");
+    }
+
+    @Override
+    protected String getSwaggerloc() {
+        return "apidef";
     }
 
 }

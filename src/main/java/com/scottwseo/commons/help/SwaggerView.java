@@ -9,13 +9,21 @@ public class SwaggerView extends View {
 
     private String applicationContextPath;
 
-    public SwaggerView(String applicationContextPath) {
+    private String swaggerloc;
+
+    public SwaggerView(String applicationContextPath, String swaggerloc) {
         super("/com/scottwseo/commons/swagger/index.ftl");
         this.applicationContextPath = applicationContextPath;
+        this.swaggerloc = swaggerloc;
     }
 
     public String getBase() {
         return applicationContextPath;
+    }
+
+    // swagger folder path under /resources e.g. /resources/my-swagger
+    public String getSwaggerloc() {
+        return swaggerloc;
     }
 
 }
