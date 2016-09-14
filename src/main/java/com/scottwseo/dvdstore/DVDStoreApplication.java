@@ -6,8 +6,6 @@ import com.netflix.config.ConfigurationManager;
 import com.scottwseo.commons.app.APIApplication;
 import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.commons.health.DummyHealthCheck;
-import com.scottwseo.commons.help.HelpView;
-import com.scottwseo.commons.help.TailView;
 import com.scottwseo.commons.logging.LogEndPoint;
 import com.scottwseo.commons.resources.HelpResource;
 import com.scottwseo.commons.resources.StartupCheckListResource;
@@ -16,6 +14,7 @@ import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
 import com.scottwseo.dvdstore.guice.DVDStoreServiceModule;
 import com.scottwseo.dvdstore.resources.CategoryResource;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -32,6 +31,7 @@ public class DVDStoreApplication extends APIApplication {
     @Override
     public void initialize(final Bootstrap<APIConfiguration> bootstrap) {
         super.initialize(bootstrap);
+        bootstrap.addBundle(new AssetsBundle("/dvdswagger", "/dvdswagger", "swagger.json", "dvdswagger"));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DVDStoreApplication extends APIApplication {
 
             Injector injector = Guice.createInjector(new DVDStoreServiceModule(configuration, environment));
 
-            environment.jersey().register(new HelpResource(new HelpView(applicationContextPath), new TailView(applicationContextPath), getName(), getAppVersion()));
+            environment.jersey().register(new HelpResource(applicationContextPath, getName(), getAppVersion()));
 
             CategoryResource categoryResource = injector.getInstance(CategoryResource.class);
 

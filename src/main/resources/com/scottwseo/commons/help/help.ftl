@@ -49,7 +49,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li id="overview" class="active"><a href="overview.html">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="../swagger/index.html">Swagger</a></li>
+                <li><a href="${base}/swagger">Swagger</a></li>
                 <li><a href="${base}/log">Log</a></li>
                 <li><a href="#">Export</a></li>
             </ul>

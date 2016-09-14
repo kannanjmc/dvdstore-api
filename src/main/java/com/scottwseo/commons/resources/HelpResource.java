@@ -2,9 +2,11 @@ package com.scottwseo.commons.resources;
 
 import com.scottwseo.commons.auth.User;
 import com.scottwseo.commons.help.HelpView;
+import com.scottwseo.commons.help.SwaggerView;
 import com.scottwseo.commons.help.TailView;
 import com.scottwseo.commons.util.Configs;
 import io.dropwizard.auth.Auth;
+import io.dropwizard.views.View;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -23,15 +25,18 @@ public class HelpResource {
 
     private TailView tailView;
 
+    private SwaggerView swaggerView;
+
     private String appName;
 
     private String appVersion;
 
-    public HelpResource(HelpView helpView, TailView tailView, String appName, String appVersion) {
-        this.helpView = helpView;
+    public HelpResource(String applicationContextPath, String appName, String appVersion) {
         this.appName = appName;
         this.appVersion =  appVersion;
-        this.tailView = tailView;
+        this.helpView = new HelpView(applicationContextPath);
+        this.tailView = new TailView(applicationContextPath);
+        this.swaggerView = new SwaggerView(applicationContextPath);
     }
 
     @GET
@@ -69,6 +74,13 @@ public class HelpResource {
     @Path("/log")
     public TailView log(@Auth User user) {
         return tailView;
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/swagger")
+    public View swagger(@Auth User user) {
+        return swaggerView;
     }
 
 }
