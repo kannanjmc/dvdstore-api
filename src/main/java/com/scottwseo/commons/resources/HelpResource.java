@@ -58,9 +58,11 @@ public class HelpResource {
         meta.put("appname", appName);
         List<Map> configs = new ArrayList<>();
         for (Configs config : Configs.values()) {
-            Map<Configs, String> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>();
             String value = Configs.isMasked(config) ? "******" : config.getString();
-            map.put(config, value);
+            map.put("key", config.name());
+            map.put("value", value);
+            map.put("required", "" + Configs.isRequired(config));
             configs.add(map);
         }
         meta.put("configs", configs);
