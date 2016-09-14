@@ -9,8 +9,9 @@
     <meta name="author" content="">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <base href="${base}/com/scottwseo/commons/help/" target="_blank">
 
-    <script src="./assets/websocket.js"></script>
+    <script src="websocket.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
 
 </pre>
 <div id="spinner">
-    <img alt="" src="./assets/spinner.gif">
+    <img alt="" src="spinner.gif">
 </div>
 
 
