@@ -3,8 +3,6 @@ package com.scottwseo.commons.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.scottwseo.commons.app.APIConfiguration;
-import com.scottwseo.commons.service.CategoryService;
-import com.scottwseo.commons.service.CategoryServiceImpl;
 import io.dropwizard.db.ManagedDataSource;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
@@ -14,8 +12,8 @@ import javax.sql.DataSource;
 
 public class ServiceModule extends AbstractModule {
 
-    private APIConfiguration configuration;
-    private Environment environment;
+    protected APIConfiguration configuration;
+    protected Environment environment;
 
     public ServiceModule(APIConfiguration configuration, Environment environment) {
         this.configuration = configuration;
@@ -24,7 +22,6 @@ public class ServiceModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(CategoryService.class).to(CategoryServiceImpl.class);
     }
 
     @Provides

@@ -1,4 +1,4 @@
-package com.scottwseo.commons.service;
+package com.scottwseo.dvdstore.service;
 
 import java.util.List;
 

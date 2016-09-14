@@ -1,4 +1,4 @@
-package com.scottwseo.commons.service;
+package com.scottwseo.dvdstore.service;
 
 import com.google.inject.Inject;
 import org.skife.jdbi.v2.DBI;

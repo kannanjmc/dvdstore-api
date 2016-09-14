@@ -5,7 +5,7 @@ logging:
 
   appenders:
     # Log warnings and errors to stderr
-    - type: websocket
+    - type: ${APPENDER_TYPE:-console}
       threshold: INFO
       target: stdout
 
@@ -13,8 +13,8 @@ logging:
 server:
   adminMinThreads: 1
   adminMaxThreads: 64
-  adminContextPath: /api/v1/commons
-  applicationContextPath: /api/v1/commons
+  adminContextPath: /api/v1/dvdstore
+  applicationContextPath: /api/v1/dvdstore
   applicationConnectors:
     - type: http
       port: 8080

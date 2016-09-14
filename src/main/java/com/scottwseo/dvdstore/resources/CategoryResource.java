@@ -1,7 +1,7 @@
-package com.scottwseo.commons.resources;
+package com.scottwseo.dvdstore.resources;
 
 import com.google.inject.Inject;
-import com.scottwseo.commons.service.CategoryService;
+import com.scottwseo.dvdstore.service.CategoryService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
