@@ -3,7 +3,7 @@
   "info": {
     "description": "This is a demo online store.",
     "version": "1.0.0",
-    "title": "Pet Store",
+    "title": "Product Store",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
       "email": "scott.seo@gmail.com"
@@ -17,8 +17,8 @@
   "basePath": "/v2",
   "tags": [
     {
-      "name": "pet",
-      "description": "Everything about your Pets",
+      "name": "product",
+      "description": "Everything about your products",
       "externalDocs": {
         "description": "Find out more",
         "url": "http://swagger.io"
@@ -26,11 +26,11 @@
     },
     {
       "name": "store",
-      "description": "Access to Petstore orders"
+      "description": "Access to DVD Store orders"
     },
     {
-      "name": "user",
-      "description": "Operations about user",
+      "name": "customer",
+      "description": "Operations about customer",
       "externalDocs": {
         "description": "Find out more about our store",
         "url": "http://swagger.io"
@@ -41,14 +41,14 @@
     "http"
   ],
   "paths": {
-    "/pet": {
+    "/product": {
       "post": {
         "tags": [
-          "pet"
+          "product"
         ],
-        "summary": "Add a new pet to the store",
+        "summary": "Add a new product to the store",
         "description": "",
-        "operationId": "addPet",
+        "operationId": "addProduct",
         "consumes": [
           "application/json",
           "application/xml"
@@ -61,10 +61,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Pet object that needs to be added to the store",
+            "description": "Product object that needs to be added to the store",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "$ref": "#/definitions/Product"
             }
           }
         ],
@@ -84,11 +84,11 @@
       },
       "put": {
         "tags": [
-          "pet"
+          "product"
         ],
         "summary": "Update an existing pet",
         "description": "",
-        "operationId": "updatePet",
+        "operationId": "updateProduct",
         "consumes": [
           "application/json",
           "application/xml"
@@ -101,10 +101,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Pet object that needs to be added to the store",
+            "description": "Product object that needs to be added to the store",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "$ref": "#/definitions/Product"
             }
           }
         ],
@@ -113,7 +113,7 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Pet not found"
+            "description": "Product not found"
           },
           "405": {
             "description": "Validation exception"
@@ -129,14 +129,14 @@
         ]
       }
     },
-    "/pet/findByStatus": {
+    "/product/findByStatus": {
       "get": {
         "tags": [
-          "pet"
+          "product"
         ],
-        "summary": "Finds Pets by status",
+        "summary": "Finds Products by status",
         "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findPetsByStatus",
+        "operationId": "findProductsByStatus",
         "produces": [
           "application/xml",
           "application/json"
@@ -166,7 +166,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Pet"
+                "$ref": "#/definitions/Product"
               }
             }
           },
@@ -184,14 +184,14 @@
         ]
       }
     },
-    "/pet/findByTags": {
+    "/product/findByTags": {
       "get": {
         "tags": [
-          "pet"
+          "product"
         ],
-        "summary": "Finds Pets by tags",
+        "summary": "Finds Products by tags",
         "description": "Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-        "operationId": "findPetsByTags",
+        "operationId": "findProductsByTags",
         "produces": [
           "application/xml",
           "application/json"
@@ -215,7 +215,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Pet"
+                "$ref": "#/definitions/Product"
               }
             }
           },
@@ -234,14 +234,14 @@
         "deprecated": true
       }
     },
-    "/pet/{petId}": {
+    "/product/{petId}": {
       "get": {
         "tags": [
-          "pet"
+          "product"
         ],
         "summary": "Find pet by ID",
         "description": "Returns a single pet",
-        "operationId": "getPetById",
+        "operationId": "getProductById",
         "produces": [
           "application/xml",
           "application/json"
@@ -260,14 +260,14 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "$ref": "#/definitions/Product"
             }
           },
           "400": {
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Pet not found"
+            "description": "Product not found"
           }
         },
         "security": [
@@ -278,11 +278,11 @@
       },
       "post": {
         "tags": [
-          "pet"
+          "product"
         ],
         "summary": "Updates a pet in the store with form data",
         "description": "",
-        "operationId": "updatePetWithForm",
+        "operationId": "updateProductWithForm",
         "consumes": [
           "application/x-www-form-urlencoded"
         ],
@@ -330,11 +330,11 @@
       },
       "delete": {
         "tags": [
-          "pet"
+          "product"
         ],
         "summary": "Deletes a pet",
         "description": "",
-        "operationId": "deletePet",
+        "operationId": "deleteProduct",
         "produces": [
           "application/xml",
           "application/json"
@@ -349,7 +349,7 @@
           {
             "name": "petId",
             "in": "path",
-            "description": "Pet id to delete",
+            "description": "Product id to delete",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -360,7 +360,7 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Pet not found"
+            "description": "Product not found"
           }
         },
         "security": [
@@ -373,10 +373,10 @@
         ]
       }
     },
-    "/pet/{petId}/uploadImage": {
+    "/product/{petId}/uploadImage": {
       "post": {
         "tags": [
-          "pet"
+          "product"
         ],
         "summary": "uploads an image",
         "description": "",
@@ -570,7 +570,7 @@
     "/user": {
       "post": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
@@ -600,7 +600,7 @@
     "/user/createWithArray": {
       "post": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Creates list of users with given input array",
         "description": "",
@@ -633,7 +633,7 @@
     "/user/createWithList": {
       "post": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Creates list of users with given input array",
         "description": "",
@@ -666,7 +666,7 @@
     "/user/login": {
       "get": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Logs user into the system",
         "description": "",
@@ -719,7 +719,7 @@
     "/user/logout": {
       "get": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Logs out current logged in user session",
         "description": "",
@@ -739,7 +739,7 @@
     "/user/{username}": {
       "get": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Get user by user name",
         "description": "",
@@ -774,7 +774,7 @@
       },
       "put": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Updated user",
         "description": "This can only be done by the logged in user.",
@@ -812,7 +812,7 @@
       },
       "delete": {
         "tags": [
-          "user"
+          "customer"
         ],
         "summary": "Delete user",
         "description": "This can only be done by the logged in user.",
@@ -844,7 +844,7 @@
   "securityDefinitions": {
     "petstore_auth": {
       "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "authorizationUrl": "http://productstore.swagger.io/oauth/dialog",
       "flow": "implicit",
       "scopes": {
         "write:pets": "modify pets in your account",
@@ -975,7 +975,7 @@
         }
       }
     },
-    "Pet": {
+    "Product": {
       "type": "object",
       "required": [
         "name",
@@ -1024,7 +1024,7 @@
         }
       },
       "xml": {
-        "name": "Pet"
+        "name": "Product"
       }
     }
   },

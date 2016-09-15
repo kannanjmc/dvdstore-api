@@ -41,7 +41,7 @@ public class CommonsApplication extends APIApplication {
 
             environment.healthChecks().register("config", new ConfigHealthCheck());
 
-            environment.jersey().register(new HelpResource(applicationContextPath, getSwaggerloc(), getName(), getAppVersion()));
+            environment.jersey().register(new HelpResource(applicationContextPath, getName(), getAppVersion()));
 
             Injector injector = Guice.createInjector(new ServiceModule(configuration, environment));
         }
@@ -61,10 +61,6 @@ public class CommonsApplication extends APIApplication {
     @Override
     protected String getAppVersion() {
         return getAppVersion("app.version", "v1.0.0");
-    }
-
-    protected String getSwaggerloc() {
-        return "/";
     }
 
 }
