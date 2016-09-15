@@ -14,6 +14,7 @@ public class ServiceModule extends AbstractModule {
 
     protected APIConfiguration configuration;
     protected Environment environment;
+    private DBI dbi;
 
     public ServiceModule(APIConfiguration configuration, Environment environment) {
         this.configuration = configuration;
@@ -33,8 +34,12 @@ public class ServiceModule extends AbstractModule {
 
     @Provides
     public DBI provideDBI() {
-        DBIFactory factory = new DBIFactory();
-        return factory.build(environment, configuration.getDataSourceFactory(), "dbi");
+        if (dbi == null) {
+            DBIFactory factory = new DBIFactory();
+            this.dbi = factory.build(environment, configuration.getDataSourceFactory(), "dbi");
+        }
+
+        return dbi;
     }
 
 }

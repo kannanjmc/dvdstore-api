@@ -112,7 +112,7 @@
           }
         ],
         "responses": {
-          "405": {
+          "400": {
             "description": "Invalid input"
           }
         },
