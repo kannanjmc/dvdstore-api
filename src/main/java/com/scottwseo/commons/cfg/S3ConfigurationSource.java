@@ -6,6 +6,7 @@ import com.scottwseo.commons.util.S3Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -32,12 +33,15 @@ public class S3ConfigurationSource implements PolledConfigurationSource {
         Map<String, Object> configs = new HashMap<String, Object>();
 
         try {
-            Properties properties = new Properties();
-            properties.load(S3Util.get(bucket, key));
+            InputStream s = S3Util.get(bucket, key);
+            if (s != null) {
+                Properties properties = new Properties();
+                properties.load(s);
 
-            for (String key : properties.stringPropertyNames()) {
-                String value = (String) properties.get(key);
-                configs.put(key, value);
+                for (String key : properties.stringPropertyNames()) {
+                    String value = (String) properties.get(key);
+                    configs.put(key, value);
+                }
             }
 
             return configs;

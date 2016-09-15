@@ -7,12 +7,18 @@ import com.scottwseo.commons.help.TailView;
 import com.scottwseo.commons.util.Configs;
 import io.dropwizard.auth.Auth;
 import io.dropwizard.views.View;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +66,8 @@ public class HelpResource {
         for (Configs config : Configs.values()) {
             Map<String, String> map = new HashMap<>();
             String value = Configs.isMasked(config) ? "******" : config.getString();
-            map.put("key", config.name());
+            map.put("name", config.name());
+            map.put("key", config.key());
             map.put("value", value);
             map.put("required", "" + Configs.isRequired(config));
             configs.add(map);
@@ -83,6 +90,50 @@ public class HelpResource {
     @Path("/swagger")
     public View swagger(@Auth User user) {
         return swaggerView;
+    }
+
+    @GET
+    @Path("/metrics")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response metrics(@Context UriInfo uriInfo) {
+
+        String baseUri = uriInfo.getBaseUri().toString();
+
+        // the internal call should not deal network firewall, so localhost is always safe
+        String host = "http://localhost";
+
+        String metrics = get("http://localhost:8081/api/v1/dvdstore/metrics");
+
+        Map json = new HashMap<>();
+        json.put("baseUri", baseUri);
+        json.put("host", host);
+        json.put("metrics", metrics);
+
+        return Response.ok().entity(metrics).build();
+    }
+
+    protected String get(String url) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .build();
+
+        String responseBody = null;
+        try {
+            okhttp3.Response response = client.newCall(request).execute();
+
+            responseBody = response.body().string();
+
+        } catch (IOException e) {
+        }
+
+        return responseBody;
     }
 
 }

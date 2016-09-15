@@ -40,7 +40,7 @@ public class S3Util {
         } catch (AmazonServiceException ase) {
             log(ase);
         } catch (AmazonClientException ace) {
-            loge(ace);
+            // loge(ace);
         }
         return null;
     }

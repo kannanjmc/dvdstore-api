@@ -26,6 +26,7 @@
         <togglz.version>2.3.0.Final</togglz.version>
         <logback.contrib.version>0.1.5</logback.contrib.version>
         <jetty.version>9.3.9.v20160517</jetty.version>
+        <okhttp.version>3.4.1</okhttp.version>
     </properties>
 
     <dependencyManagement>
@@ -161,6 +162,11 @@
                     <artifactId>javax-websocket-client-impl</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
         </dependency>
 
     </dependencies>
