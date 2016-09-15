@@ -13,11 +13,11 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "petstore.scottwseo.com",
-  "basePath": "/v2",
+  "host": "dvdstore.scottwseo.com",
+  "basePath": "/api/v1/dvdstore",
   "tags": [
     {
-      "name": "product",
+      "name": "products",
       "description": "Everything about your products",
       "externalDocs": {
         "description": "Find out more",
@@ -41,10 +41,55 @@
     "http"
   ],
   "paths": {
-    "/product": {
+    "/products": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Lists products",
+        "description": "Returns a list of products",
+        "operationId": "listProducts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Starting index of page",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Size of array",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Products"
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
       "post": {
         "tags": [
-          "product"
+          "products"
         ],
         "summary": "Add a new product to the store",
         "description": "",
@@ -64,7 +109,7 @@
             "description": "Product object that needs to be added to the store",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Product"
+              "$ref": "#/definitions/ProductCreate"
             }
           }
         ],
@@ -75,18 +120,18 @@
         },
         "security": [
           {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
+            "dvdstore_auth": [
+              "write:products",
+              "read:products"
             ]
           }
         ]
       },
       "put": {
         "tags": [
-          "product"
+          "products"
         ],
-        "summary": "Update an existing pet",
+        "summary": "Update an existing product",
         "description": "",
         "operationId": "updateProduct",
         "consumes": [
@@ -104,7 +149,7 @@
             "description": "Product object that needs to be added to the store",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Product"
+              "$ref": "#/definitions/ProductCreate"
             }
           }
         ],
@@ -121,136 +166,30 @@
         },
         "security": [
           {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
+            "dvdstore_auth": [
+              "write:products",
+              "read:products"
             ]
           }
         ]
       }
     },
-    "/product/findByStatus": {
+    "/product/{productId}": {
       "get": {
         "tags": [
-          "product"
+          "products"
         ],
-        "summary": "Finds Products by status",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findProductsByStatus",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "available",
-                "pending",
-                "sold"
-              ],
-              "default": "available"
-            },
-            "collectionFormat": "multi"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Product"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid status value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/product/findByTags": {
-      "get": {
-        "tags": [
-          "product"
-        ],
-        "summary": "Finds Products by tags",
-        "description": "Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-        "operationId": "findProductsByTags",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "Tags to filter by",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Product"
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid tag value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ],
-        "deprecated": true
-      }
-    },
-    "/product/{petId}": {
-      "get": {
-        "tags": [
-          "product"
-        ],
-        "summary": "Find pet by ID",
-        "description": "Returns a single pet",
+        "summary": "Find product by ID",
+        "description": "Returns a single product",
         "operationId": "getProductById",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
           {
-            "name": "petId",
+            "name": "productId",
             "in": "path",
-            "description": "ID of pet to return",
+            "description": "ID of product to return",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -260,7 +199,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Product"
+              "$ref": "#/definitions/ProductCreate"
             }
           },
           "400": {
@@ -276,63 +215,11 @@
           }
         ]
       },
-      "post": {
-        "tags": [
-          "product"
-        ],
-        "summary": "Updates a pet in the store with form data",
-        "description": "",
-        "operationId": "updateProductWithForm",
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet that needs to be updated",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "description": "Updated name of the pet",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "status",
-            "in": "formData",
-            "description": "Updated status of the pet",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "405": {
-            "description": "Invalid input"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      },
       "delete": {
         "tags": [
-          "product"
+          "products"
         ],
-        "summary": "Deletes a pet",
+        "summary": "Deletes a product",
         "description": "",
         "operationId": "deleteProduct",
         "produces": [
@@ -347,7 +234,7 @@
             "type": "string"
           },
           {
-            "name": "petId",
+            "name": "productId",
             "in": "path",
             "description": "Product id to delete",
             "required": true,
@@ -365,65 +252,9 @@
         },
         "security": [
           {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/product/{petId}/uploadImage": {
-      "post": {
-        "tags": [
-          "product"
-        ],
-        "summary": "uploads an image",
-        "description": "",
-        "operationId": "uploadFile",
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet to update",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "additionalMetadata",
-            "in": "formData",
-            "description": "Additional data to pass to server",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "file",
-            "in": "formData",
-            "description": "file to upload",
-            "required": false,
-            "type": "file"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/ApiResponse"
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
+            "dvdstore_auth": [
+              "write:products",
+              "read:products"
             ]
           }
         ]
@@ -434,7 +265,7 @@
         "tags": [
           "store"
         ],
-        "summary": "Returns pet inventories by status",
+        "summary": "Returns product inventories by status",
         "description": "Returns a map of status codes to quantities",
         "operationId": "getInventory",
         "produces": [
@@ -465,7 +296,7 @@
         "tags": [
           "store"
         ],
-        "summary": "Place an order for a pet",
+        "summary": "Place an order for a product",
         "description": "",
         "operationId": "placeOrder",
         "produces": [
@@ -476,7 +307,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "order placed for purchasing the pet",
+            "description": "order placed for purchasing the product",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Order"
@@ -512,7 +343,7 @@
           {
             "name": "orderId",
             "in": "path",
-            "description": "ID of pet that needs to be fetched",
+            "description": "ID of product that needs to be fetched",
             "required": true,
             "type": "integer",
             "maximum": 10.0,
@@ -842,13 +673,13 @@
     }
   },
   "securityDefinitions": {
-    "petstore_auth": {
+    "dvdstore_auth": {
       "type": "oauth2",
       "authorizationUrl": "http://productstore.swagger.io/oauth/dialog",
       "flow": "implicit",
       "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
+        "write:products": "modify products in your account",
+        "read:products": "read your products"
       }
     },
     "api_key": {
@@ -858,6 +689,130 @@
     }
   },
   "definitions": {
+    "Pagination": {
+      "properties": {
+        "start": {
+          "type": "integer",
+          "format": "int64",
+          "description": "requested starting index of page"
+        },
+        "resultSize": {
+          "type": "integer",
+          "format": "int64",
+          "description": "number of items per page"
+        },
+        "next": {
+          "type": "string",
+          "format": "url",
+          "description": "url to next page"
+        },
+        "prev": {
+          "type": "string",
+          "format": "url",
+          "description": "url to previous page"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "total number of items"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int64",
+          "description": "total number of pages"
+        }
+      }
+    },
+
+    "Products": {
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/Pagination"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        }
+      }
+    },
+    "ProductCreate": {
+      "type": "object",
+      "required": [
+        "category",
+        "title",
+        "actor",
+        "price",
+        "common_prod_id"
+      ],
+      "properties": {
+        "prod_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "category": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1"
+        },
+        "title": {
+          "type": "string",
+          "example": "star wars"
+        },
+        "actor": {
+          "type": "string",
+          "example": "harrison ford"
+        },
+        "price": {
+          "type": "number",
+          "example": "10.99"
+        },
+        "common_prod_id": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1"
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "required": [
+        "category",
+        "title",
+        "actor",
+        "price",
+        "common_prod_id"
+      ],
+      "properties": {
+        "prod_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "category": {
+          "type": "string",
+          "example": "Action"
+        },
+        "title": {
+          "type": "string",
+          "example": "star wars"
+        },
+        "actor": {
+          "type": "string",
+          "example": "harrison ford"
+        },
+        "price": {
+          "type": "number",
+          "example": "10.99"
+        },
+        "common_prod_id": {
+          "type": "integer",
+          "format": "int64",
+          "example": "1"
+        }
+      }
+    },
+
     "Order": {
       "type": "object",
       "properties": {
@@ -865,7 +820,7 @@
           "type": "integer",
           "format": "int64"
         },
-        "petId": {
+        "productId": {
           "type": "integer",
           "format": "int64"
         },
@@ -974,59 +929,8 @@
           "type": "string"
         }
       }
-    },
-    "Product": {
-      "type": "object",
-      "required": [
-        "name",
-        "photoUrls"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "category": {
-          "$ref": "#/definitions/Category"
-        },
-        "name": {
-          "type": "string",
-          "example": "doggie"
-        },
-        "photoUrls": {
-          "type": "array",
-          "xml": {
-            "name": "photoUrl",
-            "wrapped": true
-          },
-          "items": {
-            "type": "string"
-          }
-        },
-        "tags": {
-          "type": "array",
-          "xml": {
-            "name": "tag",
-            "wrapped": true
-          },
-          "items": {
-            "$ref": "#/definitions/Tag"
-          }
-        },
-        "status": {
-          "type": "string",
-          "description": "pet status in the store",
-          "enum": [
-            "available",
-            "pending",
-            "sold"
-          ]
-        }
-      },
-      "xml": {
-        "name": "Product"
-      }
     }
+
   },
   "externalDocs": {
     "description": "Find out more about Swagger",
