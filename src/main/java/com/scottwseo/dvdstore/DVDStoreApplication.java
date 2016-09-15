@@ -14,6 +14,7 @@ import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
 import com.scottwseo.dvdstore.guice.DVDStoreServiceModule;
 import com.scottwseo.dvdstore.resources.CategoryResource;
+import com.scottwseo.dvdstore.resources.ProductsResource;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -26,6 +27,10 @@ public class DVDStoreApplication extends APIApplication {
         }
         new DVDStoreApplication().run(args);
     }
+
+    private Injector injector;
+
+    private Environment environment;
 
     @Override
     public void initialize(final Bootstrap<APIConfiguration> bootstrap) {
@@ -40,16 +45,17 @@ public class DVDStoreApplication extends APIApplication {
 
         if (EnvVariables.check() && Configs.check() && PostgreSQLDatabase.check()) {
 
-            Injector injector = Guice.createInjector(new DVDStoreServiceModule(configuration, environment));
+            this.injector = Guice.createInjector(new DVDStoreServiceModule(configuration, environment));
+            this.environment = environment;
 
-            environment.jersey().register(new HelpResource(applicationContextPath, getName(), getAppVersion()));
+            registerResource(new HelpResource(applicationContextPath, getName(), getAppVersion()));
 
-            CategoryResource categoryResource = injector.getInstance(CategoryResource.class);
+            registerResource(instanceOf(CategoryResource.class));
 
-            environment.jersey().register(categoryResource);
+            registerResource(instanceOf(ProductsResource.class));
         }
         else {
-            environment.jersey().register(new StartupCheckListResource());
+            registerResource(new StartupCheckListResource());
             environment.healthChecks().register("dummy", new DummyHealthCheck());
         }
 
@@ -64,6 +70,14 @@ public class DVDStoreApplication extends APIApplication {
     @Override
     protected String getAppVersion() {
         return getAppVersion("app.version", "v1.0.0");
+    }
+
+    private <T> T instanceOf(Class clazz) {
+        return (T) injector.getInstance(clazz);
+    }
+
+    private void registerResource(Object o) {
+        this.environment.jersey().register(o);
     }
 
 }

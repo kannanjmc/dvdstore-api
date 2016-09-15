@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "dvdstore.scottwseo.com",
+  "host": "localhost:8080",
   "basePath": "/api/v1/dvdstore",
   "tags": [
     {
@@ -95,11 +95,9 @@
         "description": "",
         "operationId": "addProduct",
         "consumes": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -135,11 +133,9 @@
         "description": "",
         "operationId": "updateProduct",
         "consumes": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -174,7 +170,7 @@
         ]
       }
     },
-    "/product/{productId}": {
+    "/products/{productId}": {
       "get": {
         "tags": [
           "products"

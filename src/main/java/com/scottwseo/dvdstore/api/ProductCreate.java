@@ -1,13 +1,15 @@
 package com.scottwseo.dvdstore.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.Objects;
-
 
 /**
  * ProductCreate
  */
 public class ProductCreate {
+
     private Long prodId = null;
 
     private Long category = null;
@@ -30,6 +32,7 @@ public class ProductCreate {
      *
      * @return prodId
      **/
+    @JsonProperty("prod_id")
     public Long getProdId() {
         return prodId;
     }
@@ -48,6 +51,7 @@ public class ProductCreate {
      *
      * @return category
      **/
+    @JsonProperty("category")
     public Long getCategory() {
         return category;
     }
@@ -66,6 +70,7 @@ public class ProductCreate {
      *
      * @return title
      **/
+    @JsonProperty("title")
     public String getTitle() {
         return title;
     }
@@ -84,6 +89,7 @@ public class ProductCreate {
      *
      * @return actor
      **/
+    @JsonProperty("actor")
     public String getActor() {
         return actor;
     }
@@ -102,6 +108,7 @@ public class ProductCreate {
      *
      * @return price
      **/
+    @JsonProperty("price")
     public BigDecimal getPrice() {
         return price;
     }
@@ -120,6 +127,7 @@ public class ProductCreate {
      *
      * @return commonProdId
      **/
+    @JsonProperty("common_prod_id")
     public Long getCommonProdId() {
         return commonProdId;
     }

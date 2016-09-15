@@ -4,6 +4,8 @@ import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.dvdstore.service.CategoryService;
 import com.scottwseo.dvdstore.service.CategoryServiceImpl;
+import com.scottwseo.dvdstore.service.ProductsService;
+import com.scottwseo.dvdstore.service.ProductsServiceImpl;
 import io.dropwizard.setup.Environment;
 
 public class DVDStoreServiceModule extends ServiceModule {
@@ -15,6 +17,7 @@ public class DVDStoreServiceModule extends ServiceModule {
     @Override
     protected void configure() {
         bind(CategoryService.class).to(CategoryServiceImpl.class);
+        bind(ProductsService.class).to(ProductsServiceImpl.class);
     }
 
 }
