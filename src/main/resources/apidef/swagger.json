@@ -690,32 +690,38 @@
         "start": {
           "type": "integer",
           "format": "int64",
-          "description": "requested starting index of page"
+          "description": "requested starting index of page",
+          "example": 1
         },
         "resultSize": {
           "type": "integer",
           "format": "int64",
-          "description": "number of items per page"
+          "description": "number of items per page",
+          "example": 10
         },
         "next": {
           "type": "string",
           "format": "url",
-          "description": "url to next page"
+          "description": "url to next page",
+          "example": "http://scottwseo.com/api/v1/dvdstore/products?start=3&size=10"
         },
         "prev": {
           "type": "string",
           "format": "url",
-          "description": "url to previous page"
+          "description": "url to previous page",
+          "example": "http://scottwseo.com/api/v1/dvdstore/products?start=1&size=10"
         },
         "total": {
           "type": "integer",
           "format": "int64",
-          "description": "total number of items"
+          "description": "total number of items",
+          "example": 1000
         },
         "totalPages": {
           "type": "integer",
           "format": "int64",
-          "description": "total number of pages"
+          "description": "total number of pages",
+          "example": 100
         }
       }
     },
@@ -750,7 +756,7 @@
         "category": {
           "type": "integer",
           "format": "int64",
-          "example": "1"
+          "example": 1
         },
         "title": {
           "type": "string",
@@ -762,12 +768,12 @@
         },
         "price": {
           "type": "number",
-          "example": "10.99"
+          "example": 10.99
         },
         "common_prod_id": {
           "type": "integer",
           "format": "int64",
-          "example": "1"
+          "example": 1
         }
       }
     },
