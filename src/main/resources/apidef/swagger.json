@@ -77,8 +77,11 @@
               "$ref": "#/definitions/Products"
             }
           },
-          "404": {
-            "description": "Product not found"
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server Error"
           }
         },
         "security": [

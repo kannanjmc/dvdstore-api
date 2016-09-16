@@ -34,15 +34,14 @@ public class ProductsServiceImpl implements ProductsService {
         try (Handle h = dbi.open()) {
             sql = "INSERT\n" +
                     "INTO\n" +
-                    "    public.products\n" +
+                    "    products\n" +
                     "    (\n" +
                     "        category,\n" +
                     "        title,\n" +
                     "        actor,\n" +
                     "        price,\n" +
                     "        special,\n" +
-                    "        common_prod_id,\n" +
-                    "        special\n" +
+                    "        common_prod_id\n" +
                     "    )\n" +
                     "    VALUES\n" +
                     "    (\n" +
@@ -51,17 +50,15 @@ public class ProductsServiceImpl implements ProductsService {
                     "        :actor,\n" +
                     "        :price,\n" +
                     "        :special,\n" +
-                    "        :common_prod_id,\n" +
-                    "        :special\n" +
+                    "        :common_prod_id\n" +
                     "    )";
             long prodId = h.createStatement(sql.toString())
             .bind("category", product.getCategory())
             .bind("title", product.getTitle())
             .bind("actor", product.getActor())
             .bind("price", product.getPrice())
-            .bind("special", 1)
+            .bind("special", product.isSpecial() ? 1 : 0)
             .bind("common_prod_id", product.getCommonProdId())
-            .bind("special", product.isSpecial())
             .executeAndReturnGeneratedKeys(LongColumnMapper.PRIMITIVE).first();
 
             return new ProductCreate()
@@ -71,11 +68,9 @@ public class ProductsServiceImpl implements ProductsService {
                     .title(product.getTitle())
                     .price(product.getPrice())
                     .commonProdId(product.getCommonProdId());
-
-            // return new ProductCreate().error(map("products.addproduct.failed", "Please check your input", "product", product));
         }
         catch (Exception e) {
-            Map error = warn("products.addproduct.failed", "Please check your input", "product", product);
+            Map error = warn("products.addproduct.failed", e.getMessage(), "product", product);
             return new ProductCreate().error(error);
         }
 
@@ -90,7 +85,7 @@ public class ProductsServiceImpl implements ProductsService {
 
             long offset = (start == 1 || start == 0) ? 0 : (size * size) - size;
 
-            String sql = "select * from public.products offset :offset limit :limit";
+            String sql = "select * from products offset :offset limit :limit";
 
             products = h.createQuery(sql)
                 .bind("offset", offset)

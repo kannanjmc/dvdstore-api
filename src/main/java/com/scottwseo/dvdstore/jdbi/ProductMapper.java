@@ -18,6 +18,7 @@ public class ProductMapper implements ResultSetMapper<Product> {
 
         try {
             product.actor(r.getString("actor"))
+                    .title(r.getString("title"))
                     .category(r.getLong("category"))
                     .commonProdId(r.getLong("common_prod_id"))
                     .price(r.getBigDecimal("price"))

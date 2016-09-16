@@ -47,8 +47,11 @@ public class ProductsResource {
                                  @Context UriInfo uriInfo) {
 
         Products products = productsService.listProducts(start, size, securityContext, uriInfo.getBaseUri().toString());
+        if (products.error() != null) {
+            return Response.status(400).entity(products.error()).build();
+        }
 
-        return null;
+        return Response.ok().entity(products).build();
     }
 
     @PUT
