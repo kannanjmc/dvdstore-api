@@ -10,7 +10,7 @@ public interface ProductsService {
 
     ProductCreate addProduct(ProductCreate post, SecurityContext securityContext);
 
-    Products listProducts(Long start, Long size, SecurityContext securityContext);
+    Products listProducts(Long start, Long size, SecurityContext securityContext, String baseUri);
 
     ProductCreate updateProduct(ProductCreate post, SecurityContext securityContext);
 

@@ -3,6 +3,7 @@ package com.scottwseo.dvdstore.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -21,6 +22,17 @@ public class ProductCreate {
     private BigDecimal price = null;
 
     private Long commonProdId = null;
+
+    private Map error = null;
+
+    public <T> T error(Map error) {
+        this.error = error;
+        return (T) this;
+    }
+
+    public Map error() {
+        return this.error;
+    }
 
     public ProductCreate prodId(Long prodId) {
         this.prodId = prodId;

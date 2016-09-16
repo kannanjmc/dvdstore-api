@@ -7,10 +7,7 @@ import com.scottwseo.dvdstore.api.Products;
 import com.scottwseo.dvdstore.service.ProductsService;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.*;
 
 /**
  * Created by sseo on 9/6/16.
@@ -35,6 +32,10 @@ public class ProductsResource {
 
         ProductCreate product = productsService.addProduct(post, securityContext);
 
+        if (product.error() != null) {
+            return Response.status(400).entity(product.error()).build();
+        }
+
         return Response.ok().entity(product).build();
     }
 
@@ -42,9 +43,10 @@ public class ProductsResource {
     @Produces({ "application/json" })
     public Response listProducts(@QueryParam("start") Long start,
                                  @QueryParam("size") Long size,
-                                 @Context SecurityContext securityContext) {
+                                 @Context SecurityContext securityContext,
+                                 @Context UriInfo uriInfo) {
 
-        Products products = productsService.listProducts(start,size,securityContext);
+        Products products = productsService.listProducts(start, size, securityContext, uriInfo.getBaseUri().toString());
 
         return null;
     }

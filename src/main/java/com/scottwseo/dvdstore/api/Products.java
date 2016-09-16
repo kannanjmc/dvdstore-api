@@ -2,6 +2,7 @@ package com.scottwseo.dvdstore.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -13,6 +14,17 @@ public class Products {
     private Pagination pagination = null;
 
     private List<Product> items = new ArrayList<Product>();
+
+    private Map error = null;
+
+    public <T> T error(Map error) {
+        this.error = error;
+        return (T) this;
+    }
+
+    public Map error() {
+        return this.error;
+    }
 
     public Products pagination(Pagination pagination) {
         this.pagination = pagination;

@@ -6,9 +6,16 @@ import com.scottwseo.dvdstore.api.ProductCreate;
 import com.scottwseo.dvdstore.api.Products;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
+import org.skife.jdbi.v2.util.IntegerColumnMapper;
 import org.skife.jdbi.v2.util.LongColumnMapper;
 
 import javax.ws.rs.core.SecurityContext;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static com.scottwseo.commons.util.ResourcesUtil.paginate;
+import static com.scottwseo.commons.util.ResourcesUtil.warn;
 
 public class ProductsServiceImpl implements ProductsService {
 
@@ -22,8 +29,9 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public ProductCreate addProduct(ProductCreate product, SecurityContext securityContext) {
 
+        String sql = null;
         try (Handle h = dbi.open()) {
-            String sql = "INSERT\n" +
+            sql = "INSERT\n" +
                     "INTO\n" +
                     "    public.products\n" +
                     "    (\n" +
@@ -59,15 +67,32 @@ public class ProductsServiceImpl implements ProductsService {
                     .title(product.getTitle())
                     .price(product.getPrice())
                     .commonProdId(product.getCommonProdId());
+
+            //return new ProductCreate().error(asMap("products.addproduct.failed", "Please check your input", "product", product));
         }
         catch (Exception e) {
-            return null;
+            Map error = warn("products.addproduct.failed", "Please check your input", "product", product);
+            return new ProductCreate().error(error);
+        }
+
+    }
+
+    @Override
+    public Products listProducts(Long start, Long size, SecurityContext securityContext, String baseUri) {
+
+        try (Handle h = dbi.open()) {
+
+            List<Product> products = new ArrayList<>();
+
+            return new Products().pagination(paginate(baseUri, start, size, totalRecords()))
+                    .items(products);
+        }
+        catch (Exception e) {
+            Map error = warn("products.list.failed", e.getMessage(), "start", start, "size", size);
+            return new Products().error(error);
         }
     }
-    @Override
-    public Products listProducts(Long start, Long size, SecurityContext securityContext) {
-        return null;
-    }
+
     @Override
     public ProductCreate updateProduct(ProductCreate body, SecurityContext securityContext) {
         return null;
@@ -77,9 +102,21 @@ public class ProductsServiceImpl implements ProductsService {
     public boolean deleteProduct(Long productId, String apiKey, SecurityContext securityContext) {
         return false;
     }
+
     @Override
     public Product getProductById(Long productId, SecurityContext securityContext) {
         return null;
+    }
+
+    private Long totalRecords() {
+        try (Handle h = dbi.open()) {
+
+            return new Long(h.createQuery("select count(*) from products")
+                        .map(IntegerColumnMapper.PRIMITIVE).first());
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
 }

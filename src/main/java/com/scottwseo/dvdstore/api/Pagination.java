@@ -4,6 +4,7 @@ import java.util.Objects;
 
 
 public class Pagination {
+
     private Long start = null;
 
     private Long resultSize = null;
@@ -15,6 +16,8 @@ public class Pagination {
     private Long total = null;
 
     private Long totalPages = null;
+
+
 
     public Pagination start(Long start) {
         this.start = start;
