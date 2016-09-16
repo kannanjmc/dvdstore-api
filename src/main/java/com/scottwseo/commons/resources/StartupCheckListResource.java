@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.scottwseo.commons.util.ConfigUtil.isRequired;
+
 /**
  * Created by sseo on 9/6/16.
  */
@@ -32,12 +34,16 @@ public class StartupCheckListResource {
         List<String> s = new ArrayList<>();
 
         if (!EnvVariables.check()) {
-            s.addAll(EnvVariables.missing());
+            for (EnvVariables env : EnvVariables.values()) {
+                if (isRequired(env) && !env.isProvided()) {
+                    s.add("env [" + env.key() + "] missing");
+                }
+            }
         }
 
         if (!Configs.check()) {
             for (Configs config : Configs.values()) {
-                if (Configs.isRequired(config) && !config.isProvided()) {
+                if (isRequired(config) && !config.isProvided()) {
                     s.add("config [" + config.key() + "] missing");
                 }
             }

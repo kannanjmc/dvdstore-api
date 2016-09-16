@@ -4,6 +4,7 @@ import com.scottwseo.commons.auth.User;
 import com.scottwseo.commons.help.HelpView;
 import com.scottwseo.commons.help.TailView;
 import com.scottwseo.commons.util.Configs;
+import com.scottwseo.commons.util.EnvVariables;
 import io.dropwizard.auth.Auth;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.scottwseo.commons.util.ConfigUtil.isMasked;
+import static com.scottwseo.commons.util.ConfigUtil.isRequired;
 
 @Path("/")
 public class HelpResource {
@@ -58,19 +62,30 @@ public class HelpResource {
         meta.put("tag", appVersion);
         meta.put("appname", appName);
         List<Map> configs = new ArrayList<>();
-        for (Configs config : Configs.values()) {
-            Map<String, String> map = new HashMap<>();
-            String value = Configs.isMasked(config) ? "******" : config.getString();
-            map.put("name", config.name());
-            map.put("key", config.key());
-            map.put("value", value);
-            map.put("required", "" + Configs.isRequired(config));
-            configs.add(map);
+
+        for (EnvVariables env : EnvVariables.values()) {
+            String value = isMasked(env) ? "******" : env.getString();
+            populateCfg(configs, env.name(), env.key(), value, isRequired(env));
         }
+
+        for (Configs config : Configs.values()) {
+            String value = isMasked(config) ? "******" : config.getString();
+            populateCfg(configs, config.name(), config.key(), value, isRequired(config));
+        }
+
         meta.put("configs", configs);
 
         return meta;
 
+    }
+
+    private void populateCfg(List<Map> configs, String name, String key, String value, boolean required) {
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name);
+        map.put("key", key);
+        map.put("value", value);
+        map.put("required", "" + required);
+        configs.add(map);
     }
 
     @GET

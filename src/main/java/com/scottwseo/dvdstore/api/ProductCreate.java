@@ -21,6 +21,8 @@ public class ProductCreate {
 
     private BigDecimal price = null;
 
+    private boolean special;
+
     private Long commonProdId = null;
 
     private Map error = null;
@@ -146,6 +148,21 @@ public class ProductCreate {
 
     public void setCommonProdId(Long commonProdId) {
         this.commonProdId = commonProdId;
+    }
+
+
+    @JsonProperty("special")
+    public boolean isSpecial() {
+        return special;
+    }
+
+    public void setSpecial(boolean special) {
+        this.special = special;
+    }
+
+    public ProductCreate special(boolean special) {
+        this.special = special;
+        return this;
     }
 
 

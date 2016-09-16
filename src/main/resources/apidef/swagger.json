@@ -792,8 +792,8 @@
           "format": "int64"
         },
         "category": {
-          "type": "string",
-          "example": "Action"
+          "type": "integer",
+          "example": "1"
         },
         "title": {
           "type": "string",

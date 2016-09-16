@@ -15,8 +15,8 @@ public class AWSCredentialsInitializerBundle<T extends Configuration>  implement
 
     @Override
     public void run(T configuration, Environment environment) throws Exception {
-        System.setProperty("aws.accessKeyId", System.getenv(EnvVariables.ACCESS_KEY_ID));
-        System.setProperty("aws.secretKey", System.getenv(EnvVariables.SECRET_KEY));
+        System.setProperty("aws.accessKeyId", EnvVariables.ACCESS_KEY_ID.getString());
+        System.setProperty("aws.secretKey", EnvVariables.SECRET_KEY.getString());
     }
 
     @Override

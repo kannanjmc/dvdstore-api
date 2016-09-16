@@ -14,9 +14,9 @@ public class ArchaiusS3ConfigSourceBundle <T extends Configuration>  implements 
 
     @Override
     public void run(T configuration, Environment environment) throws Exception {
-        String bucket = System.getenv(EnvVariables.S3_BUCKET);
+        String bucket = EnvVariables.S3_BUCKET.getString();
 
-        String key = System.getenv(EnvVariables.S3_KEY);
+        String key = EnvVariables.S3_KEY.getString();
 
         PolledConfigurationSource s3ConfigurationSource = new S3ConfigurationSource(bucket, key);
 

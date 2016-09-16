@@ -1,50 +1,63 @@
 package com.scottwseo.commons.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.scottwseo.commons.cfg.Config;
+import com.scottwseo.commons.cfg.ConfigDataType;
+import com.scottwseo.commons.cfg.Configuration;
 
+import static com.scottwseo.commons.util.ConfigUtil.isRequired;
 import static com.scottwseo.commons.util.StringUtils.isEmpty;
-import static com.scottwseo.commons.util.StringUtils.isNotEmpty;
 
 /**
  * Created by seos on 9/8/16.
  */
-public class EnvVariables {
+public enum EnvVariables implements Config {
 
-    private EnvVariables() {
+    @Configuration(type= ConfigDataType.TEXT)
+    S3_BUCKET("com.scottwseo.api.S3_BUCKET"),
+
+    @Configuration(type= ConfigDataType.TEXT)
+    S3_KEY("com.scottwseo.api.S3_KEY"),
+
+    @Configuration(type= ConfigDataType.TEXT, required = false, masked = true)
+    ACCESS_KEY_ID("com.scottwseo.api.ACCESS_KEY_ID"),
+
+    @Configuration(type= ConfigDataType.TEXT, required = false, masked = true)
+    SECRET_KEY("com.scottwseo.api.SECRET_KEY");
+
+    private String key;
+
+    EnvVariables(String key) {
+        this.key = key;
     }
 
-    public static final String S3_BUCKET = "com.scottwseo.api.S3_BUCKET";
+    public boolean isProvided() {
+        String value = System.getenv(key);
 
-    public static final String S3_KEY = "com.scottwseo.api.S3_KEY";
+        if (isEmpty(value)) {
+            return false;
+        }
+        return true;
+    }
 
-    public static final String ACCESS_KEY_ID = "com.scottwseo.api.ACCESS_KEY_ID";
+    public String getString() {
+        return System.getenv(key);
+    }
 
-    public static final String SECRET_KEY = "com.scottwseo.api.SECRET_KEY";
+    public String key() {
+        return key;
+    }
 
     public static boolean check() {
-        return isNotEmpty(System.getenv(S3_BUCKET)) &&
-                isNotEmpty(System.getenv(S3_KEY)) &&
-                isNotEmpty(System.getenv(ACCESS_KEY_ID)) &&
-                isNotEmpty(System.getenv(SECRET_KEY));
-    }
+        boolean valid = true;
 
-    public static List<String> missing() {
-        List<String> s = new ArrayList<>();
-        if (isEmpty(System.getenv(S3_BUCKET))) {
-            s.add("env [" + S3_BUCKET + "] missing");
-        }
-        if (isEmpty(System.getenv(S3_KEY))) {
-            s.add("env [" + S3_KEY + "] missing");
-        }
-        if (isEmpty(System.getenv(ACCESS_KEY_ID))) {
-            s.add("env [" + ACCESS_KEY_ID + "] missing");
-        }
-        if (isEmpty(System.getenv(SECRET_KEY))) {
-            s.add("env [" + SECRET_KEY + "] missing");
+        for (EnvVariables env : EnvVariables.values()) {
+            if (isRequired(env) && !env.isProvided()) {
+                valid = false;
+                break;
+            }
         }
 
-        return s;
+        return valid;
     }
 
 }

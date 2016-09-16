@@ -1,6 +1,9 @@
 package com.scottwseo.dvdstore.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -8,9 +11,10 @@ import java.util.Objects;
  * Product
  */
 public class Product {
+
     private Long prodId = null;
 
-    private String category = null;
+    private Long category = null;
 
     private String title = null;
 
@@ -18,7 +22,16 @@ public class Product {
 
     private BigDecimal price = null;
 
+    private boolean special;
+
     private Long commonProdId = null;
+
+    private Map error = null;
+
+    public <T> T error(Map error) {
+        this.error = error;
+        return (T) this;
+    }
 
     public Product prodId(Long prodId) {
         this.prodId = prodId;
@@ -38,7 +51,7 @@ public class Product {
         this.prodId = prodId;
     }
 
-    public Product category(String category) {
+    public Product category(Long category) {
         this.category = category;
         return this;
     }
@@ -48,11 +61,11 @@ public class Product {
      *
      * @return category
      **/
-    public String getCategory() {
+    public Long getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Long category) {
         this.category = category;
     }
 
@@ -128,6 +141,20 @@ public class Product {
         this.commonProdId = commonProdId;
     }
 
+
+    @JsonProperty("special")
+    public boolean isSpecial() {
+        return special;
+    }
+
+    public void setSpecial(boolean special) {
+        this.special = special;
+    }
+
+    public Product special(boolean special) {
+        this.special = special;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

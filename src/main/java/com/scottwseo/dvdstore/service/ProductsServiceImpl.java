@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.scottwseo.dvdstore.api.Product;
 import com.scottwseo.dvdstore.api.ProductCreate;
 import com.scottwseo.dvdstore.api.Products;
+import com.scottwseo.dvdstore.jdbi.ProductMapper;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.util.IntegerColumnMapper;
@@ -14,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.scottwseo.commons.util.ResourcesUtil.paginate;
-import static com.scottwseo.commons.util.ResourcesUtil.warn;
+import static com.scottwseo.commons.util.LogUtil.warn;
+import static com.scottwseo.dvdstore.util.ResourcesUtil.paginate;
 
 public class ProductsServiceImpl implements ProductsService {
 
@@ -40,7 +41,8 @@ public class ProductsServiceImpl implements ProductsService {
                     "        actor,\n" +
                     "        price,\n" +
                     "        special,\n" +
-                    "        common_prod_id\n" +
+                    "        common_prod_id,\n" +
+                    "        special\n" +
                     "    )\n" +
                     "    VALUES\n" +
                     "    (\n" +
@@ -49,7 +51,8 @@ public class ProductsServiceImpl implements ProductsService {
                     "        :actor,\n" +
                     "        :price,\n" +
                     "        :special,\n" +
-                    "        :common_prod_id\n" +
+                    "        :common_prod_id,\n" +
+                    "        :special\n" +
                     "    )";
             long prodId = h.createStatement(sql.toString())
             .bind("category", product.getCategory())
@@ -58,6 +61,7 @@ public class ProductsServiceImpl implements ProductsService {
             .bind("price", product.getPrice())
             .bind("special", 1)
             .bind("common_prod_id", product.getCommonProdId())
+            .bind("special", product.isSpecial())
             .executeAndReturnGeneratedKeys(LongColumnMapper.PRIMITIVE).first();
 
             return new ProductCreate()
@@ -68,7 +72,7 @@ public class ProductsServiceImpl implements ProductsService {
                     .price(product.getPrice())
                     .commonProdId(product.getCommonProdId());
 
-            //return new ProductCreate().error(asMap("products.addproduct.failed", "Please check your input", "product", product));
+            // return new ProductCreate().error(map("products.addproduct.failed", "Please check your input", "product", product));
         }
         catch (Exception e) {
             Map error = warn("products.addproduct.failed", "Please check your input", "product", product);
@@ -83,6 +87,16 @@ public class ProductsServiceImpl implements ProductsService {
         try (Handle h = dbi.open()) {
 
             List<Product> products = new ArrayList<>();
+
+            long offset = (start == 1 || start == 0) ? 0 : (size * size) - size;
+
+            String sql = "select * from public.products offset :offset limit :limit";
+
+            products = h.createQuery(sql)
+                .bind("offset", offset)
+                .bind("limit", size)
+                .map(new ProductMapper())
+                .list();
 
             return new Products().pagination(paginate(baseUri, start, size, totalRecords()))
                     .items(products);

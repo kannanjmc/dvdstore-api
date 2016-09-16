@@ -5,8 +5,7 @@ import com.scottwseo.commons.cfg.Config;
 import com.scottwseo.commons.cfg.ConfigDataType;
 import com.scottwseo.commons.cfg.Configuration;
 
-import java.lang.annotation.Annotation;
-
+import static com.scottwseo.commons.util.ConfigUtil.isRequired;
 import static com.scottwseo.commons.util.StringUtils.isEmpty;
 
 /**
@@ -63,37 +62,6 @@ public enum Configs implements Config {
         }
 
         return valid;
-    }
-
-    public static <A extends Annotation> A getAnnotation(Config config, Class<A> annotationType) {
-        try {
-            Class<? extends Config> configClass = config.getClass();
-            A fieldAnnotation = configClass.getField(config.name()).getAnnotation(annotationType);
-            A classAnnotation = configClass.getAnnotation(annotationType);
-
-            return fieldAnnotation != null ? fieldAnnotation : classAnnotation;
-        } catch (SecurityException e) {
-            // ignore
-        } catch (NoSuchFieldException e) {
-            // ignore
-        }
-        return null;
-    }
-
-    public static boolean isRequired(Config config) {
-        Configuration configuration = getAnnotation(config, Configuration.class);
-        if (configuration != null) {
-            return configuration.required();
-        }
-        return true;
-    }
-
-    public static boolean isMasked(Config config) {
-        Configuration configuration = getAnnotation(config, Configuration.class);
-        if (configuration != null) {
-            return configuration.masked();
-        }
-        return true;
     }
 
 }
