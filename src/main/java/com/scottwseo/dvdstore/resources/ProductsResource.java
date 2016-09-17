@@ -8,6 +8,7 @@ import com.scottwseo.dvdstore.service.ProductsService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.util.Map;
 
 /**
  * Created by sseo on 9/6/16.
@@ -47,6 +48,7 @@ public class ProductsResource {
                                  @Context UriInfo uriInfo) {
 
         Products products = productsService.listProducts(start, size, securityContext, uriInfo.getBaseUri().toString());
+
         if (products.error() != null) {
             return Response.status(400).entity(products.error()).build();
         }
@@ -57,12 +59,18 @@ public class ProductsResource {
     @PUT
     @Consumes({ "application/json"})
     @Produces({ "application/json" })
-    public Response updateProduct(ProductCreate body,
+    public Response updateProduct(ProductCreate product,
                                   @Context SecurityContext securityContext) {
 
-        ProductCreate product = productsService.updateProduct(body,securityContext);
+        ProductCreate productUpdated = productsService.updateProduct(product,securityContext);
 
-        return null;
+        if (productUpdated.error() != null) {
+            int statusCode = (int) productUpdated.error().get("statusCode");
+            return Response.status(statusCode).entity(productUpdated
+                    .error()).build();
+        }
+
+        return Response.status(204).build();
     }
 
     @DELETE
@@ -71,9 +79,15 @@ public class ProductsResource {
     public Response deleteProduct(@PathParam("productId") Long productId,
                                   @HeaderParam("api_key") String apiKey,
                                   @Context SecurityContext securityContext) {
-        boolean successful = productsService.deleteProduct(productId, apiKey, securityContext);
+        Map error = productsService.deleteProduct(productId, apiKey, securityContext);
 
-        return null;
+        if (error != null) {
+            int statusCode = (int) error.get("statusCode");
+            return Response.status(statusCode).entity(error).build();
+        }
+
+        return Response.status(204).build();
+
     }
 
     @GET
@@ -84,7 +98,12 @@ public class ProductsResource {
 
         Product product = productsService.getProductById(productId, securityContext);
 
-        return null;
+        if (product.error() != null) {
+            int statusCode = (int) product.error().get("statusCode");
+            return Response.status(statusCode).entity(product.error()).build();
+        }
+
+        return Response.ok().entity(product).build();
     }
 
 }

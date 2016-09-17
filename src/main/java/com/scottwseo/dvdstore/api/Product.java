@@ -33,6 +33,10 @@ public class Product {
         return (T) this;
     }
 
+    public Map error() {
+        return this.error;
+    }
+
     public Product prodId(Long prodId) {
         this.prodId = prodId;
         return this;

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.scottwseo.commons.util.LogUtil.map;
 import static com.scottwseo.commons.util.LogUtil.warn;
 import static com.scottwseo.dvdstore.util.ResourcesUtil.paginate;
 
@@ -30,9 +31,8 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public ProductCreate addProduct(ProductCreate product, SecurityContext securityContext) {
 
-        String sql = null;
         try (Handle h = dbi.open()) {
-            sql = "INSERT\n" +
+            String sql = "INSERT\n" +
                     "INTO\n" +
                     "    products\n" +
                     "    (\n" +
@@ -61,17 +61,11 @@ public class ProductsServiceImpl implements ProductsService {
             .bind("common_prod_id", product.getCommonProdId())
             .executeAndReturnGeneratedKeys(LongColumnMapper.PRIMITIVE).first();
 
-            return new ProductCreate()
-                    .prodId(prodId)
-                    .actor(product.getActor())
-                    .category(product.getCategory())
-                    .title(product.getTitle())
-                    .price(product.getPrice())
-                    .commonProdId(product.getCommonProdId());
+            return product.prodId(prodId);
         }
         catch (Exception e) {
             Map error = warn("products.addproduct.failed", e.getMessage(), "product", product);
-            return new ProductCreate().error(error);
+            return product.error(error);
         }
 
     }
@@ -83,9 +77,9 @@ public class ProductsServiceImpl implements ProductsService {
 
             List<Product> products = new ArrayList<>();
 
-            long offset = (start == 1 || start == 0) ? 0 : (size * size) - size;
+            long offset = (start == 1 || start == 0) ? 0 : (start * size) - size;
 
-            String sql = "select * from products offset :offset limit :limit";
+            String sql = "select * from products order by prod_id offset :offset limit :limit";
 
             products = h.createQuery(sql)
                 .bind("offset", offset)
@@ -103,18 +97,114 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public ProductCreate updateProduct(ProductCreate body, SecurityContext securityContext) {
-        return null;
+    public ProductCreate updateProduct(ProductCreate product, SecurityContext securityContext) {
+
+        Product existingProduct = getProductById(product.getProdId(), securityContext);
+
+        if (existingProduct.error() != null) {
+            return product.error(existingProduct.error());
+        }
+
+        try (Handle h = dbi.open()) {
+            String sql =
+                    "UPDATE\n" +
+                    "    products\n" +
+                    "SET\n" +
+                    "    category = :category,\n" +
+                    "    title = :title,\n" +
+                    "    actor = :actor,\n" +
+                    "    price = :price,\n" +
+                    "    special = :special,\n" +
+                    "    common_prod_id = :common_prod_id\n" +
+                    "WHERE\n" +
+                    "    prod_id = :prod_id";
+            long rowsUpdated = h.createStatement(sql.toString())
+                    .bind("category", product.getCategory())
+                    .bind("title", product.getTitle())
+                    .bind("actor", product.getActor())
+                    .bind("price", product.getPrice())
+                    .bind("special", product.isSpecial() ? 1 : 0)
+                    .bind("common_prod_id", product.getCommonProdId())
+                    .bind("prod_id", product.getProdId())
+                    .execute();
+
+            if (rowsUpdated == 1) {
+                return product;
+            }
+            else {
+                Map error = warn("product.update.unexepected", "updated affected multiple row", "product", product, "statusCode", 500);
+                return product.error(error);
+            }
+        }
+        catch (Exception e) {
+            Map error = warn("product.update.failed", e.getMessage(), "product", product, "statusCode", 500);
+            return product.error(error);
+        }
     }
 
     @Override
-    public boolean deleteProduct(Long productId, String apiKey, SecurityContext securityContext) {
-        return false;
+    public Map deleteProduct(Long productId, String apiKey, SecurityContext securityContext) {
+        Product existingProduct = getProductById(productId, securityContext);
+
+        if (existingProduct.error() != null) {
+            return existingProduct.error();
+        }
+
+        try (Handle h = dbi.open()) {
+            String sql =
+                    "DELETE\n" +
+                            "FROM\n" +
+                            "    products\n" +
+                            "WHERE\n" +
+                            "    prod_id = :prod_id";
+            int rows = h.createStatement(sql.toString())
+                    .bind("prod_id", productId)
+                    .execute();
+
+            if (rows == 1) {
+                return null;
+            }
+            else {
+                return map("product.delete.failed", "delete affected more than one row", "prod_id", productId, "statusCode", 500);
+            }
+        }
+        catch (Exception e) {
+            Map error = warn("product.delete.failed", e.getMessage(), "prod_id", productId, "statusCode", 500);
+            return new Products().error(error);
+        }
     }
 
     @Override
     public Product getProductById(Long productId, SecurityContext securityContext) {
-        return null;
+        try (Handle h = dbi.open()) {
+            String sql =
+                    "SELECT\n" +
+                            "    prod_id,\n" +
+                            "    category,\n" +
+                            "    title,\n" +
+                            "    actor,\n" +
+                            "    price,\n" +
+                            "    special,\n" +
+                            "    common_prod_id\n" +
+                            "FROM\n" +
+                            "    products\n" +
+                            "WHERE\n" +
+                            "    prod_id = :prod_id";
+            Product product = h.createQuery(sql.toString())
+                    .bind("prod_id", productId)
+                    .map(new ProductMapper())
+                    .first();
+
+            if (product == null) {
+                return new Product().error(map("product.findbyid.failed", "", "prod_id", productId, "statusCode", 404));
+            }
+
+            return product;
+        }
+        catch (Exception e) {
+            Map error = warn("product.update.failed", e.getMessage(), "prod_id", productId, "statusCode", 500);
+            return new Products().error(error);
+        }
     }
 
     private Long totalRecords() {

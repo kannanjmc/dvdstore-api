@@ -26,7 +26,7 @@ public class ResourcesUtil {
                 .prev(prev)
                 .total(totalRecords)
                 .resultSize(pageSize)
-                .totalPages(totalRecords / pageSize);
+                .totalPages(totalRecords / pageSize + ((totalRecords % pageSize) == 0 ? 0 : 1));
     }
 
 }
