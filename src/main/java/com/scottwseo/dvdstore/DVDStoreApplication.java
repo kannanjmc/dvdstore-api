@@ -14,6 +14,8 @@ import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
 import com.scottwseo.dvdstore.guice.DVDStoreServiceModule;
 import com.scottwseo.dvdstore.resources.CategoryResource;
+import com.scottwseo.dvdstore.resources.CustomersResource;
+import com.scottwseo.dvdstore.resources.OrdersResource;
 import com.scottwseo.dvdstore.resources.ProductsResource;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -53,6 +55,10 @@ public class DVDStoreApplication extends APIApplication {
             registerResource(instanceOf(CategoryResource.class));
 
             registerResource(instanceOf(ProductsResource.class));
+
+            registerResource(instanceOf(OrdersResource.class));
+
+            registerResource(instanceOf(CustomersResource.class));
         }
         else {
             registerResource(new StartupCheckListResource());
@@ -64,7 +70,7 @@ public class DVDStoreApplication extends APIApplication {
 
     @Override
     public String getName() {
-        return ConfigurationManager.getConfigInstance().getString(Configs.APP_NAME.key(), "DVD Store");
+        return ConfigurationManager.getConfigInstance().getString(Configs.APP_NAME.key(), "DVD Store API");
     }
 
     @Override

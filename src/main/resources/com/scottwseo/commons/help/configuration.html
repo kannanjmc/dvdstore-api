@@ -25,18 +25,34 @@
 <!--    <script type="text/javascript" src="./chart.js"></script>-->
 </head>
 <body>
-    <h1 class="page-header">Trouble Shooting</h1>
+<!--
 
-    <h2 class="sub-header">Configuration</h2>
-    <ul>
-        <li>Dynamic</li>
-        <li>Checked during app boot up time</li>
-    </ul>
-    <h2 class="sub-header">Logging</h2>
-    <ul>
-        <li>Machine readable</li>
-        <li>Human readable</li>
-    </ul>
+    <h1 class="page-header">Dashboard</h1>
+
+    <div class="row placeholders">
+        <div class="col-xs-12 col-sm-6 placeholder">
+            <div id="memory_chart_div"></div>
+            <h4>Memory</h4>
+            <span class="text-muted"></span>
+        </div>
+    </div>
+    <h1 class="sub-header">Configs</h1>
+-->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Config</th>
+                <th>Key</th>
+                <th>Value</th>
+                <th>Required</th>
+            </tr>
+            </thead>
+            <tbody id="config">
+            </tbody>
+        </table>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -49,6 +65,46 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="ie10-viewport-bug-workaround.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.js"></script>
+
+    <script type="text/dust" id="template">
+        {#configs}
+        <tr>
+            <td>
+                {type}
+            </td>
+            <td>
+                {name}
+            </td>
+            <td>
+                {key}
+            </td>
+            <td>
+                {value}
+            </td>
+            <td>
+                {required}
+            </td>
+        </tr>
+        {/configs}
+    </script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            var src = document.getElementById('template').textContent;
+            var compiled = dust.compile(src);
+            var tmpl = dust.loadSource(compiled);
+
+            $.getJSON('../../../../meta', function (json) {
+                dust.render(tmpl, json, function(err, out) {
+                    $('#config').html(out);
+                });
+            });
+
+        });
+
+    </script>
 
 </body>
 </html>

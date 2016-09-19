@@ -65,12 +65,12 @@ public class HelpResource {
 
         for (EnvVariables env : EnvVariables.values()) {
             String value = isMasked(env) ? "******" : env.getString();
-            populateCfg(configs, env.name(), env.key(), value, isRequired(env));
+            populateCfg(configs, env.name(), env.key(), value, isRequired(env), "environment");
         }
 
         for (Configs config : Configs.values()) {
             String value = isMasked(config) ? "******" : config.getString();
-            populateCfg(configs, config.name(), config.key(), value, isRequired(config));
+            populateCfg(configs, config.name(), config.key(), value, isRequired(config), "dynamic");
         }
 
         meta.put("configs", configs);
@@ -79,8 +79,9 @@ public class HelpResource {
 
     }
 
-    private void populateCfg(List<Map> configs, String name, String key, String value, boolean required) {
+    private void populateCfg(List<Map> configs, String name, String key, String value, boolean required, String type) {
         Map<String, String> map = new HashMap<>();
+        map.put("type", type);
         map.put("name", name);
         map.put("key", key);
         map.put("value", value);

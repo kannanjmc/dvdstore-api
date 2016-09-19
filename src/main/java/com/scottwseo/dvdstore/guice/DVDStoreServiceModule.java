@@ -2,10 +2,7 @@ package com.scottwseo.dvdstore.guice;
 
 import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.commons.guice.ServiceModule;
-import com.scottwseo.dvdstore.service.CategoryService;
-import com.scottwseo.dvdstore.service.CategoryServiceImpl;
-import com.scottwseo.dvdstore.service.ProductsService;
-import com.scottwseo.dvdstore.service.ProductsServiceImpl;
+import com.scottwseo.dvdstore.service.*;
 import io.dropwizard.setup.Environment;
 
 public class DVDStoreServiceModule extends ServiceModule {
@@ -18,6 +15,8 @@ public class DVDStoreServiceModule extends ServiceModule {
     protected void configure() {
         bind(CategoryService.class).to(CategoryServiceImpl.class);
         bind(ProductsService.class).to(ProductsServiceImpl.class);
+        bind(OrdersService.class).to(OrdersServiceImpl.class);
+        bind(CustomersService.class).to(CustomerServiceImpl.class);
     }
 
 }

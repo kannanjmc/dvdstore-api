@@ -49,9 +49,13 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li id="overview" class="active"><a href="overview.html">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="${base}/swagger/">Swagger</a></li>
-                <li><a href="${base}/log">Log</a></li>
-                <li><a href="${base}/togglz">Features</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+                <li><a href="${base}/log">Logging</a></li>
+                <li><a href="${base}/metrics">Metrics</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="${base}/swagger/">API Specification</a></li>
+                <li><a href="${base}/togglz">Feature Flags</a></li>
             </ul>
         </div>
     </div>
