@@ -70,7 +70,7 @@ public class DVDStoreApplication extends APIApplication {
 
     @Override
     public String getName() {
-        return ConfigurationManager.getConfigInstance().getString(Configs.APP_NAME.key(), "DVD Store");
+        return ConfigurationManager.getConfigInstance().getString(Configs.APP_NAME.key(), "DVD Store API");
     }
 
     @Override
