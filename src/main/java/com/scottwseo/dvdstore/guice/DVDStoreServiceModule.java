@@ -16,6 +16,7 @@ public class DVDStoreServiceModule extends ServiceModule {
         bind(CategoryService.class).to(CategoryServiceImpl.class);
         bind(ProductsService.class).to(ProductsServiceImpl.class);
         bind(OrdersService.class).to(OrdersServiceImpl.class);
+        bind(CustomersService.class).to(CustomerServiceImpl.class);
     }
 
 }
