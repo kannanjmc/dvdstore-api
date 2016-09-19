@@ -14,6 +14,7 @@ import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.PostgreSQLDatabase;
 import com.scottwseo.dvdstore.guice.DVDStoreServiceModule;
 import com.scottwseo.dvdstore.resources.CategoryResource;
+import com.scottwseo.dvdstore.resources.OrdersResource;
 import com.scottwseo.dvdstore.resources.ProductsResource;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -53,6 +54,8 @@ public class DVDStoreApplication extends APIApplication {
             registerResource(instanceOf(CategoryResource.class));
 
             registerResource(instanceOf(ProductsResource.class));
+
+            registerResource(instanceOf(OrdersResource.class));
         }
         else {
             registerResource(new StartupCheckListResource());
