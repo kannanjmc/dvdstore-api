@@ -299,7 +299,6 @@
         "description": "",
         "operationId": "placeOrder",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -335,7 +334,6 @@
         "description": "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
         "operationId": "getOrderById",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -397,16 +395,15 @@
         }
       }
     },
-    "/user": {
+    "/customer": {
       "post": {
         "tags": [
           "customer"
         ],
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
-        "operationId": "createUser",
+        "operationId": "createCustomer",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -416,7 +413,7 @@
             "description": "Created user object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Customer"
             }
           }
         ],
@@ -427,82 +424,15 @@
         }
       }
     },
-    "/user/createWithArray": {
-      "post": {
-        "tags": [
-          "customer"
-        ],
-        "summary": "Creates list of users with given input array",
-        "description": "",
-        "operationId": "createUsersWithArrayInput",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "List of user object",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/user/createWithList": {
-      "post": {
-        "tags": [
-          "customer"
-        ],
-        "summary": "Creates list of users with given input array",
-        "description": "",
-        "operationId": "createUsersWithListInput",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "List of user object",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/user/login": {
+    "/customer/login": {
       "get": {
         "tags": [
           "customer"
         ],
         "summary": "Logs user into the system",
         "description": "",
-        "operationId": "loginUser",
+        "operationId": "loginCustomer",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -546,16 +476,15 @@
         }
       }
     },
-    "/user/logout": {
+    "/customer/logout": {
       "get": {
         "tags": [
           "customer"
         ],
         "summary": "Logs out current logged in user session",
         "description": "",
-        "operationId": "logoutUser",
+        "operationId": "logoutCustomer",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [],
@@ -566,16 +495,15 @@
         }
       }
     },
-    "/user/{username}": {
+    "/customer/{username}": {
       "get": {
         "tags": [
           "customer"
         ],
         "summary": "Get user by user name",
         "description": "",
-        "operationId": "getUserByName",
+        "operationId": "getCustomerByName",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -591,14 +519,14 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Customer"
             }
           },
           "400": {
             "description": "Invalid username supplied"
           },
           "404": {
-            "description": "User not found"
+            "description": "Customer not found"
           }
         }
       },
@@ -608,9 +536,8 @@
         ],
         "summary": "Updated user",
         "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
+        "operationId": "updateCustomer",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -627,7 +554,7 @@
             "description": "Updated user object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Customer"
             }
           }
         ],
@@ -636,7 +563,7 @@
             "description": "Invalid user supplied"
           },
           "404": {
-            "description": "User not found"
+            "description": "Customer not found"
           }
         }
       },
@@ -646,9 +573,8 @@
         ],
         "summary": "Delete user",
         "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
+        "operationId": "deleteCustomer",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -665,7 +591,7 @@
             "description": "Invalid username supplied"
           },
           "404": {
-            "description": "User not found"
+            "description": "Customer not found"
           }
         }
       }
@@ -817,42 +743,77 @@
         }
       }
     },
-
     "Order": {
       "type": "object",
+      "required": [
+        "order_date",
+        "customer_id",
+        "net_amount",
+        "tax",
+        "total_amount"
+      ],
       "properties": {
-        "id": {
+        "customer_id": {
           "type": "integer",
           "format": "int64"
         },
-        "productId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "quantity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "shipDate": {
+        "order_date": {
           "type": "string",
           "format": "date-time"
         },
-        "status": {
-          "type": "string",
-          "description": "Order Status",
-          "enum": [
-            "placed",
-            "approved",
-            "delivered"
-          ]
+        "customer_id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
         },
-        "complete": {
-          "type": "boolean",
-          "default": false
+        "net_amount": {
+          "type": "number",
+          "example": 313.24
+        },
+        "tax": {
+          "type": "number",
+          "example": 25.84
+        },
+        "total_amount": {
+          "type": "number",
+          "example": 339.08
+        },
+        "orderlines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderLine"
+          }
         }
       },
       "xml": {
         "name": "Order"
+      }
+    },
+    "OrderLine": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "quantity",
+        "order_date"
+      ],
+      "properties": {
+        "product_id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int64",
+          "example": 2
+        },
+        "order_date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "xml": {
+        "name": "OrderLine"
       }
     },
     "Category": {
@@ -870,39 +831,90 @@
         "name": "Category"
       }
     },
-    "User": {
+    "Customer": {
       "type": "object",
       "properties": {
-        "id": {
+        "customer_id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "example": 1
         },
-        "username": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
+        "first_name": {
+          "type": "string",
+          "example": "William"
         },
         "lastName": {
+          "type": "string",
+          "example": "Joshnson"
+        },
+        "address1": {
+          "type": "string",
+          "example": "16519 71st Ave"
+        },
+        "city": {
+          "type": "string",
+          "example": "New York"
+        },
+        "state": {
+          "type": "string",
+          "example": "NY"
+        },
+       "zip": {
+          "type": "integer",
+          "example": "NY"
+        },
+        "country": {
+          "type": "string",
+          "example": "USA"
+        },
+        "region": {
           "type": "string"
         },
         "email": {
+          "type": "",
+          "example": "scott.seo@gmail.com"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "credit_card_type": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Customer Status"
+        },
+        "credit_card": {
+          "type": "string"
+        },
+        "credit_card_expiration": {
+          "type": "string"
+        },
+        "username": {
           "type": "string"
         },
         "password": {
           "type": "string"
         },
-        "phone": {
-          "type": "string"
-        },
-        "userStatus": {
+        "age": {
           "type": "integer",
           "format": "int32",
-          "description": "User Status"
+          "description": "age"
+        },
+        "income": {
+          "type": "integer",
+          "format": "int32",
+          "description": "age"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "M",
+            "F"
+          ]
+
         }
       },
       "xml": {
-        "name": "User"
+        "name": "Customer"
       }
     },
     "Tag": {
