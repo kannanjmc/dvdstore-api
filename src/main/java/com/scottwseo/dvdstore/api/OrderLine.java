@@ -15,12 +15,14 @@ public class OrderLine {
 
     private String orderDate;
 
+    @JsonProperty("orderline_id")
     public Long getOrderLineId() {
         return orderLineId;
     }
 
-    public void setOrderLineId(Long orderLineId) {
+    public OrderLine orderLineId(Long orderLineId) {
         this.orderLineId = orderLineId;
+        return this;
     }
 
     @JsonProperty("product_id")
@@ -28,8 +30,9 @@ public class OrderLine {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public OrderLine productId(Long productId) {
         this.productId = productId;
+        return this;
     }
 
     @JsonProperty("quantity")
@@ -37,16 +40,35 @@ public class OrderLine {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public OrderLine quantity(int quantity) {
         this.quantity = quantity;
+        return this;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
     }
 
     @JsonProperty("order_date")
-    public String getOrderDate() {
-        return orderDate;
+    public OrderLine orderDate(String orderDate) {
+        this.orderDate = orderDate;
+        return this;
+    }
+
+    public void setOrderLineId(Long orderLineId) {
+        this.orderLineId = orderLineId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
+
 }

@@ -2,13 +2,16 @@ package com.scottwseo.dvdstore.service;
 
 import com.google.inject.Inject;
 import com.scottwseo.dvdstore.api.Order;
+import com.scottwseo.dvdstore.api.OrderLine;
 import com.scottwseo.dvdstore.api.Products;
+import com.scottwseo.dvdstore.jdbi.OrderAndOrderLine;
 import com.scottwseo.dvdstore.jdbi.OrderMapper;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.util.LongColumnMapper;
 
 import javax.ws.rs.core.SecurityContext;
+import java.util.List;
 import java.util.Map;
 
 import static com.scottwseo.commons.util.LogUtil.map;
@@ -99,23 +102,45 @@ public class OrdersServiceImpl implements OrdersService {
         try (Handle h = dbi.open()) {
             String sql =
                     "SELECT\n" +
-                            "    orderid,\n" +
-                            "    orderdate,\n" +
+                            "    o.orderid,\n" +
+                            "    o.orderdate,\n" +
                             "    customerid,\n" +
                             "    netamount,\n" +
                             "    tax,\n" +
-                            "    totalamount\n" +
+                            "    totalamount,\n" +
+                            "    orderlineid,\n" +
+                            "    prod_id,\n" +
+                            "    quantity,\n" +
+                            "    ol.orderdate\n" +
                             "FROM\n" +
-                            "    orders\n" +
+                            "    orders o INNER JOIN orderlines ol ON (o.orderid = ol.orderid)\n" +
                             "WHERE\n" +
-                            "    orderid = :orderid";
-            Order order = h.createQuery(sql.toString())
+                            "    o.orderid = :orderid";
+            List<OrderAndOrderLine> orderAndOrderLines = h.createQuery(sql.toString())
                     .bind("orderid", orderId)
                     .map(new OrderMapper())
-                    .first();
+                    .list();
 
-            if (order == null) {
+            if (orderAndOrderLines == null || orderAndOrderLines.size() == 0) {
                 return new Order().error(map("order.findbyid.failed", "", "orderid", orderId, "statusCode", 404));
+            }
+
+            OrderAndOrderLine row = orderAndOrderLines.get(0);
+            Order order = new Order().orderId(row.getOrderId())
+                    .orderDate(row.getOrderDate())
+                    .customerId(row.getCustomerId())
+                    .netAmount(row.getNetAmount())
+                    .tax(row.getTax())
+                    .totalAmount(row.getTotalAmount());
+
+            for (OrderAndOrderLine ool : orderAndOrderLines) {
+                order.getOrderLines().add(
+                        new OrderLine()
+                            .orderLineId(ool.getOrderLineId())
+                            .productId(ool.getProductId())
+                            .quantity(ool.getQuantity())
+                            .orderDate(ool.getOrderDate())
+                );
             }
 
             return order;
