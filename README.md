@@ -1,13 +1,30 @@
-# Features
-- Auth
-- Securing credential using S3
-- Feature flags
-- Swagger UI
-- MetricsReporterFactory
-- Json log formatting
-- Websocket logging
+<img src="https://github.com/scott-seo/api/images/api-spec.png">
 
-# Todo
-- Buy SSL cert
-- Complete swagger once data dump is ready
+## Troubleshooting
+
+#### Configuration
+  * Credentials secured using S3
+  * Dynamic config reloading
+  * Checks environment variables and dynamic config during api startup
+
+#### Logging
+  * Fleuntd
+  * Json
+  * Websocket
+
+#### Metrics
+  * Grafana backed by Graphite
+
+---
+
+### Continuous Delivery
+  * Feature flags
+  * Dockerized
+
+### Development
+- Swagger UI
+
+
+
+
 
