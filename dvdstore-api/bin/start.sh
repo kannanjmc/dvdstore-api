@@ -2,5 +2,5 @@
 
 cd /opt
 
-java -jar dvdstore/dist/dvdstore-api.jar server dvdstore/conf/dvdstore-api.yml
+java -jar dvdstore-api/dist/dvdstore-api.jar server dvdstore-api/conf/dvdstore-api.yml
 
