@@ -29,7 +29,7 @@
       "description": "Access to DVD Store orders"
     },
     {
-      "name": "customer",
+      "name": "user",
       "description": "Operations about customer",
       "externalDocs": {
         "description": "Find out more about our store",
@@ -364,10 +364,10 @@
         }
       }
     },
-    "/customer": {
+    "/user": {
       "post": {
         "tags": [
-          "customer"
+          "user"
         ],
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
@@ -393,10 +393,10 @@
         }
       }
     },
-    "/customer/login": {
+    "/user/login": {
       "get": {
         "tags": [
-          "customer"
+          "user"
         ],
         "summary": "Logs user into the system",
         "description": "",
@@ -445,18 +445,26 @@
         }
       }
     },
-    "/customer/logout": {
+    "/user/logout": {
       "get": {
         "tags": [
-          "customer"
+          "user"
         ],
-        "summary": "Logs out current logged in user session",
+        "summary": "Logs out user session",
         "description": "",
         "operationId": "logoutCustomer",
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -464,10 +472,10 @@
         }
       }
     },
-    "/customer/{username}": {
+    "/user/{username}": {
       "get": {
         "tags": [
-          "customer"
+          "user"
         ],
         "summary": "Get user by user name",
         "description": "",
@@ -501,7 +509,7 @@
       },
       "put": {
         "tags": [
-          "customer"
+          "user"
         ],
         "summary": "Updated user",
         "description": "This can only be done by the logged in user.",
@@ -538,7 +546,7 @@
       },
       "delete": {
         "tags": [
-          "customer"
+          "user"
         ],
         "summary": "Delete user",
         "description": "This can only be done by the logged in user.",
@@ -805,20 +813,23 @@
       "properties": {
         "customer_id": {
           "type": "integer",
-          "format": "int64",
-          "example": 1
+          "format": "int64"
         },
-        "first_name": {
+        "firstname": {
           "type": "string",
           "example": "William"
         },
-        "lastName": {
+        "lastname": {
           "type": "string",
           "example": "Joshnson"
         },
         "address1": {
           "type": "string",
           "example": "16519 71st Ave"
+        },
+        "address2": {
+          "type": "string",
+          "example": "FL 1"
         },
         "city": {
           "type": "string",
@@ -830,48 +841,55 @@
         },
        "zip": {
           "type": "integer",
-          "example": "NY"
+          "example": 11101
         },
         "country": {
           "type": "string",
-          "example": "USA"
+          "example": "US"
         },
         "region": {
-          "type": "string"
+          "type": "integer",
+          "example": 1
         },
         "email": {
-          "type": "",
+          "type": "string",
           "example": "scott.seo@gmail.com"
         },
         "phone": {
-          "type": "string"
+          "type": "string",
+          "example": "888-111-5555"
         },
         "credit_card_type": {
           "type": "integer",
           "format": "int32",
-          "description": "Customer Status"
+          "example": 4
         },
         "credit_card": {
-          "type": "string"
+          "type": "string",
+          "example": "8377095518168063"
         },
         "credit_card_expiration": {
-          "type": "string"
+          "type": "string",
+          "example": "2010/10"
         },
         "username": {
-          "type": "string"
+          "type": "string",
+          "example": "user"
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "example": "password"
         },
         "age": {
           "type": "integer",
           "format": "int32",
-          "description": "age"
+          "description": "age",
+          "example": 25
         },
         "income": {
           "type": "integer",
           "format": "int32",
-          "description": "age"
+          "example": 100000
         },
         "gender": {
           "type": "string",

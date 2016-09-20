@@ -10,8 +10,8 @@ import java.util.Map;
 public class Customer {
 
     // "" indicates use the field name as json name
-    @JsonProperty("")
-    private String customerid;
+    @JsonProperty("customer_id")
+    private Long customerid;
 
     @JsonProperty("")
     private String firstname;
@@ -46,13 +46,13 @@ public class Customer {
     @JsonProperty("")
     private String phone;
 
-    @JsonProperty("")
+    @JsonProperty("credit_card_type")
     private int creditcardtype;
 
-    @JsonProperty("")
+    @JsonProperty("credit_card")
     private String creditcard;
 
-    @JsonProperty("")
+    @JsonProperty("credit_card_expiration")
     private String creditcardexpiration;
 
     @JsonProperty("")
@@ -113,15 +113,15 @@ public class Customer {
         return this.error;
     }
 
-    public String getCustomerid() {
+    public Long getCustomerid() {
         return customerid;
     }
 
-    public void setCustomerid(String customerid) {
+    public void setCustomerid(Long customerid) {
         this.customerid = customerid;
     }
 
-    public Customer customerid(String customerid) {
+    public Customer customerid(Long customerid) {
         this.customerid = customerid;
         return this;
     }

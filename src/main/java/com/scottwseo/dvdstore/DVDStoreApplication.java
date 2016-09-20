@@ -59,6 +59,8 @@ public class DVDStoreApplication extends APIApplication {
             registerResource(instanceOf(OrdersResource.class));
 
             registerResource(instanceOf(CustomersResource.class));
+
+            // environment.jersey().register(new UnrecognizedPropertyExceptionMapper());
         }
         else {
             registerResource(new StartupCheckListResource());

@@ -18,7 +18,7 @@ public class CustomerMapper implements ResultSetMapper<Customer> {
 
         try {
             customer
-                    .customerid(r.getString("customerid"))
+                    .customerid(r.getLong("customerid"))
                     .firstname(r.getString("firstname"))
                     .lastname(r.getString("lastname"))
                     .address1(r.getString("address1"))
