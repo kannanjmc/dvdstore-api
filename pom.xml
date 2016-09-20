@@ -10,11 +10,11 @@
     </prerequisites>
 
     <groupId>com.scottwseo</groupId>
-    <artifactId>commons</artifactId>
+    <artifactId>dvdstore-api</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>commons</name>
+    <name>DVD Store API</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -224,6 +224,7 @@
                             <mainClass>${mainClass}</mainClass>
                         </manifest>
                     </archive>
+                    <finalName>${artifactId}</finalName>
                 </configuration>
             </plugin>
             <plugin>

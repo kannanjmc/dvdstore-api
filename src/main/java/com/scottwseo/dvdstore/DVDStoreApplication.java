@@ -25,7 +25,7 @@ public class DVDStoreApplication extends APIApplication {
     public static void main(String[] args) throws Exception {
         java.security.Security.setProperty("networkaddress.cache.ttl", "60");
         if (args == null || args.length == 0) {
-            args = new String[] {"server", "dvdstore/conf/api.yml"};
+            args = new String[] {"server", "dvdstore-api/conf/dvdstore-api.yml"};
         }
         new DVDStoreApplication().run(args);
     }
