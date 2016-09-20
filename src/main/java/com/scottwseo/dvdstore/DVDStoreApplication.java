@@ -43,12 +43,13 @@ public class DVDStoreApplication extends APIApplication {
     public void run(final APIConfiguration configuration,
                     final Environment environment) {
 
+        this.environment = environment;
+
         String applicationContextPath = applicationContextPath(configuration);
 
         if (EnvVariables.check() && Configs.check() && PostgreSQLDatabase.check()) {
 
             this.injector = Guice.createInjector(new DVDStoreServiceModule(configuration, environment));
-            this.environment = environment;
 
             registerResource(new HelpResource(applicationContextPath, getName(), getAppVersion()));
 
