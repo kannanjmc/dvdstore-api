@@ -42,6 +42,7 @@ public class JsonUtil {
 
     private static String[] dateFormats = new String[] {
             "yyyy-MM-dd'T'HH:mm:ssZ",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
             "yyyy-MM-dd HH:mm:ss",
             "MM/dd/yyyy",
             "MM/dd/yyyy HH:mm:ss",

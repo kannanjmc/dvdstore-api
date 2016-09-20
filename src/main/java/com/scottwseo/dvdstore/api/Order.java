@@ -24,7 +24,7 @@ public class Order {
 
     private BigDecimal totalAmount;
 
-    private List<OrderLine> orderLines = new ArrayList();
+    private List<Orderline> orderlines = new ArrayList();
 
     private Map error = null;
 
@@ -121,13 +121,13 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
-    @JsonProperty("order_lines")
-    public List<OrderLine> getOrderLines() {
-        return orderLines;
+    @JsonProperty("orderlines")
+    public List<Orderline> getOrderlines() {
+        return orderlines;
     }
 
-    public void setOrderLines(List<OrderLine> orderLines) {
-        this.orderLines = orderLines;
+    public void setOrderlines(List<Orderline> orderlines) {
+        this.orderlines = orderlines;
     }
 
 

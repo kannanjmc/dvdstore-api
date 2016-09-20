@@ -25,7 +25,7 @@
       }
     },
     {
-      "name": "store",
+      "name": "orders",
       "description": "Access to DVD Store orders"
     },
     {
@@ -259,41 +259,10 @@
         ]
       }
     },
-    "/store/inventory": {
-      "get": {
-        "tags": [
-          "store"
-        ],
-        "summary": "Returns product inventories by status",
-        "description": "Returns a map of status codes to quantities",
-        "operationId": "getInventory",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
-      }
-    },
-    "/store/order": {
+    "/orders": {
       "post": {
         "tags": [
-          "store"
+          "orders"
         ],
         "summary": "Place an order for a product",
         "description": "",
@@ -325,10 +294,10 @@
         }
       }
     },
-    "/store/order/{orderId}": {
+    "/orders/{orderId}": {
       "get": {
         "tags": [
-          "store"
+          "orders"
         ],
         "summary": "Find purchase order by ID",
         "description": "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
@@ -365,7 +334,7 @@
       },
       "delete": {
         "tags": [
-          "store"
+          "orders"
         ],
         "summary": "Delete purchase order by ID",
         "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",

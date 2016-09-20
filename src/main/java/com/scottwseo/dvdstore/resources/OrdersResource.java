@@ -29,7 +29,7 @@ public class OrdersResource {
     @POST
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    public Response addProduct(Order orderToAdd,
+    public Response addOrder(Order orderToAdd,
                                @Context SecurityContext securityContext) {
 
         Order order = ordersService.addOrder(orderToAdd, securityContext);

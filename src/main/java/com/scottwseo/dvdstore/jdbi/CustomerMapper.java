@@ -37,7 +37,7 @@ public class CustomerMapper implements ResultSetMapper<Customer> {
                     .password(r.getString("password"))
                     .age(r.getInt("age"))
                     .income(r.getInt("income"))
-                    .gender(r.getString("gender"));
+                    .gender(Customer.GenderEnum.valueOf(r.getString("gender")));
         } catch (Exception e) {
             Map error = warn("rset to customer mapping failed", e.getMessage(), "ctx", ctx);
             customer.error(error);

@@ -1,20 +1,28 @@
 package com.scottwseo.dvdstore.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 
 public class Pagination {
 
+    @JsonProperty("")
     private Long start = null;
 
+    @JsonProperty("result_size")
     private Long resultSize = null;
 
+    @JsonProperty("")
     private String next = null;
 
+    @JsonProperty("")
     private String prev = null;
 
+    @JsonProperty("")
     private Long total = null;
 
+    @JsonProperty("total_pages")
     private Long totalPages = null;
 
 

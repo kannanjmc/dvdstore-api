@@ -1,21 +1,22 @@
 package com.scottwseo.dvdstore.service;
 
 import com.google.inject.Inject;
+import com.scottwseo.commons.util.JsonUtil;
 import com.scottwseo.dvdstore.api.Order;
-import com.scottwseo.dvdstore.api.OrderLine;
+import com.scottwseo.dvdstore.api.Orderline;
 import com.scottwseo.dvdstore.api.Products;
 import com.scottwseo.dvdstore.jdbi.OrderAndOrderLine;
 import com.scottwseo.dvdstore.jdbi.OrderMapper;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
+import org.skife.jdbi.v2.PreparedBatch;
 import org.skife.jdbi.v2.util.LongColumnMapper;
 
 import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 import java.util.Map;
 
-import static com.scottwseo.commons.util.LogUtil.map;
-import static com.scottwseo.commons.util.LogUtil.warn;
+import static com.scottwseo.commons.util.LogUtil.*;
 
 public class OrdersServiceImpl implements OrdersService {
 
@@ -49,12 +50,43 @@ public class OrdersServiceImpl implements OrdersService {
                     "        :totalamount\n" +
                     "    )";
             long orderId = h.createStatement(sql.toString())
-            .bind("orderdate", order.getOrderDate())
+            .bind("orderdate", JsonUtil.format(order.getOrderDate()))
             .bind("customerid", order.getCustomerId())
             .bind("netamount", order.getNetAmount())
             .bind("tax", order.getTax())
             .bind("totalamount", order.getTotalAmount())
             .executeAndReturnGeneratedKeys(LongColumnMapper.PRIMITIVE).first();
+
+            PreparedBatch b = h.prepareBatch("INSERT\n" +
+                    "INTO\n" +
+                    "    orderlines\n" +
+                    "    (\n" +
+                    "        orderlineid,\n" +
+                    "        orderid,\n" +
+                    "        prod_id,\n" +
+                    "        quantity,\n" +
+                    "        orderdate\n" +
+                    "    )\n" +
+                    "    VALUES\n" +
+                    "    (\n" +
+                    "        :orderlineid,\n" +
+                    "        :orderid,\n" +
+                    "        :prod_id,\n" +
+                    "        :quantity,\n" +
+                    "        :orderdate\n" +
+                    "    )");
+
+            for (Orderline orderline : order.getOrderlines()) {
+                int orderlineid = 1;
+                b.add()
+                .bind("orderlineid", orderlineid++)
+                .bind("orderid", orderId)
+                .bind("prod_id", orderline.getProductId())
+                .bind("quantity", orderline.getQuantity())
+                .bind("orderdate", JsonUtil.format(orderline.getOrderDate()));
+                info("batchinsert", "", "orderline", orderline);
+            }
+            b.execute();
 
             return order.orderId(orderId);
         }
@@ -134,8 +166,8 @@ public class OrdersServiceImpl implements OrdersService {
                     .totalAmount(row.getTotalAmount());
 
             for (OrderAndOrderLine ool : orderAndOrderLines) {
-                order.getOrderLines().add(
-                        new OrderLine()
+                order.getOrderlines().add(
+                        new Orderline()
                             .orderLineId(ool.getOrderLineId())
                             .productId(ool.getProductId())
                             .quantity(ool.getQuantity())

@@ -67,8 +67,40 @@ public class Customer {
     @JsonProperty("")
     private int income;
 
-    @JsonProperty("")
-    private String gender;
+    private GenderEnum gender = null;
+
+    /**
+     * Gets or Sets gender
+     */
+    public enum GenderEnum {
+        M("M"),
+
+        F("F");
+
+        private String value;
+
+        GenderEnum(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(value);
+        }
+    }
+
+    public Customer gender(GenderEnum gender) {
+        this.gender = gender;
+        return this;
+    }
+
+    public GenderEnum getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
+    }
 
     private Map error = null;
 
@@ -328,16 +360,4 @@ public class Customer {
         return this;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Customer gender(String gender) {
-        this.gender = gender;
-        return this;
-    }
 }
