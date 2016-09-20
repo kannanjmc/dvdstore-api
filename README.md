@@ -1,4 +1,4 @@
-<img src="https://github.com/scott-seo/api/images/api-spec.png">
+<img src="https://github.com/scott-seo/api/blob/master/images/api-spec.png">
 
 ## Troubleshooting
 
