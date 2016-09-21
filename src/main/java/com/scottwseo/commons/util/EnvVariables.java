@@ -12,17 +12,11 @@ import static com.scottwseo.commons.util.StringUtils.isEmpty;
  */
 public enum EnvVariables implements Config {
 
-    @Configuration(type= ConfigDataType.TEXT)
-    S3_BUCKET("com.scottwseo.api.S3_BUCKET"),
-
-    @Configuration(type= ConfigDataType.TEXT)
-    S3_KEY("com.scottwseo.api.S3_KEY"),
+    @Configuration(type= ConfigDataType.TEXT, required = true, masked = true)
+    CONFIG_URL("com.scottwseo.api.CONFIG_URL"),
 
     @Configuration(type= ConfigDataType.TEXT, required = false, masked = true)
-    ACCESS_KEY_ID("com.scottwseo.api.ACCESS_KEY_ID"),
-
-    @Configuration(type= ConfigDataType.TEXT, required = false, masked = true)
-    SECRET_KEY("com.scottwseo.api.SECRET_KEY");
+    AWS_PROFILE("com.scottwseo.api.AWS_PROFILE");
 
     private String key;
 

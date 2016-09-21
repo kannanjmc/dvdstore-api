@@ -35,7 +35,7 @@ public abstract class APIApplication extends Application<APIConfiguration> {
         if (EnvVariables.check()) {
             // AWSCredentialInitializerBundle is for allowing developers to manually specify the aws
             // credentials using environment variables
-            bootstrap.addBundle(new AWSCredentialsInitializerBundle<APIConfiguration>());
+            // bootstrap.addBundle(new AWSCredentialsInitializerBundle<APIConfiguration>());
             bootstrap.addBundle(new ArchaiusS3ConfigSourceBundle<APIConfiguration>());
         }
 
