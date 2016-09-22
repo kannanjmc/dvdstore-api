@@ -31,10 +31,10 @@ public class PostgreSQLDatabase {
 
         url.append(Configs.DB_URL.getString());
         if (url.toString().contains("?")) {
-            url.append("&user=").append(user).append("&password=").append("*****");
+            url.append("&user=").append(user).append("&password=").append(password);
         }
         else {
-            url.append("?user=").append(user).append("&password=").append("*****");
+            url.append("?user=").append(user).append("&password=").append(password);
         }
         return url.toString();
     }
