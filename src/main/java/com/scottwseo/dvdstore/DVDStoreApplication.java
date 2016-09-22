@@ -88,7 +88,7 @@ public class DVDStoreApplication extends APIApplication {
                 }
             }
             else if (!PostgreSQLDatabase.check()) {
-                s.append("PostgreSQL connection failure. URL: " + PostgreSQLDatabase.url());
+                s.append("PostgreSQL database connection failure.");
             }
 
             warn("prelaunch.check.failed", s.toString());
