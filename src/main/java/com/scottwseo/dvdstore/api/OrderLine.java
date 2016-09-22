@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Created by seos on 9/19/16.
  */
-public class Orderline {
+public class OrderLine {
 
     private Long orderLineId;
 
@@ -20,7 +20,7 @@ public class Orderline {
         return orderLineId;
     }
 
-    public Orderline orderLineId(Long orderLineId) {
+    public OrderLine orderLineId(Long orderLineId) {
         this.orderLineId = orderLineId;
         return this;
     }
@@ -30,7 +30,7 @@ public class Orderline {
         return productId;
     }
 
-    public Orderline productId(Long productId) {
+    public OrderLine productId(Long productId) {
         this.productId = productId;
         return this;
     }
@@ -40,7 +40,7 @@ public class Orderline {
         return quantity;
     }
 
-    public Orderline quantity(int quantity) {
+    public OrderLine quantity(int quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -50,7 +50,7 @@ public class Orderline {
     }
 
     @JsonProperty("order_date")
-    public Orderline orderDate(String orderDate) {
+    public OrderLine orderDate(String orderDate) {
         this.orderDate = orderDate;
         return this;
     }

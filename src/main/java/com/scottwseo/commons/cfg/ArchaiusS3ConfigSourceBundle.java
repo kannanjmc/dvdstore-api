@@ -2,10 +2,16 @@ package com.scottwseo.commons.cfg;
 
 import com.netflix.config.*;
 import com.scottwseo.commons.util.EnvVariables;
+import com.scottwseo.commons.util.S3Util;
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import java.io.InputStream;
+import java.net.URL;
+
+import static com.scottwseo.commons.util.StringUtils.isNotEmpty;
 
 /**
  * Created by seos on 9/8/16.
@@ -14,12 +20,19 @@ public class ArchaiusS3ConfigSourceBundle <T extends Configuration>  implements 
 
     @Override
     public void run(T configuration, Environment environment) throws Exception {
+        InputStream is = null;
+        String url = EnvVariables.CONFIG_URL.getString();
 
-        String bucket = parseBucket(EnvVariables.CONFIG_URL.getString());
+        if (isNotEmpty(EnvVariables.AWS_PROFILE.toString())) {
+            String bucket = parseBucket(url);
+            String key = parseKey(url);
+            is = S3Util.get(bucket, key);
+        }
+        else {
+            is = new URL(url).openStream();
+        }
 
-        String key = parseKey(EnvVariables.CONFIG_URL.getString());
-
-        PolledConfigurationSource s3ConfigurationSource = new S3ConfigurationSource(bucket, key);
+        PolledConfigurationSource s3ConfigurationSource = new InputStreamConfigurationSource(is);
 
         AbstractPollingScheduler scheduler = new FixedDelayPollingScheduler(0, 60 * 1000, true);
 
@@ -47,7 +60,7 @@ public class ArchaiusS3ConfigSourceBundle <T extends Configuration>  implements 
 
         // config.scottwseo.com/dev/config.properties
 
-        return url.substring(url.indexOf("/"), url.length());
+        return url.substring(url.indexOf("/") + 1, url.length());
     }
 
 }

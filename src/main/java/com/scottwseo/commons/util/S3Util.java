@@ -2,11 +2,11 @@ package com.scottwseo.commons.util;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.scottwseo.commons.cfg.SimpleAWSCredentialProviderChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ public class S3Util {
     private static final Logger LOG = LoggerFactory.getLogger(S3Util.class);
 
     public static void put(String bucket, String key, File file) throws IOException {
-        AmazonS3 s3client = new AmazonS3Client(new DefaultAWSCredentialsProviderChain());
+        AmazonS3 s3client = new AmazonS3Client(new SimpleAWSCredentialProviderChain());
         try {
             s3client.putObject(new PutObjectRequest(bucket, key, file));
         } catch (AmazonServiceException ase) {
@@ -33,7 +33,7 @@ public class S3Util {
     }
 
     public static InputStream get(String bucket, String key) throws IOException {
-        AmazonS3 s3client = new AmazonS3Client(new DefaultAWSCredentialsProviderChain());
+        AmazonS3 s3client = new AmazonS3Client(new SimpleAWSCredentialProviderChain());
         try {
             S3Object s3Object = s3client.getObject(bucket, key);
             return s3Object.getObjectContent();

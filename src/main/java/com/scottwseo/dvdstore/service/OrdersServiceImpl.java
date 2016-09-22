@@ -3,7 +3,7 @@ package com.scottwseo.dvdstore.service;
 import com.google.inject.Inject;
 import com.scottwseo.commons.util.JsonUtil;
 import com.scottwseo.dvdstore.api.Order;
-import com.scottwseo.dvdstore.api.Orderline;
+import com.scottwseo.dvdstore.api.OrderLine;
 import com.scottwseo.dvdstore.api.Products;
 import com.scottwseo.dvdstore.jdbi.OrderAndOrderLine;
 import com.scottwseo.dvdstore.jdbi.OrderMapper;
@@ -76,7 +76,7 @@ public class OrdersServiceImpl implements OrdersService {
                     "        :orderdate\n" +
                     "    )");
 
-            for (Orderline orderline : order.getOrderlines()) {
+            for (OrderLine orderline : order.getOrderlines()) {
                 int orderlineid = 1;
                 b.add()
                 .bind("orderlineid", orderlineid++)
@@ -167,7 +167,7 @@ public class OrdersServiceImpl implements OrdersService {
 
             for (OrderAndOrderLine ool : orderAndOrderLines) {
                 order.getOrderlines().add(
-                        new Orderline()
+                        new OrderLine()
                             .orderLineId(ool.getOrderLineId())
                             .productId(ool.getProductId())
                             .quantity(ool.getQuantity())

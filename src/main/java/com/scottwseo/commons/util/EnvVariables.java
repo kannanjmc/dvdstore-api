@@ -12,10 +12,10 @@ import static com.scottwseo.commons.util.StringUtils.isEmpty;
  */
 public enum EnvVariables implements Config {
 
-    @Configuration(type= ConfigDataType.TEXT, required = true, masked = true)
+    @Configuration(type= ConfigDataType.TEXT, required = true, masked = false)
     CONFIG_URL("com.scottwseo.api.CONFIG_URL"),
 
-    @Configuration(type= ConfigDataType.TEXT, required = false, masked = true)
+    @Configuration(type= ConfigDataType.TEXT, required = false, masked = false)
     AWS_PROFILE("com.scottwseo.api.AWS_PROFILE");
 
     private String key;

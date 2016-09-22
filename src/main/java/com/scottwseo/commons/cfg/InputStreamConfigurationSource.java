@@ -2,7 +2,6 @@ package com.scottwseo.commons.cfg;
 
 import com.netflix.config.PollResult;
 import com.netflix.config.PolledConfigurationSource;
-import com.scottwseo.commons.util.S3Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,16 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class S3ConfigurationSource implements PolledConfigurationSource {
+public class InputStreamConfigurationSource implements PolledConfigurationSource {
 
-    private static Logger LOG = LoggerFactory.getLogger(S3ConfigurationSource.class);
+    private static Logger LOG = LoggerFactory.getLogger(InputStreamConfigurationSource.class);
 
-    private String bucket;
-    private String key;
+    private InputStream is;
 
-    public S3ConfigurationSource(String bucket, String key) {
-        this.bucket = bucket;
-        this.key = key;
+    public InputStreamConfigurationSource(InputStream is) {
+        this.is = is;
     }
 
     @Override
@@ -33,10 +30,9 @@ public class S3ConfigurationSource implements PolledConfigurationSource {
         Map<String, Object> configs = new HashMap<String, Object>();
 
         try {
-            InputStream s = S3Util.get(bucket, key);
-            if (s != null) {
+            if (is != null) {
                 Properties properties = new Properties();
-                properties.load(s);
+                properties.load(is);
 
                 for (String key : properties.stringPropertyNames()) {
                     String value = (String) properties.get(key);
