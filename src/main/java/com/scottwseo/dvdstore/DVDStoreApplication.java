@@ -20,6 +20,9 @@ import com.scottwseo.dvdstore.resources.ProductsResource;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import static com.scottwseo.commons.util.ConfigUtil.isRequired;
+import static com.scottwseo.commons.util.LogUtil.*;
+
 public class DVDStoreApplication extends APIApplication {
 
     public static void main(String[] args) throws Exception {
@@ -65,7 +68,30 @@ public class DVDStoreApplication extends APIApplication {
         }
         else {
             registerResource(new StartupCheckListResource());
+
             environment.healthChecks().register("dummy", new DummyHealthCheck());
+
+            StringBuilder s = new StringBuilder();
+            if (!EnvVariables.check()) {
+                for (EnvVariables env : EnvVariables.values()) {
+                    if (isRequired(env) && !env.isProvided()) {
+                        s.append("env [" + env.key() + "] missing ");
+                    }
+                }
+            }
+
+            if (!Configs.check()) {
+                for (Configs config : Configs.values()) {
+                    if (isRequired(config) && !config.isProvided()) {
+                        s.append("config [" + config.key() + "] missing ");
+                    }
+                }
+            }
+            else if (!PostgreSQLDatabase.check()) {
+                s.append("PostgreSQL connection failure. URL: " + PostgreSQLDatabase.url());
+            }
+
+            warn("prelaunch.check.failed", s.toString());
         }
 
         websocket.addEndpoint(LogEndPoint.class);
