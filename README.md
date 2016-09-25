@@ -21,14 +21,18 @@
 #### Metrics
   * Grafana backed by Graphite
 
+#### Traceability
+  * Use of Correlation ID in logging
+
 ---
 
-### Continuous Delivery
-  * Feature flags
-  * Dockerized
+## Development Discipline
+
+### Continuous Deplyoment
+  * Dark release using feature flags
 
 ### Development
-- Swagger UI
+  * API specification defined using swagger
 
 
 
