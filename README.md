@@ -28,7 +28,7 @@
 
 ## Development Discipline
 
-### Continuous Deplyoment
+### Continuous Deployment
   * Dark release using feature flags
 
 ### Development
