@@ -2,8 +2,7 @@
 
 # DVD Store API: API Design Demo
 
-[![][travis img]][travis]
-[![][license img]][license]
+[![Build Status](https://travis-ci.org/scott-seo/dvdstore-api.svg?branch=master)](https://travis-ci.org/scott-seo/dvdstore-api)
 
 ## DevOps Discipline
 
