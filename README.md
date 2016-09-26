@@ -1,28 +1,37 @@
 <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png">
 
-## Troubleshooting
+# DVD Store API: API Design Demo
+
+[![Build Status](https://travis-ci.org/scott-seo/dvdstore-api.svg?branch=master)](https://travis-ci.org/scott-seo/dvdstore-api)
+
+## DevOps Discipline
 
 #### Configuration
-  * Credentials secured using S3
+  * Credentials secured using S3 and credentials authenticated using EC2 profile
   * Dynamic config reloading
-  * Checks environment variables and dynamic config during api startup
+  * Pre-launch checks for environmental variables and configs 
+  * Dockerized [image](https://hub.docker.com/r/scottseo/dvdstore-api/)
 
 #### Logging
-  * Fleuntd
-  * Json
-  * Websocket
+  * Log forwarding using fleuntd [image](https://hub.docker.com/r/scottseo/dvdstore-db/)
+  * Jsonized
+  * Websocket for quick access
 
 #### Metrics
   * Grafana backed by Graphite
 
+#### Traceability
+  * Use of Correlation ID in logging
+
 ---
 
-### Continuous Delivery
-  * Feature flags
-  * Dockerized
+## Development Discipline
+
+### Continuous Deployment
+  * Dark release using feature flags
 
 ### Development
-- Swagger UI
+  * API specification defined using swagger
 
 
 
