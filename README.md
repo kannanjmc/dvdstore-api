@@ -30,6 +30,8 @@
 
 ### Continuous Deployment
   * Dark release using feature flags
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/togglz-main.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/togglz-activation.png">
 
 ### Development
   * API specification defined using swagger

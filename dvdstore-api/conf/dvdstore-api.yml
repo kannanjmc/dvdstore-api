@@ -1,7 +1,7 @@
 logging:
 
   # Permit DEBUG, INFO, WARN and ERROR messages to be logged by appenders.
-  level: INFO
+  level: WARN
 
   appenders:
     # Log warnings and errors to stderr

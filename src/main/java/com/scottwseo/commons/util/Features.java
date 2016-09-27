@@ -14,11 +14,11 @@ import org.togglz.core.context.FeatureContext;
 public enum Features implements Feature {
 
     @EnabledByDefault
-    @InfoLink("https://github.com/")
+    @InfoLink("https://github.com/scott-seo/dvdstore-api/issues/1")
     @Owner("Scott Seo")
-    @Issue("Issue")
-    @Label("New Issue")
-    NEW_FEATURE;
+    @Issue("Issue-1")
+    @Label("Inventory Update")
+    INVENTORY_UPDATE;
 
     public boolean isActive() {
         return FeatureContext.getFeatureManager().isActive(this);
