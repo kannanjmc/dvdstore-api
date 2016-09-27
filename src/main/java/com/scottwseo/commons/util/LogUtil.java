@@ -19,7 +19,10 @@ public class LogUtil {
     private static Map log(String message, String description, String level, Object... context) {
         Map map = new Hashtable();
         map.put("message", message);
-        map.put("description", description);
+        // don't print out empty description in the json
+        if (description != null && description.length() > 0) {
+            map.put("description", description);
+        }
         map.putAll(map(context));
         switch (level) {
             case "debug": LOG.debug(asJson(map)); break;
