@@ -8,13 +8,13 @@
 ## DevOps Discipline
 
 #### Configuration
-  * Credentials secured using S3 and credentials authenticated using EC2 profile
+  * Credentials secured using S3 and EC2 profile
   * Dynamic config reloading
   * Pre-launch checks for environmental variables and configs 
   * Dockerized [image](https://hub.docker.com/r/scottseo/dvdstore-api/)
 
 #### Logging
-  * Log forwarding using fleuntd [image](https://hub.docker.com/r/scottseo/dvdstore-db/)
+  * Log forwarding using fleuntd [image](https://hub.docker.com/r/scottseo/custom-fluentd/)
   * Jsonized
   * Websocket for quick access
 
