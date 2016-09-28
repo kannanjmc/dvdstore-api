@@ -33,7 +33,7 @@ public enum EnvVariables implements Config {
         return true;
     }
 
-    public String getString() {
+    public String value() {
         return System.getenv(key);
     }
 

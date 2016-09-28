@@ -64,7 +64,7 @@ public class HelpResource {
         List<Map> configs = new ArrayList<>();
 
         for (EnvVariables env : EnvVariables.values()) {
-            String value = isMasked(env) ? "******" : env.getString();
+            String value = isMasked(env) ? "******" : env.value();
             populateCfg(configs, env.name(), env.key(), value, isRequired(env), "environment");
         }
 

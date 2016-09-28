@@ -1,7 +1,6 @@
 package com.scottwseo.commons.cfg;
 
 import com.netflix.config.*;
-import com.scottwseo.commons.util.EnvVariables;
 import com.scottwseo.commons.util.S3Util;
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
@@ -12,6 +11,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import static com.scottwseo.commons.util.StringUtils.isNotEmpty;
+import static com.scottwseo.commons.util.EnvVariables.*;
 
 /**
  * Created by seos on 9/8/16.
@@ -21,9 +21,9 @@ public class ArchaiusS3ConfigSourceBundle <T extends Configuration>  implements 
     @Override
     public void run(T configuration, Environment environment) throws Exception {
         InputStream is = null;
-        String url = EnvVariables.CONFIG_URL.getString();
+        String url = CONFIG_URL.value();
 
-        if (isNotEmpty(EnvVariables.AWS_PROFILE.toString())) {
+        if (isNotEmpty(AWS_PROFILE.value())) {
             String bucket = parseBucket(url);
             String key = parseKey(url);
             is = S3Util.get(bucket, key);

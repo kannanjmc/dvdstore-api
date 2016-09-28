@@ -16,10 +16,10 @@ public class AWSCredentialsInitializerBundle<T extends Configuration>  implement
     @Override
     public void run(T configuration, Environment environment) throws Exception {
         // read it from home/.aws/credential file
-        String profile = EnvVariables.AWS_PROFILE.getString();
+        String profile = EnvVariables.AWS_PROFILE.value();
 
-        System.setProperty("aws.accessKeyId", null); // EnvVariables.ACCESS_KEY_ID.getString()
-        System.setProperty("aws.secretKey", null); //EnvVariables.SECRET_KEY.getString()
+        System.setProperty("aws.accessKeyId", null); // EnvVariables.ACCESS_KEY_ID.value()
+        System.setProperty("aws.secretKey", null); //EnvVariables.SECRET_KEY.value()
     }
 
     @Override
