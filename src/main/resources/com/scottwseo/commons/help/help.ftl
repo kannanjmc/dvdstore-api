@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li id="overview" class="active"><a href="overview.html">Overview <span class="sr-only">(current)</span></a></li>
+                <li id="overview" class="active"><a href="${base}/overview">Overview <span class="sr-only">(current)</span></a></li>
                 <li><a href="configuration.html">Configuration</a></li>
                 <li><a href="${base}/log">Logging</a></li>
                 <li><a href="${base}/metrics">Metrics</a></li>

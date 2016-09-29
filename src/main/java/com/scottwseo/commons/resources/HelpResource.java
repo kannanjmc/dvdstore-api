@@ -2,6 +2,7 @@ package com.scottwseo.commons.resources;
 
 import com.scottwseo.commons.auth.User;
 import com.scottwseo.commons.help.HelpView;
+import com.scottwseo.commons.help.OverviewView;
 import com.scottwseo.commons.help.TailView;
 import com.scottwseo.commons.util.Configs;
 import com.scottwseo.commons.util.EnvVariables;
@@ -33,6 +34,8 @@ public class HelpResource {
 
     private TailView tailView;
 
+    private OverviewView overview;
+
     private String appName;
 
     private String appVersion;
@@ -42,6 +45,7 @@ public class HelpResource {
         this.appVersion =  appVersion;
         this.helpView = new HelpView(applicationContextPath);
         this.tailView = new TailView(applicationContextPath);
+        this.overview = new OverviewView();
     }
 
     @GET
@@ -139,5 +143,13 @@ public class HelpResource {
 
         return responseBody;
     }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/overview")
+    public OverviewView overview() {
+        return overview;
+    }
+
 
 }
