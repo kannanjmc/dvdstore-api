@@ -16,7 +16,7 @@ public class OverviewView extends View {
     public String getHtml() throws IOException {
 
         // Hard coded but could come from anywhere
-        String markdown = "<img src=\"https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png\">\n" +
+        String markdown =
                 "\n" +
                 "# DVD Store API: API Design Demo\n" +
                 "\n" +

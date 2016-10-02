@@ -100,7 +100,7 @@
         })
 
         // load the initial page
-        $('iframe').attr('src', 'overview.html');
+        $('iframe').attr('src', '${base}/overview');
 
         $.ajax({url: '${base}/meta', success: function(json){
             $("#tag").html(json.tag);
