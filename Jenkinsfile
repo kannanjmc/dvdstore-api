@@ -17,6 +17,6 @@ node {
         archive 'target/*.jar'
     }
     stage('Database Stop') {
-        sh "${dockerHome}/bin/docker rm -f scottseo/dvdstore-db"
+        sh "${dockerHome}/bin/docker rm -f dvdstore-db"
     }
 }
