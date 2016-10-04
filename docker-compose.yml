@@ -1,0 +1,48 @@
+version: '2'
+services:
+  api:
+    build: .
+    ports:
+     - "8080:8080"
+    depends_on:
+     - logger
+     - db
+     - grafana
+    environment:
+     - com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/local/local.config.properties
+    logging:
+      driver: "fluentd"
+  logger:
+    ports:
+     - "24224:24224"
+    environment:
+     - TOKEN=08a557c4-e11b-45cc-8de9-137c94ecbe27
+    image: scottseo/custom-fluentd:latest
+  db:
+    ports:
+     - "5432:5432"
+    environment:
+     - POSTGRES_USER=dbuser
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_DB=dellstore2
+    image: scottseo/dvdstore-db
+  grafana:
+    ports:
+     - "3000:3000"
+    environment:
+     - GF_SECURITY_ADMIN_PASSWORD=password
+    image: grafana/grafana:develop
+    volumes:
+      - ./grafana:/var/lib/grafana
+    depends_on:
+      - graphite
+  graphite:
+    ports:
+     - "80:80"
+     - "2003-2004:2003-2004"
+     - "2023-2024:2023-2024"
+     - "8125:8125/udp"
+     - "8126:8126"
+    image: hopsoft/graphite-statsd
+
+

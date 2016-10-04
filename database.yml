@@ -1,0 +1,10 @@
+version: '2'
+services:
+  db:
+    ports:
+     - "5432:5432"
+    environment:
+     - POSTGRES_USER=dbuser
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_DB=dellstore2
+    image: scottseo/dvdstore-db
