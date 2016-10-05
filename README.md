@@ -36,9 +36,10 @@
 
 ### API Design
   * API specification defined using swagger
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png"> 
 
-
-
-
-
+### Testing
+  * Unit tests
+  * Functional tests
+  * Postman Runner tests
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner.png">
