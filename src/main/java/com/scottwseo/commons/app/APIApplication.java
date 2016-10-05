@@ -2,12 +2,11 @@ package com.scottwseo.commons.app;
 
 import com.google.common.base.MoreObjects;
 import com.scottwseo.commons.auth.AuthenticationBundle;
-import com.scottwseo.commons.cfg.ArchaiusS3ConfigSourceBundle;
+import com.scottwseo.commons.cfg.ConfigInitializer;
 import com.scottwseo.commons.logging.ServerFactoryWrapper;
 import com.scottwseo.commons.logging.WebsocketBundle;
 import com.scottwseo.commons.resources.HelpResource;
 import com.scottwseo.commons.togglz.TogglzBundle;
-import com.scottwseo.commons.util.AWSCredentialsInitializerBundle;
 import com.scottwseo.commons.util.EnvVariables;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -36,7 +35,7 @@ public abstract class APIApplication extends Application<APIConfiguration> {
             // AWSCredentialInitializerBundle is for allowing developers to manually specify the aws
             // credentials using environment variables
             // bootstrap.addBundle(new AWSCredentialsInitializerBundle<APIConfiguration>());
-            bootstrap.addBundle(new ArchaiusS3ConfigSourceBundle<APIConfiguration>());
+            ConfigInitializer.initialize();
         }
 
         bootstrap.addBundle(new TogglzBundle<APIConfiguration>());

@@ -50,22 +50,15 @@ public class SimpleGraphiteReporterFactory extends GraphiteReporterFactory {
                 .convertRatesTo(getRateUnit())
                 .filter(getFilter())
                 .prefixedWith(getPrefix())
-                .build(new Graphite(new InetSocketAddress(getHost(), getPort())));
+                .build(new Graphite(new InetSocketAddress(host, getPort())));
     }
 
     private String getHostname() {
-        String instanceId = EC2MetadataUtils.getInstanceId();
-
-        if (StringUtils.isNotEmpty(instanceId)) {
-            return instanceId;
+        try {
+            return InetAddress.getLocalHost().getHostName();
         }
-        else {
-            try {
-                return InetAddress.getLocalHost().getHostName();
-            }
-            catch (UnknownHostException uhe) {
-                return "unknown";
-            }
+        catch (UnknownHostException uhe) {
+            return "unknown";
         }
     }
 

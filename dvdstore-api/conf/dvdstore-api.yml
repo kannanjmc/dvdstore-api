@@ -88,6 +88,12 @@ database:
 
       maxConnectionAge: 120s
 
-jerseyClient:
+jerseyClientConfiguration:
   timeout: 3s
   connectionTimeout: 3s
+
+metrics:
+  reporters:
+     - type: SimpleGraphiteReporterFactory
+       port: 2003
+       appname: dvdstore-api

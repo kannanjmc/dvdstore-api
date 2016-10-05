@@ -1,24 +1,5 @@
 version: '2'
 services:
-  api:
-    build: .
-    ports:
-     - "8080:8080"
-    depends_on:
-     - logger
-     - db
-     - grafana
-     - graphite
-    environment:
-     - com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/local/local.config.properties
-    logging:
-      driver: "fluentd"
-  logger:
-    ports:
-     - "24224:24224"
-    environment:
-     - TOKEN=08a557c4-e11b-45cc-8de9-137c94ecbe27
-    image: scottseo/custom-fluentd:latest
   db:
     ports:
      - "5432:5432"

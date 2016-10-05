@@ -18,7 +18,7 @@ public class APIConfiguration extends Configuration {
 
     @Valid
     @NotNull
-    @JsonProperty("jerseyClient")
+    @JsonProperty("jerseyClientConfiguration")
     private JerseyClientConfiguration jerseyClientConfiguration = new JerseyClientConfiguration();
 
     public DataSourceFactory getDataSourceFactory() {

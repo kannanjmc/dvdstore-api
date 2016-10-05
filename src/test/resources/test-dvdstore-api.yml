@@ -88,6 +88,7 @@ database:
 
       maxConnectionAge: 120s
 
-jerseyClient:
+jerseyClientConfiguration:
   timeout: 3s
   connectionTimeout: 3s
+
