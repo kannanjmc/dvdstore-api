@@ -44,5 +44,4 @@
   * Postman Runner tests
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner.png">
   * Newman tests as part of Jenkins build
-  [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/dcbaa42eea227cc9d300)
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/newman_run.png">
