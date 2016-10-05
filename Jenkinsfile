@@ -15,14 +15,13 @@ node {
     stage('Results') {
         junit '**/target/surefire-reports/TEST-*.xml'
         archive 'target/*.jar'
-        input message: "Did all the tests pass?", ok: "Continue"
     }
     stage('Database Stop') {
         sh "${dockerHome}/bin/docker rm -f dvdstore-db"
     }
-    stage('Docker') {
+/*    stage('Docker Push') {
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-login') {
             docker.build('scottseo/dvdstore-api').push('latest')
         }
-    }
+    }*/
 }
