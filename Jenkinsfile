@@ -15,6 +15,7 @@ node {
     stage('Results') {
         junit '**/target/surefire-reports/TEST-*.xml'
         archive 'target/*.jar'
+        input message: "Ok to continue?"
     }
     stage('Database Stop') {
         sh "${dockerHome}/bin/docker rm -f dvdstore-db"
