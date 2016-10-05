@@ -22,7 +22,7 @@ server:
   applicationContextPath: /api/v1/dvdstore
   applicationConnectors:
     - type: http
-      port: 8080
+      port: 8090
       bindHost: 0.0.0.0
       inheritChannel: false
       headerCacheSize: 512 bytes
@@ -44,7 +44,7 @@ server:
       useForwardedHeaders: true
   adminConnectors:
     - type: http
-      port: 8081
+      port: 8091
 
 database:
       # the name of your JDBC driver

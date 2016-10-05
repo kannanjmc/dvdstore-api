@@ -10,6 +10,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.Map;
 
+import static com.scottwseo.commons.util.LogUtil.*;
+
 /**
  * Created by sseo on 9/6/16.
  */
@@ -36,6 +38,8 @@ public class ProductsResource {
         if (product.error() != null) {
             return Response.status(400).entity(product.error()).build();
         }
+
+        info("product.create.successful", "", "product", product);
 
         return Response.ok().entity(product).build();
     }
@@ -69,6 +73,8 @@ public class ProductsResource {
             return Response.status(statusCode).entity(productUpdated
                     .error()).build();
         }
+
+        info("product.update.successful", "", "product", productUpdated);
 
         return Response.status(204).build();
     }
