@@ -3,6 +3,7 @@ package com.scottwseo.commons.app;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.scottwseo.commons.util.Configs;
 import io.dropwizard.Configuration;
+import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.db.DataSourceFactory;
 
 import javax.validation.Valid;
@@ -15,6 +16,11 @@ public class APIConfiguration extends Configuration {
     @JsonProperty("database")
     private DataSourceFactory database = new DataSourceFactory();
 
+    @Valid
+    @NotNull
+    @JsonProperty("jerseyClient")
+    private JerseyClientConfiguration jerseyClientConfiguration = new JerseyClientConfiguration();
+
     public DataSourceFactory getDataSourceFactory() {
 
         if (!Configs.check()) {
@@ -26,6 +32,10 @@ public class APIConfiguration extends Configuration {
         database.setPassword(Configs.DB_PWD.getString());
 
         return database;
+    }
+
+    public JerseyClientConfiguration getJerseyClientConfiguration() {
+        return this.jerseyClientConfiguration;
     }
 
 }

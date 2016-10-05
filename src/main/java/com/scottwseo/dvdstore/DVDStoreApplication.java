@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.netflix.config.ConfigurationManager;
 import com.scottwseo.commons.app.APIApplication;
 import com.scottwseo.commons.app.APIConfiguration;
+import com.scottwseo.commons.exception.UnrecognizedPropertyExceptionMapper;
 import com.scottwseo.commons.health.DummyHealthCheck;
 import com.scottwseo.commons.logging.LogEndPoint;
 import com.scottwseo.commons.resources.HelpResource;
@@ -64,7 +65,7 @@ public class DVDStoreApplication extends APIApplication {
 
             registerResource(instanceOf(CustomersResource.class));
 
-            // environment.jersey().register(new UnrecognizedPropertyExceptionMapper());
+            environment.jersey().register(new UnrecognizedPropertyExceptionMapper());
 
             info("server.startup.completed", "");
         }
