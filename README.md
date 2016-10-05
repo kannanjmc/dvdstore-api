@@ -1,5 +1,3 @@
-<img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png">
-
 # DVD Store API: API Design Demo
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/scott-seo/dvdstore-api/blob/master/LICENSE)
@@ -38,6 +36,7 @@
 
 ### API Design
   * API specification defined using swagger
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png">
 
 
 
