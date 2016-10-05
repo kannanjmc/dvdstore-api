@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/scott-seo/dvdstore-api/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/scott-seo/dvdstore-api.svg?branch=master)](https://travis-ci.org/scott-seo/dvdstore-api)
 
-## DevOps Discipline
+## Operational Concerns
 
 #### Configuration
   * Credentials secured using S3 and EC2 profile
@@ -15,7 +15,7 @@
 
 #### Logging
   * Log forwarding using fleuntd [image](https://hub.docker.com/r/scottseo/custom-fluentd/)
-  * Jsonized
+  * JSONized
   * Websocket for quick access
 
 #### Metrics
@@ -24,16 +24,19 @@
 #### Traceability
   * Use of Correlation ID in logging
 
----
+--
 
-## Development Discipline
+## Development Concerns
 
-### Continuous Deployment
-  * Dark release using feature flags
+### Continuous Develivery
+<img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/pipeline.png">
+
+### Continuous Deployment 
+  * Using feature flags to get features out to production as often as possible
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/togglz-main.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/togglz-activation.png">
 
-### Development
+### API Design
   * API specification defined using swagger
 
 
