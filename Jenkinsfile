@@ -19,6 +19,8 @@ node {
     stage('Database Stop') {
         sh "${dockerHome}/bin/docker rm -f dvdstore-db"
     }
+    step([$class: 'JaCoCoPublisher'])
+
 /*    stage('Docker Push') {
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-login') {
             docker.build('scottseo/dvdstore-api').push('latest')
