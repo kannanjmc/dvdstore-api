@@ -33,7 +33,9 @@ public class CustomJsonLayout extends JsonLayout {
         try {
             String message = (String) map.get("message");
             Map msgMap = JsonUtil.fromJson(message, Map.class);
+            // json log will be the value of log property
             map.put("log", msgMap);
+            // web request log will be the value of message property
             map.remove("message");
             return formatter.toJsonString(map);
         } catch (Exception e) {
