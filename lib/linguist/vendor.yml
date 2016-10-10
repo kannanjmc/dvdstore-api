@@ -323,6 +323,6 @@
 # Jenkins Pipeline
 - ^Jenkinsfile$
 
-# Help Page js
-- ^src/main/resources/com/scottwseo/commons/help/
-- ^src/main/resources/com/scottwseo/commons/swagger/
+# Help page javascripts and swagger files
+- src/main/resources/com/scottwseo/commons/help/
+- src/main/resources/com/scottwseo/commons/swagger/
