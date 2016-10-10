@@ -14,8 +14,9 @@
 
 #### Logging
   * Log forwarding using fleuntd [image](https://hub.docker.com/r/scottseo/custom-fluentd/)
-  * JSONized
   * Websocket for quick access
+  * JSONized
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/loggly.png">
 
 #### Metrics
   * Grafana backed by Graphite

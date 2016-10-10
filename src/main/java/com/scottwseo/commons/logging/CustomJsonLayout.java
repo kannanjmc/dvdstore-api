@@ -33,7 +33,8 @@ public class CustomJsonLayout extends JsonLayout {
         try {
             String message = (String) map.get("message");
             Map msgMap = JsonUtil.fromJson(message, Map.class);
-            map.put("message", msgMap);
+            map.put("log", msgMap);
+            map.remove("message");
             return formatter.toJsonString(map);
         } catch (Exception e) {
             addError("JsonFormatter failed.  Defaulting to map.toString().  Message: " + e.getMessage(), e);
