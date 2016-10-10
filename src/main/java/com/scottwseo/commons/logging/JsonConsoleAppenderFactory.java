@@ -37,10 +37,14 @@ public class JsonConsoleAppenderFactory extends AbstractAppenderFactory {
         appender.setTarget("System.out");
 
         LayoutWrappingEncoder layoutEncoder = new LayoutWrappingEncoder();
-
-        JsonLayout jsonLayout = new JsonLayout();
         JacksonJsonFormatter jsonFormatter = new JacksonJsonFormatter();
         jsonFormatter.setPrettyPrint(false);
+
+        JsonLayout jsonLayout = new CustomJsonLayout();
+        jsonLayout.setIncludeLoggerName(false);
+        jsonLayout.setIncludeThreadName(false);
+        jsonLayout.setIncludeContextName(false);
+        jsonLayout.setIncludeTimestamp(true);
         jsonLayout.setJsonFormatter(jsonFormatter);
         jsonLayout.setTimestampFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         jsonLayout.setTimestampFormatTimezoneId("UTC");
