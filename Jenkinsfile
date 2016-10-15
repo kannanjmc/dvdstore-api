@@ -12,11 +12,10 @@ node {
     stage('Build') {
         docker.image('maven:3.3.3-jdk-8').inside('--link dvdstore-db:db') {
 
-          git 'https://github.com/scott-seo/dvdstore-api.git'
+          // git 'https://github.com/scott-seo/dvdstore-api.git'
+          scm checkout
 
           writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
-
-          sh 'ls -l /'
 
           withEnv(["com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/junit/local.config.properties"]) {
             sh 'mvn -B -s settings.xml clean install'
