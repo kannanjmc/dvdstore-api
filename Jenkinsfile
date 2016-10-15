@@ -12,8 +12,7 @@ node {
     stage('Build') {
         docker.image('maven:3.3.3-jdk-8').inside('--link dvdstore-db:db') {
 
-          // git 'https://github.com/scott-seo/dvdstore-api.git'
-          scm checkout
+          git '/data/git/dvdstore-api.git'
 
           writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
 
