@@ -10,11 +10,11 @@ node {
         sh "${dockerHome}/bin/docker run --name dvdstore-db -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db"
     }
     stage('Build') {
-        docker.image('maven:3.3.3-jdk-8').withRun('--volume ~/.m2/repository:/exports --link dvdstore-db:db') { c ->
+        docker.image('maven:3.3.3-jdk-8').inside('--link dvdstore-db:db') {
 
           git 'https://github.com/scott-seo/dvdstore-api.git'
 
-          writeFile file: 'settings.xml', text: "<settings><localRepository>/exports</localRepository></settings>"
+          writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo"
 
           sh 'ls -l /'
 
