@@ -6,14 +6,17 @@ node {
     }
     stage('Database Start') {
         dockerHome = tool 'DOCKER'
+        docker ps | grep dvdstore-db | awk {'print $1'} | xargs docker rm -f
         sh "${dockerHome}/bin/docker run --name dvdstore-db -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db"
     }
     stage('Build') {
-        docker.image('maven:3.3.3-jdk-8').withRun('--volume ~/.m2/repository:/exports') { c ->
+        docker.image('maven:3.3.3-jdk-8').withRun('--volume ~/.m2/repository:/exports --link dvdstore:db') { c ->
 
           git 'https://github.com/scott-seo/dvdstore-api.git'
 
           writeFile file: 'settings.xml', text: "<settings><localRepository>/exports</localRepository></settings>"
+
+          sh 'ls -l /exports'
 
           withEnv(["com.scottwseo.api.CONFIG_URL=http://localhost:8000/localhost.config.properties"]) {
             sh 'mvn -B -s settings.xml clean install'
