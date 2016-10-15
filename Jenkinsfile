@@ -16,7 +16,7 @@ node {
 
           writeFile file: 'settings.xml', text: "<settings><localRepository>/exports</localRepository></settings>"
 
-          sh 'ls -l /exports'
+          sh 'ls -l /'
 
           withEnv(["com.scottwseo.api.CONFIG_URL=http://localhost:8000/localhost.config.properties"]) {
             sh 'mvn -B -s settings.xml clean install'
