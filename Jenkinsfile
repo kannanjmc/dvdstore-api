@@ -18,7 +18,7 @@ node {
 
           sh 'ls -l /'
 
-          withEnv(["com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/junit/localhost.config.properties"]) {
+          withEnv(["com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/junit/local.config.properties"]) {
             sh 'mvn -B -s settings.xml clean install'
           }
 
