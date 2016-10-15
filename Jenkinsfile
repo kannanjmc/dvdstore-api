@@ -31,9 +31,9 @@ node {
     }
     step([$class: 'hudson.plugins.jacoco.JacocoPublisher'])
 
-/*    stage('Docker Push') {
+    stage('Docker Push') {
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-login') {
             docker.build('scottseo/dvdstore-api').push('latest')
         }
-    }*/
+    }
 }
