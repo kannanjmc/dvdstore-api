@@ -29,7 +29,7 @@ node {
     stage('Database Stop') {
         sh "${dockerHome}/bin/docker rm -f dvdstore-db"
     }
-    step([$class: 'JacocoPublisher'])
+    step([$class: 'hudson.plugins.jacoco.JacocoPublisher'])
 
 /*    stage('Docker Push') {
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-login') {
