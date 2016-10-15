@@ -30,7 +30,7 @@
 ## Development Concerns
 
 ### Continuous Develivery
-<img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/pipeline2.png">
+<img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/pipeline3.png">
 
 ### Continuous Deployment 
   * Using feature flags to get features out to production as often as possible
