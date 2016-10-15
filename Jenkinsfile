@@ -6,7 +6,7 @@ node {
     }
     stage('Database Start') {
         dockerHome = tool 'DOCKER'
-        docker ps | grep dvdstore-db | awk {'print $1'} | xargs docker rm -f
+        sh "docker ps | grep dvdstore-db | awk {'print $1'} | xargs docker rm -f"
         sh "${dockerHome}/bin/docker run --name dvdstore-db -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db"
     }
     stage('Build') {
