@@ -14,7 +14,7 @@ node {
 
           git 'https://github.com/scott-seo/dvdstore-api.git'
 
-          writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo"
+          writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
 
           sh 'ls -l /'
 
