@@ -10,7 +10,7 @@
   * Dynamic config reloading
   * Pre-launch checks for environmental variables and configs 
   * Dockerized [image](https://hub.docker.com/r/scottseo/dvdstore-api/)
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/configuration.png">
 
 #### Logging
@@ -21,7 +21,7 @@
 
 #### Metrics
   * Grafana backed by Graphite
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/grafana2.png">
 
 #### Traceability
@@ -41,7 +41,7 @@
 
 ### API Design
   * API specification defined using swagger
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png"> 
 
 ### Testing
@@ -50,7 +50,7 @@
   * Postman Runner tests
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner2.png">
   * Newman tests as part of Jenkins build
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/newman_run2.png">
   
 ### Take a test drive with Postman Collection
