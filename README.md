@@ -43,7 +43,7 @@
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/togglz-activation.png">
 
 ### API Design
-  * API specification defined using swagger (Open API Initiative) specification
+  * API specification defined using swagger ([Open API Initiative](https://openapis.org/)) specification
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png"> 
 
@@ -52,11 +52,11 @@
   * Functional tests
   * Postman Runner tests
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner2.png">
-  * Newman tests as part of Jenkins build
+  * Newman tests
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/newman_run2.png">
   
-### Take a test drive with Postman Collection
+### Take a test drive of my API with Postman 
   * [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/dcbaa42eea227cc9d300)
   
 ## Life is good!
