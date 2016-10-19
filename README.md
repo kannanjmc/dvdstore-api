@@ -10,6 +10,7 @@
   * Dynamic config reloading
   * Pre-launch checks for environmental variables and configs 
   * Dockerized [image](https://hub.docker.com/r/scottseo/dvdstore-api/)
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/configuration.png">
 
 #### Logging
