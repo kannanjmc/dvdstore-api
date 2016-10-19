@@ -9,38 +9,41 @@
   * Credentials secured using S3 and EC2 profile
   * Dynamic config reloading
   * Pre-launch checks for environmental variables and configs 
-  * Dockerized [image](https://hub.docker.com/r/scottseo/dvdstore-api/)
+  * Immutable infrastructure implemented using [Docker](https://hub.docker.com/r/scottseo/dvdstore-api/)
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/configuration.png">
 
 #### Logging
-  * Log forwarding using fleuntd [image](https://hub.docker.com/r/scottseo/custom-fluentd/)
-  * Websocket for quick access
-  * JSONized
+  * Log forwarding to central logging service using logging agent [fluentd](https://hub.docker.com/r/scottseo/custom-fluentd/)
+  * Logging to websocket for live tailing of logs
+  * JSONized to be machine readable
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/loggly.png">
 
 #### Metrics
-  * Grafana backed by Graphite
+  * Metrics collected by Graphite and rendered by Grafana
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/grafana2.png">
 
 #### Traceability
-  * Use of Correlation ID in logging
+  * Use of Correlation ID in request header and logs to correlate events from originating client to all of its APIs 
 
 --
 
 ## Development Concerns
 
-### Continuous Develivery
+### Continuous Delivery
+  * Achieved consistent build, test, deploy and ready to ship phases  
 <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/pipeline3.png">
 
 ### Continuous Deployment 
-  * Using feature flags to get features out to production as often as possible
+  * Using feature flags to get features out to production as often and as soon as possible
+  * Tracking every release and marking release events on Grafana graphs
+  * Following [Etsy](https://codeascraft.com/2010/12/08/track-every-release/) deployment model  
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/togglz-main.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/togglz-activation.png">
 
 ### API Design
-  * API specification defined using swagger
+  * API specification defined using swagger (Open API Initiative) specification
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png"> 
 
