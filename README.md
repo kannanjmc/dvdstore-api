@@ -20,7 +20,7 @@
 
 #### Metrics
   * Grafana backed by Graphite
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/grafana.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/grafana2.png">
 
 #### Traceability
   * Use of Correlation ID in logging
@@ -45,9 +45,9 @@
   * Unit tests
   * Functional tests
   * Postman Runner tests
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner2.png">
   * Newman tests as part of Jenkins build
-  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/newman_run.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/newman_run2.png">
   
 ### Take a test drive with Postman Collection
   * [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/dcbaa42eea227cc9d300)
