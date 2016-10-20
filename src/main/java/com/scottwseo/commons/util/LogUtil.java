@@ -16,9 +16,9 @@ public class LogUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger("");
 
-    private static Map log(String message, String description, String level, Object... context) {
+    private static Map log(String event, String description, String level, Object... context) {
         Map map = new Hashtable();
-        map.put("event", message);
+        map.put("event", event);
         // don't print out empty description in the json
         if (description != null && description.length() > 0) {
             map.put("description", description);
