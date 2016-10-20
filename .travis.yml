@@ -13,8 +13,8 @@ before_install:
   - docker pull scottseo/dvdstore-db
   - docker run --name dvdstore-db -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db
 
-script:
-  - docker run --rm --link dvdstore-db:db -t -v $(pwd):/var/lib/jenkins:rw -e com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/junit/local.config.properties --entrypoint cat maven:3.3.3-jdk-8
+#script:
+#  - docker run --rm --link dvdstore-db:db -t -v $(pwd):/var/lib/jenkins:rw -e com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/junit/local.config.properties --entrypoint cat maven:3.3.3-jdk-8
 
 after_script:
   - docker rm -f dvdstore-db
