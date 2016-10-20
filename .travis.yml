@@ -11,4 +11,4 @@ services:
 
 before_install:
   - docker pull scottseo/dvdstore-db
-  - docker run --name dvdstore-db -p 127.0.0.1:5432:5432 -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db
+  - docker run --name dvdstore-db -p 5432:5432 -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db
