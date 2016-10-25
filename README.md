@@ -25,6 +25,7 @@
 
 #### Traceability
   * Using Zipkin for distributed tracing 
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/zipkin.png">
 
 --
