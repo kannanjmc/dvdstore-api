@@ -8,6 +8,8 @@ import com.scottwseo.commons.logging.WebsocketBundle;
 import com.scottwseo.commons.resources.HelpResource;
 import com.scottwseo.commons.togglz.TogglzBundle;
 import com.scottwseo.commons.util.EnvVariables;
+import com.smoketurner.dropwizard.zipkin.ZipkinBundle;
+import com.smoketurner.dropwizard.zipkin.ZipkinFactory;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -52,6 +54,13 @@ public abstract class APIApplication extends Application<APIConfiguration> {
         bootstrap.addBundle(new AssetsBundle("/com/scottwseo/commons/swagger", "/swagger", "index.ftl", "swagger"));
 
         bootstrap.addBundle(new AssetsBundle("/apidef","/apidef", "swagger.json", "swaggerdef"));
+
+        bootstrap.addBundle(new ZipkinBundle<APIConfiguration>(getName()) {
+            @Override
+            public ZipkinFactory getZipkinFactory(APIConfiguration configuration) {
+                return configuration.getZipkinFactory();
+            }
+        });
 
         bootstrap.addBundle(websocket);
 

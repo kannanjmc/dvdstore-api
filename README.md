@@ -24,7 +24,8 @@
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/grafana2.png">
 
 #### Traceability
-  * Use of Correlation ID in request header and logs to correlate events from originating client to all of its APIs 
+  * Using Zipkin for distributed tracing 
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/zipkin.png">
 
 --
 

@@ -98,3 +98,16 @@ metrics:
      - type: SimpleGraphiteReporterFactory
        port: 2003
        appname: dvdstore-api
+
+zipkin:
+
+  # Required properties
+  # Listening IP address of the service
+  serviceHost: 192.168.1.100
+  # Listening port of the service
+  servicePort: 8080
+
+  # Optional properties
+  collector: http
+  # If using the http collector, provide the baseUrl
+  baseUrl: http://127.0.0.1:9411/

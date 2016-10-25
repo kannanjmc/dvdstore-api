@@ -1,5 +1,6 @@
 package com.scottwseo.dvdstore;
 
+import com.github.kristofa.brave.Brave;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.netflix.config.ConfigurationManager;
@@ -66,6 +67,8 @@ public class DVDStoreApplication extends APIApplication {
             registerResource(instanceOf(CustomersResource.class));
 
             environment.jersey().register(new UnrecognizedPropertyExceptionMapper());
+
+            Brave brave = configuration.getZipkinFactory().build(environment);
 
             info("server.startup.completed", "");
         }
