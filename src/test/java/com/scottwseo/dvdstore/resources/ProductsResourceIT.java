@@ -1,9 +1,7 @@
 package com.scottwseo.dvdstore.resources;
 
-import com.scottwseo.commons.app.APIApplication;
 import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.dvdstore.DVDStoreApplication;
-import com.scottwseo.dvdstore.api.Product;
 import com.scottwseo.dvdstore.api.ProductCreate;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.testing.ResourceHelpers;
@@ -16,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-
 import java.math.BigDecimal;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,9 +23,9 @@ import static org.hamcrest.core.IsNull.notNullValue;
 /**
  * Created by seos on 10/5/16.
  */
-public class ProductsResourceTest {
+public class ProductsResourceIT {
 
-    private static Logger LOG = LoggerFactory.getLogger(ProductsResourceTest.class);
+    private static Logger LOG = LoggerFactory.getLogger(ProductsResourceIT.class);
 
     private static final String API_URL = "http://localhost:%d/api/v1/dvdstore/products";
 

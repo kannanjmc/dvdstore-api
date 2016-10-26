@@ -50,7 +50,7 @@
 
 ### Testing
   * Unit tests
-  * Functional tests
+  * Integration tests
   * Postman Runner tests
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner2.png">
   * Newman tests
