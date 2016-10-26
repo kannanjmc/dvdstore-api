@@ -2,6 +2,7 @@ package com.scottwseo.dvdstore.resources;
 
 import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.dvdstore.DVDStoreApplication;
+import com.scottwseo.dvdstore.api.Product;
 import com.scottwseo.dvdstore.api.ProductCreate;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.testing.ResourceHelpers;
@@ -57,7 +58,7 @@ public class ProductsResourceIT {
 
         assertThat(status, is(200));
 
-        ProductCreate productReceived = response.readEntity(ProductCreate.class);
+        Product productReceived = response.readEntity(Product.class);
 
         assertThat(productReceived, is(notNullValue()));
 
