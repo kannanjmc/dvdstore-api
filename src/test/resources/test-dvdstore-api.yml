@@ -96,14 +96,14 @@ zipkin:
 
   # Required properties
   # Listening IP address of the service
-  serviceHost: 192.168.1.100
+  serviceHost: 0.0.0.0
   # Listening port of the service
   servicePort: 8080
 
   # Optional properties
   collector: http
   # If using the http collector, provide the baseUrl
-  baseUrl: http://127.0.0.1:9411/
+  baseUrl: http://zipkin:9411/
 
 zipkinClient:
   serviceName: dvdstore-api-client

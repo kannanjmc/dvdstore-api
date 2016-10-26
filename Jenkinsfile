@@ -7,10 +7,12 @@ node {
     stage('Database Start') {
         dockerHome = tool 'DOCKER'
         sh "docker ps | grep dvdstore-db | awk {'print \$1'} | xargs docker rm -f"
+        sh "docker ps | grep zipkin | awk {'print \$1'} | xargs docker rm -f"
         sh "${dockerHome}/bin/docker run --name dvdstore-db -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db"
+        sh "${dockerHome}/bin/docker run --name zipkin -d -p 9411:9411 openzipkin/zipkin"
     }
     stage('Build') {
-        docker.image('maven:3.3.3-jdk-8').inside('--link dvdstore-db:db') {
+        docker.image('maven:3.3.3-jdk-8').inside('--link dvdstore-db:db --link zipkin:zipkin') {
 
           git '/data/git/dvdstore-api.git'
 
