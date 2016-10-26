@@ -92,3 +92,20 @@ jerseyClientConfiguration:
   timeout: 3s
   connectionTimeout: 3s
 
+zipkin:
+
+  # Required properties
+  # Listening IP address of the service
+  serviceHost: 192.168.1.100
+  # Listening port of the service
+  servicePort: 8080
+
+  # Optional properties
+  collector: http
+  # If using the http collector, provide the baseUrl
+  baseUrl: http://127.0.0.1:9411/
+
+zipkinClient:
+  serviceName: dvdstore-api-client
+  timeout: 2s
+
