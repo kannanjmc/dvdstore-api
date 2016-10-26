@@ -9,7 +9,7 @@ node {
         sh "docker ps | grep dvdstore-db | awk {'print \$1'} | xargs docker rm -f"
         sh "docker ps | grep zipkin | awk {'print \$1'} | xargs docker rm -f"
         sh "${dockerHome}/bin/docker run --name dvdstore-db -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=password -e POSTGRES_DB=dellstore2 -d scottseo/dvdstore-db"
-        sh "${dockerHome}/bin/docker run --name zipkin -d -p 9411:9411 openzipkin/zipkin"
+        sh "${dockerHome}/bin/docker run --name zipkin -d openzipkin/zipkin"
     }
     stage('Build') {
         docker.image('maven:3.3.3-jdk-8').inside('--link dvdstore-db:db --link zipkin:zipkin') {
@@ -50,6 +50,7 @@ node {
     }
     stage('Database Stop') {
         sh "${dockerHome}/bin/docker rm -f dvdstore-db"
+        sh "${dockerHome}/bin/docker rm -f zipkin"
     }
     stage('Docker Push') {
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-login') {
