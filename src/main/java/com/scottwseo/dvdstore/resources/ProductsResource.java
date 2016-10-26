@@ -1,16 +1,20 @@
 package com.scottwseo.dvdstore.resources;
 
+import com.github.kristofa.brave.Brave;
+import com.github.kristofa.brave.ClientTracer;
 import com.google.inject.Inject;
 import com.scottwseo.dvdstore.api.Product;
 import com.scottwseo.dvdstore.api.ProductCreate;
 import com.scottwseo.dvdstore.api.Products;
 import com.scottwseo.dvdstore.service.ProductsService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.client.Client;
 import javax.ws.rs.core.*;
 import java.util.Map;
 
-import static com.scottwseo.commons.util.LogUtil.*;
+import static com.scottwseo.commons.util.LogUtil.info;
 
 /**
  * Created by sseo on 9/6/16.
@@ -22,18 +26,29 @@ public class ProductsResource {
 
     private ProductsService productsService;
 
+    private Client client;
+
+    private Brave brave;
+
     @Inject
-    public ProductsResource(ProductsService productsService) {
+    public ProductsResource(ProductsService productsService, Client client, Brave brave) {
         this.productsService = productsService;
+        this.client = client;
+        this.brave = brave;
     }
 
     @POST
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     public Response addProduct(ProductCreate post,
-                               @Context SecurityContext securityContext) {
+                               @Context HttpServletRequest request,
+                               @Context SecurityContext securityContext) throws Exception {
 
+        ClientTracer clientTracer = brave.clientTracer();
+        clientTracer.startNewSpan("database");
+        clientTracer.setClientSent();
         ProductCreate product = productsService.addProduct(post, securityContext);
+        clientTracer.setClientReceived();
 
         if (product.error() != null) {
             return Response.status(400).entity(product.error()).build();
@@ -41,7 +56,8 @@ public class ProductsResource {
 
         info("product.create.successful", "", "product", product);
 
-        return Response.ok().entity(product).build();
+        return client.target("http://127.0.0.1:" + request.getServerPort() + "/api/v1/dvdstore/orders/" + product.getProdId()).request().get();
+
     }
 
     @GET

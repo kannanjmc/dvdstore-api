@@ -3,6 +3,7 @@ package com.scottwseo.commons.app;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.scottwseo.commons.util.Configs;
 import com.smoketurner.dropwizard.zipkin.ZipkinFactory;
+import com.smoketurner.dropwizard.zipkin.client.ZipkinClientConfiguration;
 import io.dropwizard.Configuration;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.db.DataSourceFactory;
@@ -27,6 +28,11 @@ public class APIConfiguration extends Configuration {
     @JsonProperty("zipkin")
     private ZipkinFactory zipkin;
 
+    @Valid
+    @NotNull
+    private final ZipkinClientConfiguration zipkinClient = new ZipkinClientConfiguration();
+
+
     public DataSourceFactory getDataSourceFactory() {
 
         if (!Configs.check()) {
@@ -46,6 +52,11 @@ public class APIConfiguration extends Configuration {
 
     public ZipkinFactory getZipkinFactory() {
         return zipkin;
+    }
+
+    @JsonProperty
+    public ZipkinClientConfiguration getZipkinClient() {
+        return zipkinClient;
     }
 
 }

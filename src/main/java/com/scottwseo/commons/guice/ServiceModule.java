@@ -1,20 +1,24 @@
 package com.scottwseo.commons.guice;
 
+import com.github.kristofa.brave.Brave;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.scottwseo.commons.app.APIConfiguration;
+import com.smoketurner.dropwizard.zipkin.client.ZipkinClientBuilder;
 import io.dropwizard.db.ManagedDataSource;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
 
 import javax.sql.DataSource;
+import javax.ws.rs.client.Client;
 
 public class ServiceModule extends AbstractModule {
 
     protected APIConfiguration configuration;
     protected Environment environment;
     private DBI dbi;
+    private Brave brave;
 
     public ServiceModule(APIConfiguration configuration, Environment environment) {
         this.configuration = configuration;
@@ -40,6 +44,21 @@ public class ServiceModule extends AbstractModule {
         }
 
         return dbi;
+    }
+
+    @Provides
+    public Brave provideBrave() {
+        if (this.brave == null) {
+            this.brave = configuration.getZipkinFactory().build(environment);
+        }
+
+        return this.brave;
+    }
+
+    @Provides
+    public Client provideClient() {
+        return new ZipkinClientBuilder(environment, this.provideBrave())
+                .build(configuration.getZipkinClient());
     }
 
 }

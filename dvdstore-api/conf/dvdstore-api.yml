@@ -111,3 +111,7 @@ zipkin:
   collector: http
   # If using the http collector, provide the baseUrl
   baseUrl: http://127.0.0.1:9411/
+
+zipkinClient:
+  serviceName: dvdstore-api-client
+  timeout: 2s

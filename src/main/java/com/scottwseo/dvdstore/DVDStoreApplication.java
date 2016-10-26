@@ -19,11 +19,14 @@ import com.scottwseo.dvdstore.resources.CategoryResource;
 import com.scottwseo.dvdstore.resources.CustomersResource;
 import com.scottwseo.dvdstore.resources.OrdersResource;
 import com.scottwseo.dvdstore.resources.ProductsResource;
+import com.smoketurner.dropwizard.zipkin.rx.BraveRxJavaSchedulersHook;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import rx.plugins.RxJavaPlugins;
 
 import static com.scottwseo.commons.util.ConfigUtil.isRequired;
-import static com.scottwseo.commons.util.LogUtil.*;
+import static com.scottwseo.commons.util.LogUtil.info;
+import static com.scottwseo.commons.util.LogUtil.warn;
 
 public class DVDStoreApplication extends APIApplication {
 
@@ -56,6 +59,11 @@ public class DVDStoreApplication extends APIApplication {
 
             this.injector = Guice.createInjector(new DVDStoreServiceModule(configuration, environment));
 
+            final Brave brave = instanceOf(Brave.class);
+
+            RxJavaPlugins.getInstance()
+                    .registerSchedulersHook(new BraveRxJavaSchedulersHook(brave));
+
             registerResource(new HelpResource(applicationContextPath, getName(), getAppVersion()));
 
             registerResource(instanceOf(CategoryResource.class));
@@ -67,8 +75,6 @@ public class DVDStoreApplication extends APIApplication {
             registerResource(instanceOf(CustomersResource.class));
 
             environment.jersey().register(new UnrecognizedPropertyExceptionMapper());
-
-            Brave brave = configuration.getZipkinFactory().build(environment);
 
             info("server.startup.completed", "");
         }

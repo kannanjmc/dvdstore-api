@@ -33,6 +33,7 @@
         <pegdown.version>1.6.0</pegdown.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.1.0</mockito.version>
+        <smoketurner.zipkin.version>1.0.2-3</smoketurner.zipkin.version>
     </properties>
 
     <dependencyManagement>
@@ -186,7 +187,17 @@
         <dependency>
             <groupId>com.smoketurner.dropwizard</groupId>
             <artifactId>zipkin-core</artifactId>
-            <version>1.0.2-3</version>
+            <version>${smoketurner.zipkin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smoketurner.dropwizard</groupId>
+            <artifactId>zipkin-client</artifactId>
+            <version>${smoketurner.zipkin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smoketurner.dropwizard</groupId>
+            <artifactId>zipkin-rx</artifactId>
+            <version>${smoketurner.zipkin.version}</version>
         </dependency>
 
         <dependency>
