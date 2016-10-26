@@ -56,7 +56,7 @@ public class ProductsResource {
 
         info("product.create.successful", "", "product", product);
 
-        return client.target("http://127.0.0.1:" + request.getServerPort() + "/api/v1/dvdstore/orders/" + product.getProdId()).request().get();
+        return client.target("http://127.0.0.1:" + request.getServerPort() + "/api/v1/dvdstore/products/" + product.getProdId()).request().get();
 
     }
 
