@@ -8,3 +8,8 @@ services:
      - POSTGRES_PASSWORD=password
      - POSTGRES_DB=dellstore2
     image: scottseo/dvdstore-db
+
+  zipkin:
+    ports:
+     - "9411:9411"
+    image: openzipkin/zipkin
