@@ -53,6 +53,7 @@ node {
         sh "${dockerHome}/bin/docker rm -f zipkin"
     }
     stage('Docker Push') {
+        input message: 'Publish to docker hub?'
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-login') {
             docker.build('scottseo/dvdstore-api').push('latest')
         }
