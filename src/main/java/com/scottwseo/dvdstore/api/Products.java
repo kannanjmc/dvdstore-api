@@ -26,6 +26,14 @@ public class Products {
         return this.error;
     }
 
+    public Map getError() {
+        return  this.error;
+    }
+
+    public void setError(Map error) {
+        this.error = error;
+    }
+
     public Products pagination(Pagination pagination) {
         this.pagination = pagination;
         return this;
@@ -93,6 +101,7 @@ public class Products {
 
         sb.append("    pagination: ").append(toIndentedString(pagination)).append("\n");
         sb.append("    items: ").append(toIndentedString(items)).append("\n");
+        sb.append("    error: ").append(toIndentedString(error)).append("\n");
         sb.append("}");
         return sb.toString();
     }

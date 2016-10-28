@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import static com.scottwseo.commons.util.JsonUtil.asJson;
@@ -17,7 +16,7 @@ public class LogUtil {
     private static final Logger LOG = LoggerFactory.getLogger("");
 
     private static Map log(String event, String description, String level, Object... context) {
-        Map map = new Hashtable();
+        Map map = new HashMap();
         map.put("event", event);
         // don't print out empty description in the json
         if (description != null && description.length() > 0) {

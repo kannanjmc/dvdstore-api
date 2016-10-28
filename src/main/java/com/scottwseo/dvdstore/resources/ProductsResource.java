@@ -15,6 +15,7 @@ import javax.ws.rs.core.*;
 import java.util.Map;
 
 import static com.scottwseo.commons.util.LogUtil.info;
+import static com.scottwseo.commons.util.LogUtil.warn;
 
 /**
  * Created by sseo on 9/6/16.
@@ -67,6 +68,13 @@ public class ProductsResource {
                                  @Context SecurityContext securityContext,
                                  @Context UriInfo uriInfo) {
 
+        if (start == null || size == null) {
+            Map error = warn("product.list.failed", "validation.error", "start", start, "size", size);
+            Products products = new Products();
+            products.error(error);
+            return Response.status(400).entity(products).build();
+        }
+
         Products products = productsService.listProducts(start, size, securityContext, uriInfo.getBaseUri().toString());
 
         if (products.error() != null) {
@@ -82,7 +90,7 @@ public class ProductsResource {
     public Response updateProduct(ProductCreate product,
                                   @Context SecurityContext securityContext) {
 
-        ProductCreate productUpdated = productsService.updateProduct(product,securityContext);
+        ProductCreate productUpdated = productsService.updateProduct(product, securityContext);
 
         if (productUpdated.error() != null) {
             int statusCode = (int) productUpdated.error().get("statusCode");
