@@ -18,7 +18,7 @@ node {
 
           writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
 
-          withEnv(["com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/junit/local.config.properties"]) {
+          withEnv(["SWS_API_CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/junit/local.config.properties"]) {
             sh 'mvn -B -s settings.xml clean install'
           }
 
