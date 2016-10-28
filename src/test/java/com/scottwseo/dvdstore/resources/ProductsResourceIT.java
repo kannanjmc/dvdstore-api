@@ -55,7 +55,6 @@ public class ProductsResourceIT {
 
         Response response = client.target(String.format(API_URL, RULE.getLocalPort())).request().post(Entity.json(product));
 
-
         int status = response.getStatus();
 
         if (status != 200) {
@@ -106,6 +105,97 @@ public class ProductsResourceIT {
 
         assertThat(productsReceived.error(), is(notNullValue()));
 
+    }
+
+    @Test
+    public void updateProduct() throws Exception {
+
+        ProductCreate product = createProduct();
+
+        ProductCreate productUpdate = new ProductCreate();
+        productUpdate.setProdId(product.getProdId());
+        productUpdate.actor("Tom");
+        productUpdate.category(2L);
+        productUpdate.title("Tom Goes to Hollywood");
+        productUpdate.commonProdId(2L);
+        productUpdate.price(new BigDecimal(20.00));
+
+        Response response = client.target(String.format(API_URL, RULE.getLocalPort())).request().put(Entity.json(productUpdate));
+
+        int status = response.getStatus();
+
+        assertThat(status, is(204));
+    }
+
+    @Test
+    public void findProductById() throws Exception {
+
+        ProductCreate product = createProduct();
+
+        Response response = client.target(String.format(API_URL + "/" + product.getProdId(), RULE.getLocalPort())).request().get();
+
+        int status = response.getStatus();
+
+        if (status != 200) {
+            String responseBody = response.readEntity(String.class);
+            LOG.warn(responseBody);
+        }
+
+        assertThat(status, is(200));
+
+        ProductCreate productReceived = response.readEntity(ProductCreate.class);
+
+        assertThat(productReceived, is(notNullValue()));
+
+    }
+
+    @Test
+    public void deleteProduct() throws Exception {
+        ProductCreate product = createProduct();
+
+        Response response = client.target(String.format(API_URL + "/" + product.getProdId(), RULE.getLocalPort())).request().delete();
+
+        int status = response.getStatus();
+
+        assertThat(status, is(204));
+
+        response = client.target(String.format(API_URL + "/" + product.getProdId(), RULE.getLocalPort())).request().get();
+
+        status = response.getStatus();
+
+        if (status != 200) {
+            String responseBody = response.readEntity(String.class);
+            LOG.warn(responseBody);
+        }
+
+        assertThat(status, is(404));
+
+    }
+
+    private ProductCreate createProduct() throws Exception {
+        ProductCreate product = new ProductCreate();
+        product.actor("Scott");
+        product.category(1L);
+        product.title("Scott Goes to Hollywood");
+        product.commonProdId(1L);
+        product.price(new BigDecimal(10.00));
+
+        Response response = client.target(String.format(API_URL, RULE.getLocalPort())).request().post(Entity.json(product));
+
+        int status = response.getStatus();
+
+        if (status != 200) {
+            String responseBody = response.readEntity(String.class);
+            LOG.warn(responseBody);
+        }
+
+        assertThat(status, is(200));
+
+        ProductCreate productReceived = response.readEntity(ProductCreate.class);
+
+        assertThat(productReceived, is(notNullValue()));
+
+        return productReceived;
     }
 
 }

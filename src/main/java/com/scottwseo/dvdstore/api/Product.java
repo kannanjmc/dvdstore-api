@@ -47,6 +47,7 @@ public class Product {
      *
      * @return prodId
      **/
+    @JsonProperty("prod_id")
     public Long getProdId() {
         return prodId;
     }
@@ -65,6 +66,7 @@ public class Product {
      *
      * @return category
      **/
+    @JsonProperty("category")
     public Long getCategory() {
         return category;
     }
@@ -101,6 +103,7 @@ public class Product {
      *
      * @return actor
      **/
+    @JsonProperty("actor")
     public String getActor() {
         return actor;
     }
@@ -119,6 +122,7 @@ public class Product {
      *
      * @return price
      **/
+    @JsonProperty("price")
     public BigDecimal getPrice() {
         return price;
     }
@@ -137,6 +141,7 @@ public class Product {
      *
      * @return commonProdId
      **/
+    @JsonProperty("common_prod_id")
     public Long getCommonProdId() {
         return commonProdId;
     }
