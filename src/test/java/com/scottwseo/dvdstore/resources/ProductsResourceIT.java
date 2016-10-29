@@ -181,7 +181,7 @@ public class ProductsResourceIT {
 
         int status = response.getStatus();
 
-        assertThat(status, is(204));
+        assertThat(status, is(500));
     }
 
     @Test
