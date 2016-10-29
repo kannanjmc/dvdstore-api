@@ -57,8 +57,6 @@ public class ProductsResource {
 
         info("product.create.successful", "", "product", product);
 
-        // return client.target("http://127.0.0.1:" + request.getServerPort() + "/api/v1/dvdstore/products/" + product.getProdId()).request().get();
-
         return Response.ok().entity(product).build();
     }
 
@@ -71,9 +69,7 @@ public class ProductsResource {
 
         if (start == null || size == null) {
             Map error = warn("product.list.failed", "validation.error", "start", start, "size", size);
-            Products products = new Products();
-            products.error(error);
-            return Response.status(400).entity(products).build();
+            return Response.status(400).entity(error).build();
         }
 
         Products products = productsService.listProducts(start, size, securityContext, uriInfo.getBaseUri().toString());

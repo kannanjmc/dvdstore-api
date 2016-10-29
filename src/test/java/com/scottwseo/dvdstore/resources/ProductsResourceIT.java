@@ -18,6 +18,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -71,6 +72,28 @@ public class ProductsResourceIT {
     }
 
     @Test
+    public void addProductError() throws Exception {
+
+        ProductCreate product = new ProductCreate();
+        product.actor("Scott 000000000000000000000000000000000000000000000000000000000");
+        product.category(1L);
+        product.title("Scott Goes to Hollywood");
+        product.commonProdId(1L);
+        product.price(new BigDecimal(10.00));
+
+        Response response = client.target(String.format(API_URL, RULE.getLocalPort())).request().post(Entity.json(product));
+
+        int status = response.getStatus();
+
+        assertThat(status, is(400));
+
+        Map error = response.readEntity(Map.class);
+
+        assertThat(error, is(notNullValue()));
+
+    }
+
+    @Test
     public void listProducts() throws Exception {
 
         Response response = client.target(String.format(API_URL + "?start=1&size=10", RULE.getLocalPort())).request().get();
@@ -99,13 +122,27 @@ public class ProductsResourceIT {
 
         assertThat(status, is(400));
 
-        Products productsReceived = response.readEntity(Products.class);
+        Map error = response.readEntity(Map.class);
 
-        assertThat(productsReceived, is(notNullValue()));
-
-        assertThat(productsReceived.error(), is(notNullValue()));
+        assertThat(error, is(notNullValue()));
 
     }
+
+    @Test
+    public void listProductsError() throws Exception {
+
+        Response response = client.target(String.format(API_URL + "?start=-1&size=10", RULE.getLocalPort())).request().get();
+
+        int status = response.getStatus();
+
+        assertThat(status, is(400));
+
+        Map error = response.readEntity(Map.class);
+
+        assertThat(error, is(notNullValue()));
+
+    }
+
 
     @Test
     public void updateProduct() throws Exception {
@@ -115,6 +152,26 @@ public class ProductsResourceIT {
         ProductCreate productUpdate = new ProductCreate();
         productUpdate.setProdId(product.getProdId());
         productUpdate.actor("Tom");
+        productUpdate.category(2L);
+        productUpdate.title("Tom Goes to Hollywood");
+        productUpdate.commonProdId(2L);
+        productUpdate.price(new BigDecimal(20.00));
+
+        Response response = client.target(String.format(API_URL, RULE.getLocalPort())).request().put(Entity.json(productUpdate));
+
+        int status = response.getStatus();
+
+        assertThat(status, is(204));
+    }
+
+    @Test
+    public void updateProductError() throws Exception {
+
+        ProductCreate product = createProduct();
+
+        ProductCreate productUpdate = new ProductCreate();
+        productUpdate.setProdId(product.getProdId());
+        productUpdate.actor("Tom 000000000000000000000000000000000000000000000000000000000000000000000000000");
         productUpdate.category(2L);
         productUpdate.title("Tom Goes to Hollywood");
         productUpdate.commonProdId(2L);
