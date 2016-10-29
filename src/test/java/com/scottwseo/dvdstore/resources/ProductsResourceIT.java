@@ -23,7 +23,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
-
+import static org.junit.Assert.assertTrue;
 /**
  * Created by seos on 10/5/16.
  */
@@ -226,6 +226,17 @@ public class ProductsResourceIT {
         }
 
         assertThat(status, is(404));
+
+    }
+
+    @Test
+    public void deleteProductError() throws Exception {
+
+        Response response = client.target(String.format(API_URL + "/" + Long.MAX_VALUE, RULE.getLocalPort())).request().delete();
+
+        int status = response.getStatus();
+
+        assertTrue(status > 200);
 
     }
 
