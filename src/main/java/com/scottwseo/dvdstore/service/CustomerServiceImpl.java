@@ -105,7 +105,7 @@ public class CustomerServiceImpl implements CustomersService {
             return customer.customerid(customerId);
         }
         catch (Exception e) {
-            Map error = warn("customer.create.failed", e.getMessage(), "customer", customer);
+            Map error = warn("customer.create.failed", e.getMessage(), "customer", customer, "statusCode", 500);
             return customer.error(error);
         }
     }
