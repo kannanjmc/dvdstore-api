@@ -19,6 +19,7 @@ public class ServiceModule extends AbstractModule {
     protected Environment environment;
     private DBI dbi;
     private Brave brave;
+    private Client client;
 
     public ServiceModule(APIConfiguration configuration, Environment environment) {
         this.configuration = configuration;
@@ -57,8 +58,12 @@ public class ServiceModule extends AbstractModule {
 
     @Provides
     public Client provideClient() {
-        return new ZipkinClientBuilder(environment, this.provideBrave())
-                .build(configuration.getZipkinClient());
+        if (this.client == null) {
+            this.client = new ZipkinClientBuilder(environment, this.provideBrave())
+                    .build(configuration.getZipkinClient());
+        }
+
+        return this.client;
     }
 
 }

@@ -1,14 +1,11 @@
 package com.scottwseo.dvdstore.resources;
 
 import com.scottwseo.commons.app.APIConfiguration;
-import com.scottwseo.dvdstore.DVDStoreApplication;
+import com.scottwseo.dvdstore.TestSuiteIT;
 import com.scottwseo.dvdstore.api.Product;
 import com.scottwseo.dvdstore.api.ProductCreate;
 import com.scottwseo.dvdstore.api.Products;
-import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -24,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertTrue;
+
 /**
  * Created by seos on 10/5/16.
  */
@@ -33,16 +31,10 @@ public class ProductsResourceIT {
 
     private static final String API_URL = "http://localhost:%d/api/v1/dvdstore/products";
 
-    private static Client client;
-
     @ClassRule
-    public static final DropwizardAppRule<APIConfiguration> RULE =
-            new DropwizardAppRule<>(DVDStoreApplication.class, ResourceHelpers.resourceFilePath("test-dvdstore-api.yml"));
+    public static final DropwizardAppRule<APIConfiguration> RULE = TestSuiteIT.DROPWIZARD;
 
-    @BeforeClass
-    public static void init() {
-        client = new JerseyClientBuilder(RULE.getEnvironment()).using(RULE.getConfiguration().getJerseyClientConfiguration()).build("");
-    }
+    private static Client client = TestSuiteIT.CLIENT;
 
     @Test
     public void addProduct() throws Exception {

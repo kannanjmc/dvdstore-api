@@ -1,12 +1,9 @@
 package com.scottwseo.dvdstore.resources;
 
 import com.scottwseo.commons.app.APIConfiguration;
-import com.scottwseo.dvdstore.DVDStoreApplication;
+import com.scottwseo.dvdstore.TestSuiteIT;
 import com.scottwseo.dvdstore.api.Customer;
-import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -30,16 +27,10 @@ public class CustomersResourceIT {
 
     private static final String API_URL = "http://localhost:%d/api/v1/dvdstore/user";
 
-    private static Client client;
-
     @ClassRule
-    public static final DropwizardAppRule<APIConfiguration> RULE =
-            new DropwizardAppRule<>(DVDStoreApplication.class, ResourceHelpers.resourceFilePath("test-dvdstore-api.yml"));
+    public static final DropwizardAppRule<APIConfiguration> RULE = TestSuiteIT.DROPWIZARD;
 
-    @BeforeClass
-    public static void init() {
-        client = new JerseyClientBuilder(RULE.getEnvironment()).using(RULE.getConfiguration().getJerseyClientConfiguration()).build("");
-    }
+    private static Client client = TestSuiteIT.CLIENT;
 
     public Customer createCustomer() throws Exception {
 
