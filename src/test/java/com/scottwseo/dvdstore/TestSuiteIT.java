@@ -3,6 +3,7 @@ package com.scottwseo.dvdstore;
 import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.dvdstore.resources.CategoryResourceIT;
 import com.scottwseo.dvdstore.resources.CustomersResourceIT;
+import com.scottwseo.dvdstore.resources.OrdersResourceIT;
 import com.scottwseo.dvdstore.resources.ProductsResourceIT;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.testing.ResourceHelpers;
@@ -18,7 +19,10 @@ import javax.ws.rs.client.Client;
  * Created by seos on 10/31/16.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({CategoryResourceIT.class, CustomersResourceIT.class, ProductsResourceIT.class})
+@Suite.SuiteClasses({CategoryResourceIT.class,
+        CustomersResourceIT.class,
+        ProductsResourceIT.class,
+        OrdersResourceIT.class})
 public class TestSuiteIT {
 
     @ClassRule

@@ -45,7 +45,7 @@ public class OrdersResource {
     @DELETE
     @Path("/{orderId}")
     @Produces({"application/json"})
-    public Response deleteProduct(@PathParam("orderId") Long orderId,
+    public Response deleteOrder(@PathParam("orderId") Long orderId,
                                   @HeaderParam("api_key") String apiKey,
                                   @Context SecurityContext securityContext) {
 
@@ -63,7 +63,7 @@ public class OrdersResource {
     @GET
     @Path("/{orderId}")
     @Produces({"application/json"})
-    public Response getProductById(@PathParam("orderId") Long orderId,
+    public Response getOrderById(@PathParam("orderId") Long orderId,
                                    @Context SecurityContext securityContext) {
 
         Order order = ordersService.getOrderById(orderId, securityContext);
