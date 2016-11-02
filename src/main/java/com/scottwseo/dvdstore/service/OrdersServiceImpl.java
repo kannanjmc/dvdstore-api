@@ -76,8 +76,8 @@ public class OrdersServiceImpl implements OrdersService {
                     "        :orderdate\n" +
                     "    )");
 
+            int orderlineid = 1;
             for (OrderLine orderline : order.getOrderlines()) {
-                int orderlineid = 1;
                 b.add()
                 .bind("orderlineid", orderlineid++)
                 .bind("orderid", orderId)
