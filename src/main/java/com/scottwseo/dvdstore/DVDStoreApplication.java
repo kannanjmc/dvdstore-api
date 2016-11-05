@@ -3,7 +3,6 @@ package com.scottwseo.dvdstore;
 import com.github.kristofa.brave.Brave;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.netflix.config.ConfigurationManager;
 import com.scottwseo.commons.app.APIApplication;
 import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.commons.exception.UnrecognizedPropertyExceptionMapper;
@@ -53,8 +52,6 @@ public class DVDStoreApplication extends APIApplication {
 
         this.environment = environment;
 
-        String applicationContextPath = applicationContextPath(configuration);
-
         if (EnvVariables.check() && Configs.check() && PostgreSQLDatabase.check()) {
 
             this.injector = Guice.createInjector(new DVDStoreServiceModule(configuration, environment));
@@ -64,7 +61,7 @@ public class DVDStoreApplication extends APIApplication {
             RxJavaPlugins.getInstance()
                     .registerSchedulersHook(new BraveRxJavaSchedulersHook(brave));
 
-            registerResource(new HelpResource(applicationContextPath, getName(), getAppVersion()));
+            registerResource(instanceOf(HelpResource.class));
 
             registerResource(instanceOf(CategoryResource.class));
 
@@ -108,16 +105,6 @@ public class DVDStoreApplication extends APIApplication {
         }
 
         websocket.addEndpoint(LogEndPoint.class);
-    }
-
-    @Override
-    public String getName() {
-        return ConfigurationManager.getConfigInstance().getString(Configs.APP_NAME.key(), "DVD Store API");
-    }
-
-    @Override
-    protected String getAppVersion() {
-        return getAppVersion("app.version", "v1.0.0");
     }
 
     private <T> T instanceOf(Class clazz) {

@@ -1,5 +1,7 @@
 package com.scottwseo.commons.resources;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import com.scottwseo.commons.auth.User;
 import com.scottwseo.commons.help.HelpView;
 import com.scottwseo.commons.help.OverviewView;
@@ -38,11 +40,26 @@ public class HelpResource {
 
     private String appName;
 
+    private String applicationContextPath;
+
     private String appVersion;
 
-    public HelpResource(String applicationContextPath, String appName, String appVersion) {
+    @Inject
+    public void setAppName(@Named("AppName") String appName) {
         this.appName = appName;
-        this.appVersion =  appVersion;
+    }
+
+    @Inject
+    public void setApplicationContextPath(@Named("ApplicationContextPath") String applicationContextPath) {
+        this.applicationContextPath = applicationContextPath;
+    }
+
+    @Inject
+    public void setAppVersion(@Named("AppVersion") String appVersion) {
+        this.appVersion = appVersion;
+    }
+
+    public HelpResource() {
         this.helpView = new HelpView(applicationContextPath);
         this.tailView = new TailView(applicationContextPath);
         this.overview = new OverviewView();

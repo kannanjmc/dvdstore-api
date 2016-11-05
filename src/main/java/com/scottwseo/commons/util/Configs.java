@@ -57,11 +57,15 @@ public enum Configs implements Config {
     }
 
     public String getString() {
-        return ConfigurationManager.getConfigInstance().getString(key);
+        return value();
     }
 
     public String key() {
         return key;
+    }
+
+    public String value() {
+        return ConfigurationManager.getConfigInstance().getString(key);
     }
 
 }

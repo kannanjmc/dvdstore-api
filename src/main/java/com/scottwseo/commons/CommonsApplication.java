@@ -2,7 +2,6 @@ package com.scottwseo.commons;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.netflix.config.ConfigurationManager;
 import com.scottwseo.commons.app.APIApplication;
 import com.scottwseo.commons.app.APIConfiguration;
 import com.scottwseo.commons.guice.ServiceModule;
@@ -35,15 +34,15 @@ public class CommonsApplication extends APIApplication {
     @Override
     public void run(final APIConfiguration configuration,
                     final Environment environment) {
-        String applicationContextPath = applicationContextPath(configuration);
 
         if (EnvVariables.check() && Configs.check() && PostgreSQLDatabase.check()) {
 
             environment.healthChecks().register("config", new ConfigHealthCheck());
 
-            environment.jersey().register(new HelpResource(applicationContextPath, getName(), getAppVersion()));
-
             Injector injector = Guice.createInjector(new ServiceModule(configuration, environment));
+
+            environment.jersey().register(injector.getInstance(HelpResource.class));
+
         }
         else {
             environment.jersey().register(new StartupCheckListResource());
@@ -51,16 +50,6 @@ public class CommonsApplication extends APIApplication {
         }
 
         websocket.addEndpoint(LogEndPoint.class);
-    }
-
-    @Override
-    public String getName() {
-        return ConfigurationManager.getConfigInstance().getString(Configs.APP_NAME.key(), "API");
-    }
-
-    @Override
-    protected String getAppVersion() {
-        return getAppVersion("app.version", "v1.0.0");
     }
 
 }
