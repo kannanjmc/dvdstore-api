@@ -4,6 +4,8 @@ import com.google.common.base.MoreObjects;
 import com.google.inject.name.Names;
 import com.netflix.config.ConfigurationManager;
 import com.scottwseo.commons.app.APIConfiguration;
+import com.scottwseo.commons.app.LaunchHandler;
+import com.scottwseo.commons.app.LaunchHandlerProvider;
 import com.scottwseo.commons.guice.ServiceModule;
 import com.scottwseo.commons.logging.ServerFactoryWrapper;
 import com.scottwseo.commons.resources.HelpResource;
@@ -22,6 +24,8 @@ public class DVDStoreServiceModule extends ServiceModule {
 
     @Override
     protected void configure() {
+        bind(LaunchHandler.class).toProvider(LaunchHandlerProvider.class);
+
         bind(CategoryService.class).to(CategoryServiceImpl.class);
 
         bind(ProductsService.class).to(ProductsServiceImpl.class);
@@ -41,7 +45,6 @@ public class DVDStoreServiceModule extends ServiceModule {
         bindConstant()
                 .annotatedWith(Names.named("AppName"))
                 .to(getAppName());
-
     }
 
     protected String applicationContextPath() {
