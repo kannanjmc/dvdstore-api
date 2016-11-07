@@ -132,7 +132,7 @@ public class ProductsServiceImpl implements ProductsService {
                 return product;
             }
             else {
-                Map error = warn("product.update.unexepected", "updated affected multiple row", "product", product, "statusCode", 500);
+                Map error = warn("product.update.unexepected", "update affected multiple row", "product", product, "statusCode", 500);
                 return product.error(error);
             }
         }
@@ -165,12 +165,8 @@ public class ProductsServiceImpl implements ProductsService {
                 return null;
             }
             else {
-                return map("product.delete.failed", "delete affected more than one row", "prod_id", productId, "statusCode", 500);
+                return map("event", "product.delete.failed", "description", "delete affected more than one row", "prod_id", productId, "statusCode", 500);
             }
-        }
-        catch (Exception e) {
-            Map error = warn("product.delete.failed", e.getMessage(), "prod_id", productId, "statusCode", 500);
-            return new Products().error(error);
         }
     }
 
@@ -200,10 +196,6 @@ public class ProductsServiceImpl implements ProductsService {
             }
 
             return product;
-        }
-        catch (Exception e) {
-            Map error = warn("product.update.failed", e.getMessage(), "prod_id", productId, "statusCode", 500);
-            return new Products().error(error);
         }
     }
 
