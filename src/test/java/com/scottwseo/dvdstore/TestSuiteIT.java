@@ -1,6 +1,6 @@
 package com.scottwseo.dvdstore;
 
-import com.scottwseo.commons.app.APIConfiguration;
+import com.scottwseo.commons.rest.app.APIConfiguration;
 import com.scottwseo.dvdstore.resources.CategoryResourceIT;
 import com.scottwseo.dvdstore.resources.CustomersResourceIT;
 import com.scottwseo.dvdstore.resources.OrdersResourceIT;

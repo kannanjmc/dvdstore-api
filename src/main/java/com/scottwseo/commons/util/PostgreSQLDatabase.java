@@ -1,5 +1,6 @@
 package com.scottwseo.commons.util;
 
+import com.scottwseo.commons.config.Configs;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.exceptions.UnableToObtainConnectionException;

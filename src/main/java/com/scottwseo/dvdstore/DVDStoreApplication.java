@@ -2,11 +2,9 @@ package com.scottwseo.dvdstore;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.scottwseo.commons.app.APIApplication;
-import com.scottwseo.commons.app.APIConfiguration;
-import com.scottwseo.commons.app.LaunchHandler;
-import com.scottwseo.commons.app.LaunchHandlerProvider;
 import com.scottwseo.commons.logging.LogEndPoint;
+import com.scottwseo.commons.rest.app.APIApplication;
+import com.scottwseo.commons.rest.app.APIConfiguration;
 import com.scottwseo.dvdstore.guice.DVDStoreServiceModule;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;

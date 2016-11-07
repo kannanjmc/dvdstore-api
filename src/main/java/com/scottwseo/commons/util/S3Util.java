@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import com.scottwseo.commons.cfg.SimpleAWSCredentialProviderChain;
+import com.scottwseo.commons.config.SimpleAWSCredentialProviderChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

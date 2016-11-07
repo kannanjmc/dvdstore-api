@@ -1,6 +1,7 @@
 package com.scottwseo.commons.util;
 
-import com.scottwseo.commons.togglz.FeatureManagerProviderBase;
+import com.scottwseo.commons.config.Configs;
+import com.scottwseo.commons.rest.featureflag.FeatureManagerProviderBase;
 import org.postgresql.ds.PGPoolingDataSource;
 
 import javax.sql.DataSource;

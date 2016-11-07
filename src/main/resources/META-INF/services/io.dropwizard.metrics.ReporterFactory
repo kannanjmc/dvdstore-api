@@ -1,1 +1,1 @@
-com.scottwseo.commons.graphite.SimpleGraphiteReporterFactory
+metrics.SimpleGraphiteReporterFactory

@@ -1,5 +1,6 @@
 package com.scottwseo.commons.util;
 
+import com.scottwseo.commons.config.EnvVariables;
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;

@@ -1,6 +1,6 @@
 package com.scottwseo.commons.util;
 
-import com.scottwseo.commons.togglz.Issue;
+import com.scottwseo.commons.rest.featureflag.Issue;
 import org.togglz.core.Feature;
 import org.togglz.core.annotation.EnabledByDefault;
 import org.togglz.core.annotation.InfoLink;
