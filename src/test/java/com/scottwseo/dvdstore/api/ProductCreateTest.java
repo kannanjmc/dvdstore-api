@@ -36,6 +36,10 @@ public class ProductCreateTest {
 
         ProductCreate productB = newProductCreate();
 
+        assertThat(productA.equals(productA), is(true));
+
+        assertThat(productA.equals(null), is(false));
+
         assertThat(productA.equals(productB), is(true));
     }
 

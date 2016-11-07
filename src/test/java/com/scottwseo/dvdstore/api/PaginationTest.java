@@ -36,6 +36,10 @@ public class PaginationTest {
 
         Pagination paginationB = newPagination();
 
+        assertThat(paginationA.equals(paginationA), is(true));
+
+        assertThat(paginationA.equals(null), is(false));
+
         assertThat(paginationA.equals(paginationB), is(true));
     }
 
