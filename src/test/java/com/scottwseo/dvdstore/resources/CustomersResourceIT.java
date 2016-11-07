@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -139,6 +140,42 @@ public class CustomersResourceIT {
     }
 
     @Test
+    public void updateCustomerByUsernameError() throws Exception {
+
+        Customer customer = createCustomer();
+
+        customer.setPhone("0000000000000000000000000000000000000000000000000000000000000000000000");
+
+        Response response = client.target(String.format(API_URL + "/" + customer.getUsername(), RULE.getLocalPort())).request().put(Entity.json(customer));
+
+        int status = response.getStatus();
+
+        assertThat(status, is(500));
+
+        Map error = response.readEntity(Map.class);
+
+        assertThat(error.get("event"), is("customer.update.failed"));
+    }
+
+    @Test
+    public void updateCustomerByUsernameUserNotFoundError() throws Exception {
+        Customer customer = createCustomer();
+
+        customer.setPhone("0000000000000000000000000000000000000000000000000000000000000000000000");
+
+        Response response = client.target(String.format(API_URL + "/foo" + System.currentTimeMillis(), RULE.getLocalPort())).request().put(Entity.json(customer));
+
+        int status = response.getStatus();
+
+        assertThat(status, is(404));
+
+        Map error = response.readEntity(Map.class);
+
+        assertThat(error.get("event"), is("customer.findbyid.failed"));
+    }
+
+
+    @Test
     public void loginCustomer() throws Exception {
         Customer customer = createCustomer();
 
@@ -157,5 +194,50 @@ public class CustomersResourceIT {
 
         assertThat(status, is(200));
     }
+
+    @Test
+    public void createCustomerexistingCustomer() throws Exception {
+        Customer customer = createCustomer();
+
+        customer.setCustomerid(null);
+
+        Response response = client.target(String.format(API_URL, RULE.getLocalPort())).request().post(Entity.json(customer));
+
+        int status = response.getStatus();
+
+        assertThat(status, is(400));
+
+        Map error = response.readEntity(Map.class);
+
+        assertThat(error.get("event"), is("customer.create.failed"));
+
+        assertThat(error.get("description"), is("username exist"));
+
+    }
+
+    @Test
+    public void createCustomerError() throws Exception {
+        Customer customer = createCustomer();
+
+        customer.setCustomerid(null);
+
+        customer.setPhone("0000000000000000000000000000000000000000000000000000");
+
+        customer.setUsername("user" + System.currentTimeMillis());
+
+        Response response = client.target(String.format(API_URL, RULE.getLocalPort())).request().post(Entity.json(customer));
+
+        int status = response.getStatus();
+
+        assertThat(status, is(500));
+
+        Map error = response.readEntity(Map.class);
+
+        assertThat(error.get("event"), is("customer.create.failed"));
+
+        assertThat(error.get("description"), is(notNullValue()));
+
+    }
+
 }
 

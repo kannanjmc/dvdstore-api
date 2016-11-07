@@ -27,10 +27,6 @@ public class CategoryServiceImpl implements CategoryService {
             Query query = h.createQuery(sql.toString());
 
             return query.map(StringColumnMapper.INSTANCE).list();
-
-        }
-        catch (Exception e) {
-            return null;
         }
 
     }

@@ -32,7 +32,7 @@ public class DVDStoreServiceModule extends ServiceModule {
 
         bind(OrdersService.class).to(OrdersServiceImpl.class);
 
-        bind(CustomersService.class).to(CustomerServiceImpl.class);
+        bind(CustomersService.class).to(CustomersServiceImpl.class);
 
         bindConstant()
             .annotatedWith(Names.named("ApplicationContextPath"))

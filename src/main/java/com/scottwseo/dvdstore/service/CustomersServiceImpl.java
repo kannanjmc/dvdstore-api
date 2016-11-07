@@ -16,12 +16,12 @@ import static com.scottwseo.commons.util.LogUtil.warn;
 /**
  * Created by seos on 9/19/16.
  */
-public class CustomerServiceImpl implements CustomersService {
+public class CustomersServiceImpl implements CustomersService {
 
     private DBI dbi;
 
     @Inject
-    public CustomerServiceImpl(DBI dbi) {
+    public CustomersServiceImpl(DBI dbi) {
         this.dbi = dbi;
     }
 
@@ -29,7 +29,11 @@ public class CustomerServiceImpl implements CustomersService {
         Customer existingCustomer = getCustomerByUsername(customer.getUsername(), securityContext);
 
         if (existingCustomer != null && customer.getUsername().equals(existingCustomer.getUsername())) {
-            return customer.error(map("customer.create.failed", "username exist", "customer", customer, "statusCode", 400));
+            return customer.error(map(
+                "event", "customer.create.failed",
+                "description", "username exist",
+                "customer", customer,
+                "statusCode", 400));
         }
 
         try (Handle h = dbi.open()) {
@@ -112,6 +116,7 @@ public class CustomerServiceImpl implements CustomersService {
 
     @Override
     public Customer getCustomerByUsername(String username, SecurityContext securityContext) {
+
         try (Handle h = dbi.open()) {
             String sql =
                     "SELECT\n" +
@@ -145,15 +150,12 @@ public class CustomerServiceImpl implements CustomersService {
                     .first();
 
             if (customer == null) {
-                return new Customer().error(map("customer.findbyid.failed", "", "username", username, "statusCode", 404));
+                return new Customer().error(map("event", "customer.findbyid.failed", "username", username, "statusCode", 404));
             }
 
             return customer;
         }
-        catch (Exception e) {
-            Map error = warn("customer.update.failed", e.getMessage(), "username", username, "statusCode", 500);
-            return new Customer().error(error);
-        }
+
     }
 
     @Override
@@ -173,12 +175,8 @@ public class CustomerServiceImpl implements CustomersService {
                 return null;
             }
             else {
-                return map("customer.delete.failed", "delete affected more than one row", "username", username, "statusCode", 500);
+                return map("event", "customer.delete.failed", "username", username, "statusCode", 500);
             }
-        }
-        catch (Exception e) {
-            Map error = warn("customer.delete.failed", e.getMessage(), "username", username, "statusCode", 500);
-            return new Customer().error(error);
         }
     }
 
