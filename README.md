@@ -49,8 +49,9 @@
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/api-spec.png"> 
 
 ### Testing
-  * Unit tests
-  * Integration tests
+  * Unit tests, Integration tests 
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/spacer2.png">
+  <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/codecoverage.png">
   * Postman Runner tests
   <img src="https://github.com/scott-seo/dvdstore-api/blob/master/images/postman_runner2.png">
   * Newman tests

@@ -325,7 +325,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>com.scottwseo.commons/**/*</exclude>
-                                <exclude>com/scottwseo/dvdstore/DVDStoreApplicationLauncher.java</exclude>
+                                <exclude>com.scottwseo.dvdstore/DVDStoreApplicationLauncher*</exclude>
                             </excludes>
                         </configuration>
                         <executions>
