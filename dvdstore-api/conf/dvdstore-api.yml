@@ -95,7 +95,7 @@ jerseyClientConfiguration:
 
 metrics:
   reporters:
-     - type: SimpleGraphiteReporterFactory
+     - type: DVDGraphiteReporterFactory
        port: 2003
        appname: dvdstore-api
 

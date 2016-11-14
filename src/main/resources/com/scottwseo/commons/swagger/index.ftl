@@ -38,7 +38,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "../apidef/swagger.json";
+        url = "../openapi/swagger.json";
       }
 
       hljs.configure({

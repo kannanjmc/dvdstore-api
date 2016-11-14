@@ -1,6 +1,5 @@
 package com.scottwseo.commons.rest.featureflag;
 
-import com.scottwseo.commons.config.Configs;
 import org.togglz.core.manager.FeatureManager;
 import org.togglz.core.manager.FeatureManagerBuilder;
 import org.togglz.core.repository.StateRepository;
@@ -23,7 +22,7 @@ public abstract class FeatureManagerProviderBase implements FeatureManagerProvid
     public FeatureManagerProviderBase() {
         DataSource dataSource = getDataSource();
 
-        if (dataSource != null && Configs.DB_URL.isProvided()) {
+        if (dataSource != null) {
             this.stateRepository = new JDBCStateRepository(dataSource);
         } else {
             this.stateRepository = new InMemoryStateRepository();

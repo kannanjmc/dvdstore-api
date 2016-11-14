@@ -5,7 +5,6 @@ import com.codahale.metrics.ScheduledReporter;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.scottwseo.commons.config.Configs;
 import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
-public class SimpleGraphiteReporterFactory extends GraphiteReporterFactory {
+public abstract class SimpleGraphiteReporterFactory extends GraphiteReporterFactory {
 
     private static Logger LOG = LoggerFactory.getLogger(SimpleGraphiteReporterFactory.class);
 
@@ -36,7 +35,7 @@ public class SimpleGraphiteReporterFactory extends GraphiteReporterFactory {
 
     @Override
     public ScheduledReporter build(MetricRegistry registry) {
-        String host = Configs.GRAPHITE_HOST.getString();
+        String host = getGraphiteHostname();
 
         if (host == null) {
             LOG.info("graphite host name missing");
@@ -60,4 +59,5 @@ public class SimpleGraphiteReporterFactory extends GraphiteReporterFactory {
         }
     }
 
+    protected abstract String getGraphiteHostname();
 }

@@ -1,9 +1,10 @@
-package com.scottwseo.commons.config;
+package com.scottwseo.dvdstore.config;
 
 import com.netflix.config.ConfigurationManager;
-
-import static com.scottwseo.commons.config.ConfigUtil.isRequired;
-import static com.scottwseo.commons.util.StringUtils.isEmpty;
+import com.scottwseo.commons.config.Config;
+import com.scottwseo.commons.config.ConfigDataType;
+import com.scottwseo.commons.config.ConfigManager;
+import com.scottwseo.commons.config.Configuration;
 
 /**
  * Created by sseo on 9/6/16.
@@ -35,7 +36,7 @@ public enum Configs implements Config {
         boolean valid = true;
 
         for (Configs config : Configs.values()) {
-            if (isRequired(config) && !config.isProvided()) {
+            if (config.required() && !config.provided()) {
                 valid = false;
                 break;
             }
@@ -44,13 +45,8 @@ public enum Configs implements Config {
         return valid;
     }
 
-    public boolean isProvided() {
-        String value = ConfigurationManager.getConfigInstance().getString(key);
-
-        if (isEmpty(value)) {
-            return false;
-        }
-        return true;
+    public boolean provided() {
+        return ConfigManager.isProvided(this);
     }
 
     public String getString() {
@@ -63,6 +59,14 @@ public enum Configs implements Config {
 
     public String value() {
         return ConfigurationManager.getConfigInstance().getString(key);
+    }
+
+    public boolean required() {
+        return ConfigManager.isRequired(this);
+    }
+
+    public boolean masked() {
+        return ConfigManager.isMasked(this);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.scottwseo.commons.rest.app;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.scottwseo.commons.config.Configs;
 import com.smoketurner.dropwizard.zipkin.ZipkinFactory;
 import com.smoketurner.dropwizard.zipkin.client.ZipkinClientConfiguration;
 import io.dropwizard.Configuration;
@@ -11,7 +10,7 @@ import io.dropwizard.db.DataSourceFactory;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public class APIConfiguration extends Configuration {
+public abstract class APIConfiguration extends Configuration {
 
     @Valid
     @NotNull
@@ -35,13 +34,9 @@ public class APIConfiguration extends Configuration {
 
     public DataSourceFactory getDataSourceFactory() {
 
-        if (!Configs.check()) {
-            throw new RuntimeException("Configuration is not initialized");
-        }
-
-        database.setUrl(Configs.DB_URL.getString());
-        database.setUser(Configs.DB_USER.getString());
-        database.setPassword(Configs.DB_PWD.getString());
+        database.setUrl(getConfig("db.url"));
+        database.setUser(getConfig("db.user"));
+        database.setPassword(getConfig("db.pwd"));
 
         return database;
     }
@@ -58,5 +53,7 @@ public class APIConfiguration extends Configuration {
     public ZipkinClientConfiguration getZipkinClient() {
         return zipkinClient;
     }
+
+    protected abstract String getConfig(String name);
 
 }

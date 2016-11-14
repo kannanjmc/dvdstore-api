@@ -1,6 +1,7 @@
 package com.scottwseo.dvdstore;
 
 import com.scottwseo.commons.rest.app.APIConfiguration;
+import com.scottwseo.commons.util.EnvUtil;
 import com.scottwseo.dvdstore.resources.CategoryResourceIT;
 import com.scottwseo.dvdstore.resources.CustomersResourceIT;
 import com.scottwseo.dvdstore.resources.OrdersResourceIT;
@@ -14,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import javax.ws.rs.client.Client;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by seos on 10/31/16.
@@ -25,8 +28,14 @@ import javax.ws.rs.client.Client;
         OrdersResourceIT.class})
 public class TestSuiteIT {
 
+    static {
+        Map<String, String> env = new HashMap<>();
+        env.put("SWS_API_CONFIG_URL", "http://localhost:8000/localhost.config.properties");
+        EnvUtil.setEnv(env);
+    }
+
     @ClassRule
-    public static final DropwizardAppRule<APIConfiguration> DROPWIZARD =
+    public static final DropwizardAppRule<DVDStoreAPIConfiguration> DROPWIZARD =
             new DropwizardAppRule<>(DVDStoreApplication.class, ResourceHelpers.resourceFilePath("test-dvdstore-api.yml"));
 
     public static Client CLIENT = null;

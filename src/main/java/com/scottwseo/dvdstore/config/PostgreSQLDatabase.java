@@ -1,6 +1,6 @@
-package com.scottwseo.commons.util;
+package com.scottwseo.dvdstore.config;
 
-import com.scottwseo.commons.config.Configs;
+import com.scottwseo.dvdstore.config.Configs;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.exceptions.UnableToObtainConnectionException;

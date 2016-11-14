@@ -3,13 +3,11 @@ package com.scottwseo.dvdstore.guice;
 import com.google.common.base.MoreObjects;
 import com.google.inject.name.Names;
 import com.netflix.config.ConfigurationManager;
-import com.scottwseo.commons.config.Configs;
+import com.scottwseo.dvdstore.config.Configs;
 import com.scottwseo.commons.logging.ServerFactoryWrapper;
 import com.scottwseo.commons.rest.app.APIConfiguration;
 import com.scottwseo.commons.rest.guice.ServiceModule;
 import com.scottwseo.commons.rest.resources.HelpResource;
-import com.scottwseo.dvdstore.LaunchHandler;
-import com.scottwseo.dvdstore.LaunchHandlerProvider;
 import com.scottwseo.dvdstore.service.*;
 import io.dropwizard.server.DefaultServerFactory;
 import io.dropwizard.server.ServerFactory;
@@ -24,8 +22,6 @@ public class DVDStoreServiceModule extends ServiceModule {
 
     @Override
     protected void configure() {
-        bind(LaunchHandler.class).toProvider(LaunchHandlerProvider.class);
-
         bind(CategoryService.class).to(CategoryServiceImpl.class);
 
         bind(ProductsService.class).to(ProductsServiceImpl.class);

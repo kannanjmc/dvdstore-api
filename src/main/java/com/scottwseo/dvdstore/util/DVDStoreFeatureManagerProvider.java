@@ -1,14 +1,16 @@
-package com.scottwseo.commons.util;
+package com.scottwseo.dvdstore.util;
 
-import com.scottwseo.commons.config.Configs;
+import com.scottwseo.commons.util.Features;
+import com.scottwseo.dvdstore.config.Configs;
 import com.scottwseo.commons.rest.featureflag.FeatureManagerProviderBase;
+import com.scottwseo.dvdstore.config.PostgreSQLDatabase;
 import org.postgresql.ds.PGPoolingDataSource;
 
 import javax.sql.DataSource;
 
-public class CommonsFeatureManagerProvider extends FeatureManagerProviderBase {
+public class DVDStoreFeatureManagerProvider extends FeatureManagerProviderBase {
 
-    public CommonsFeatureManagerProvider() {
+    public DVDStoreFeatureManagerProvider() {
         super();
     }
 

@@ -1,6 +1,7 @@
 package com.scottwseo.dvdstore.resources;
 
 import com.scottwseo.commons.rest.app.APIConfiguration;
+import com.scottwseo.dvdstore.DVDStoreAPIConfiguration;
 import com.scottwseo.dvdstore.TestSuiteIT;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.ClassRule;
@@ -26,7 +27,7 @@ public class CategoryResourceIT {
     private static final String API_URL = "http://localhost:%d/api/v1/dvdstore/categories";
 
     @ClassRule
-    public static final DropwizardAppRule<APIConfiguration> RULE = TestSuiteIT.DROPWIZARD;
+    public static final DropwizardAppRule<DVDStoreAPIConfiguration> RULE = TestSuiteIT.DROPWIZARD;
 
     private static Client client = TestSuiteIT.CLIENT;
 

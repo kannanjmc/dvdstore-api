@@ -1,1 +1,1 @@
-metrics.SimpleGraphiteReporterFactory
+com.scottwseo.dvdstore.metrics.DVDGraphiteReporterFactory

@@ -5,10 +5,10 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 
 
 public class SimpleAWSCredentialProviderChain  extends AWSCredentialsProviderChain {
-    public SimpleAWSCredentialProviderChain() {
+    public SimpleAWSCredentialProviderChain(String profileName) {
         super(new AWSCredentialsProvider[]{new EnvironmentVariableCredentialsProvider(),
                 new SystemPropertiesCredentialsProvider(),
-                new ProfileCredentialsProvider(EnvVariables.AWS_PROFILE.value()),
+                new ProfileCredentialsProvider(profileName),
                 new EC2ContainerCredentialsProviderWrapper()});
     }
 }

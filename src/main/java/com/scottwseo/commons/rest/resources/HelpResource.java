@@ -2,8 +2,7 @@ package com.scottwseo.commons.rest.resources;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import com.scottwseo.commons.config.Configs;
-import com.scottwseo.commons.config.EnvVariables;
+import com.scottwseo.commons.config.Config;
 import com.scottwseo.commons.help.HelpView;
 import com.scottwseo.commons.help.OverviewView;
 import com.scottwseo.commons.help.TailView;
@@ -26,9 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.scottwseo.commons.config.ConfigUtil.isMasked;
-import static com.scottwseo.commons.config.ConfigUtil.isRequired;
-
 @Path("/")
 public class HelpResource {
 
@@ -43,6 +39,10 @@ public class HelpResource {
     private String applicationContextPath;
 
     private String appVersion;
+
+    private Config[] envs;
+
+    private Config[] cfgs;
 
     @Inject
     public void setAppName(@Named("AppName") String appName) {
@@ -60,15 +60,23 @@ public class HelpResource {
     }
 
     public HelpResource() {
-        this.helpView = new HelpView(applicationContextPath);
-        this.tailView = new TailView(applicationContextPath);
-        this.overview = new OverviewView();
+    }
+
+    public void setEnvs(Config[] envs) {
+        this.envs = envs;
+    }
+
+    public void setCfgs(Config[] cfgs) {
+        this.cfgs = cfgs;
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Path("/help")
     public HelpView help(@Auth User user) {
+        if (helpView == null) {
+            this.helpView = new HelpView(applicationContextPath);
+        }
         return helpView;
     }
 
@@ -84,14 +92,14 @@ public class HelpResource {
         meta.put("appname", appName);
         List<Map> configs = new ArrayList<>();
 
-        for (EnvVariables env : EnvVariables.values()) {
-            String value = isMasked(env) ? "******" : env.value();
-            populateCfg(configs, env.name(), env.key(), value, isRequired(env), "environment");
+        for (Config env : envs) {
+            String value = env.masked() ? "******" : env.value();
+            populateCfg(configs, env.name(), env.key(), value, env.required(), "environment");
         }
 
-        for (Configs config : Configs.values()) {
-            String value = isMasked(config) ? "******" : config.getString();
-            populateCfg(configs, config.name(), config.key(), value, isRequired(config), "dynamic");
+        for (Config config : cfgs) {
+            String value = config.masked() ? "******" : config.value();
+            populateCfg(configs, config.name(), config.key(), value, config.required(), "dynamic");
         }
 
         meta.put("configs", configs);
@@ -114,6 +122,9 @@ public class HelpResource {
     @Produces(MediaType.TEXT_HTML)
     @Path("/log")
     public TailView log(@Auth User user) {
+        if (this.tailView == null) {
+            this.tailView = new TailView(applicationContextPath);
+        }
         return tailView;
     }
 
@@ -128,7 +139,7 @@ public class HelpResource {
         // the internal call should not deal network firewall, so localhost is always safe
         String host = "http://localhost";
 
-        String metrics = get("http://localhost:8081/api/v1/dvdstore/metrics");
+        String metrics = get("http://localhost:8081" + applicationContextPath + "/metrics");
 
         Map json = new HashMap<>();
         json.put("baseUri", baseUri);
@@ -165,6 +176,9 @@ public class HelpResource {
     @Produces(MediaType.TEXT_HTML)
     @Path("/overview")
     public OverviewView overview() {
+        if (overview == null) {
+            this.overview = new OverviewView();
+        }
         return overview;
     }
 

@@ -101,9 +101,7 @@ zipkin:
   servicePort: 8080
 
   # Optional properties
-  collector: http
-  # If using the http collector, provide the baseUrl
-  baseUrl: http://zipkin:9411/
+  collector: empty
 
 zipkinClient:
   serviceName: dvdstore-api-client

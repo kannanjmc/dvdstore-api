@@ -21,8 +21,8 @@ public class S3Util {
 
     private static final Logger LOG = LoggerFactory.getLogger(S3Util.class);
 
-    public static void put(String bucket, String key, File file) throws IOException {
-        AmazonS3 s3client = new AmazonS3Client(new SimpleAWSCredentialProviderChain());
+    public static void put(String bucket, String key, File file, String profileName) throws IOException {
+        AmazonS3 s3client = new AmazonS3Client(new SimpleAWSCredentialProviderChain(profileName));
         try {
             s3client.putObject(new PutObjectRequest(bucket, key, file));
         } catch (AmazonServiceException ase) {
@@ -32,8 +32,8 @@ public class S3Util {
         }
     }
 
-    public static InputStream get(String bucket, String key) throws IOException {
-        AmazonS3 s3client = new AmazonS3Client(new SimpleAWSCredentialProviderChain());
+    public static InputStream get(String bucket, String key, String profileName) throws IOException {
+        AmazonS3 s3client = new AmazonS3Client(new SimpleAWSCredentialProviderChain(profileName));
         try {
             S3Object s3Object = s3client.getObject(bucket, key);
             return s3Object.getObjectContent();

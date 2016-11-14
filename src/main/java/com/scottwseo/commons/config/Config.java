@@ -7,4 +7,12 @@ public interface Config {
 
     String name();
 
+    String key();
+
+    String value();
+
+    boolean required();
+
+    boolean masked();
+
 }

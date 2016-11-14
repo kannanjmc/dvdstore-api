@@ -10,7 +10,7 @@ services:
      - grafana
      - graphite
     environment:
-     - com.scottwseo.api.CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/local/local.config.properties
+     - SWS_API_CONFIG_URL=https://s3.amazonaws.com/config.scottwseo.com/local/local.config.properties
     logging:
       driver: "fluentd"
   logger:
